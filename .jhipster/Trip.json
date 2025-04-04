@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404170556",
+  "dto": "mapstruct",
+  "entityTableName": "trip",
+  "fields": [
+    {
+      "fieldName": "startTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TripStatus",
+      "fieldValues": "ONGOING,COMPLETED"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Trip",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "driver",
+      "relationshipName": "driver",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "vehicle",
+      "relationshipName": "vehicle",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

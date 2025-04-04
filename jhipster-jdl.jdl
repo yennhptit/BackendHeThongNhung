@@ -1,0 +1,77 @@
+// File: driver-management.jdl
+
+// 1. Bảng Driver (Tài xế)
+entity Driver {
+    name String required
+    rfidUid String
+    licenseNumber String
+    faceData TextBlob
+    createdAt Instant
+    status DriverStatus
+}
+
+enum DriverStatus {
+    ACTIVE,
+    INACTIVE
+}
+
+// 2. Bảng Vehicle (Xe)
+entity Vehicle {
+    licensePlate String required 
+    model String 
+    status VehicleStatus
+}
+
+enum VehicleStatus {
+    AVAILABLE,
+    IN_USE
+}
+
+// 3. Bảng Trip (Chuyến đi)
+entity Trip {
+    startTime Instant
+    endTime Instant
+    status TripStatus
+}
+
+enum TripStatus {
+    ONGOING,
+    COMPLETED
+}
+
+// 4. Bảng Checkin (Lịch sử điểm danh)
+entity Checkin {
+    checkinTime Instant
+    checkoutTime Instant
+    faceVerified Boolean
+}
+
+// 5. Bảng Violation (Vi phạm)
+entity Violation {
+    value Float
+    timestamp Instant
+    type ViolationType
+}
+
+enum ViolationType {
+    ALCOHOL,
+    DROWSINESS
+}
+
+// Định nghĩa các quan hệ
+relationship OneToMany {
+    Driver to Trip{driver}
+    Vehicle to Trip{vehicle}
+     Driver to Violation{trip}
+}
+
+relationship OneToOne {
+    Checkin{trip} to Trip
+}
+
+
+// Cấu hình bổ sung
+dto * with mapstruct
+service * with serviceImpl
+paginate * with pagination
+filter *
