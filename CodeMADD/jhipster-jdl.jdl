@@ -1,0 +1,77 @@
+/**
+ * Driver entity.
+ */
+entity Driver {
+    name String required
+    rfidUid String required maxlength(20)
+    licenseNumber String required maxlength(20)
+    faceData TextBlob
+    createdAt Instant
+    status DriverStatus
+}
+
+/**
+ * Vehicle entity.
+ */
+entity Vehicle {
+    licensePlate String required maxlength(15)
+    model String maxlength(50)
+    status VehicleStatus
+}
+
+/**
+ * Trip entity.
+ */
+entity Trip {
+    startTime Instant
+    endTime Instant
+    status TripStatus
+}
+
+/**
+ * Checkin entity.
+ */
+entity Checkin {
+    checkinTime Instant
+    checkoutTime Instant
+    faceVerified Boolean
+}
+
+/**
+ * Violation entity.
+ */
+entity Violation {
+    type ViolationType
+    value Float
+    timestamp Instant
+}
+
+// ENUMs
+enum DriverStatus {
+    ACTIVE, INACTIVE
+}
+
+enum VehicleStatus {
+    AVAILABLE, IN_USE
+}
+
+enum TripStatus {
+    ONGOING, COMPLETED
+}
+
+enum ViolationType {
+    ALCOHOL, DROWSINESS
+}
+
+// Relationships
+relationship OneToMany {
+    Driver{trips} to Trip{driver}
+    Vehicle{trips} to Trip{vehicle}
+    Trip{checkins} to Checkin{trip}
+    Trip{violations} to Violation{trip}
+}
+
+// Options
+paginate all with pagination
+dto * with mapstruct
+service all with serviceImpl

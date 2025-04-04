@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404095055",
+  "documentation": "Trip entity.",
+  "dto": "mapstruct",
+  "entityTableName": "trip",
+  "fields": [
+    {
+      "fieldName": "startTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TripStatus",
+      "fieldValues": "ONGOING,COMPLETED"
+    }
+  ],
+  "name": "Trip",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "checkin",
+      "otherEntityRelationshipName": "trip",
+      "relationshipName": "checkins",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "violation",
+      "otherEntityRelationshipName": "trip",
+      "relationshipName": "violations",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "driver",
+      "otherEntityRelationshipName": "trips",
+      "relationshipName": "driver",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "vehicle",
+      "otherEntityRelationshipName": "trips",
+      "relationshipName": "vehicle",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

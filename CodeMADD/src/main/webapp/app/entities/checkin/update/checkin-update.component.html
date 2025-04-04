@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-checkin-heading" data-cy="CheckinCreateUpdateHeading" jhiTranslate="codeMaddApp.checkin.home.createOrEditLabel">
+        __jhiTransformTranslate__('codeMaddApp.checkin.home.createOrEditLabel')
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="codeMaddApp.checkin.checkinTime" for="field_checkinTime">Checkin Time</label>
+          <div class="d-flex">
+            <input
+              id="field_checkinTime"
+              data-cy="checkinTime"
+              type="datetime-local"
+              class="form-control"
+              name="checkinTime"
+              formControlName="checkinTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="codeMaddApp.checkin.checkoutTime" for="field_checkoutTime">Checkout Time</label>
+          <div class="d-flex">
+            <input
+              id="field_checkoutTime"
+              data-cy="checkoutTime"
+              type="datetime-local"
+              class="form-control"
+              name="checkoutTime"
+              formControlName="checkoutTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="codeMaddApp.checkin.faceVerified" for="field_faceVerified">Face Verified</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="faceVerified"
+            id="field_faceVerified"
+            data-cy="faceVerified"
+            formControlName="faceVerified"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="codeMaddApp.checkin.trip" for="field_trip"
+            >__jhiTransformTranslate__('codeMaddApp.checkin.trip')</label
+          >
+          <select class="form-control" id="field_trip" data-cy="trip" name="trip" formControlName="trip" [compareWith]="compareTrip">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="tripOption" *ngFor="let tripOption of tripsSharedCollection">{{ tripOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel"
+            >__jhiTransformTranslate__('entity.action.cancel')</span
+          >
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save"
+            >__jhiTransformTranslate__('entity.action.save')</span
+          >
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

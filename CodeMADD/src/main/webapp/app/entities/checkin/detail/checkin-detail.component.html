@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="checkin">
+      <h2 data-cy="checkinDetailsHeading">
+        <span jhiTranslate="codeMaddApp.checkin.detail.title">__jhiTransformTranslate__('codeMaddApp.checkin.detail.title')</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">__jhiTransformTranslate__('global.field.id')</span></dt>
+        <dd>
+          <span>{{ checkin.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.checkin.checkinTime">__jhiTransformTranslate__('codeMaddApp.checkin.checkinTime')</span></dt>
+        <dd>
+          <span>{{ checkin.checkinTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.checkin.checkoutTime">__jhiTransformTranslate__('codeMaddApp.checkin.checkoutTime')</span></dt>
+        <dd>
+          <span>{{ checkin.checkoutTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.checkin.faceVerified">__jhiTransformTranslate__('codeMaddApp.checkin.faceVerified')</span></dt>
+        <dd>
+          <span>{{ checkin.faceVerified }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.checkin.trip">__jhiTransformTranslate__('codeMaddApp.checkin.trip')</span></dt>
+        <dd>
+          <div *ngIf="checkin.trip">
+            <a [routerLink]="['/trip', checkin.trip.id, 'view']">{{ checkin.trip.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"
+          >__jhiTransformTranslate__('entity.action.back')</span
+        >
+      </button>
+
+      <button type="button" [routerLink]="['/checkin', checkin.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"
+          >__jhiTransformTranslate__('entity.action.edit')</span
+        >
+      </button>
+    </div>
+  </div>
+</div>

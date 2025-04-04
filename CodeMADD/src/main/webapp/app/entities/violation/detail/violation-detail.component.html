@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="violation">
+      <h2 data-cy="violationDetailsHeading">
+        <span jhiTranslate="codeMaddApp.violation.detail.title">__jhiTransformTranslate__('codeMaddApp.violation.detail.title')</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">__jhiTransformTranslate__('global.field.id')</span></dt>
+        <dd>
+          <span>{{ violation.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.violation.type">__jhiTransformTranslate__('codeMaddApp.violation.type')</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'codeMaddApp.ViolationType.' + violation.type }}">{{ violation.type }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.violation.value">__jhiTransformTranslate__('codeMaddApp.violation.value')</span></dt>
+        <dd>
+          <span>{{ violation.value }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.violation.timestamp">__jhiTransformTranslate__('codeMaddApp.violation.timestamp')</span></dt>
+        <dd>
+          <span>{{ violation.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.violation.trip">__jhiTransformTranslate__('codeMaddApp.violation.trip')</span></dt>
+        <dd>
+          <div *ngIf="violation.trip">
+            <a [routerLink]="['/trip', violation.trip.id, 'view']">{{ violation.trip.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"
+          >__jhiTransformTranslate__('entity.action.back')</span
+        >
+      </button>
+
+      <button type="button" [routerLink]="['/violation', violation.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"
+          >__jhiTransformTranslate__('entity.action.edit')</span
+        >
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="vehicle">
+      <h2 data-cy="vehicleDetailsHeading">
+        <span jhiTranslate="codeMaddApp.vehicle.detail.title">__jhiTransformTranslate__('codeMaddApp.vehicle.detail.title')</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">__jhiTransformTranslate__('global.field.id')</span></dt>
+        <dd>
+          <span>{{ vehicle.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.vehicle.licensePlate">__jhiTransformTranslate__('codeMaddApp.vehicle.licensePlate')</span></dt>
+        <dd>
+          <span>{{ vehicle.licensePlate }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.vehicle.model">__jhiTransformTranslate__('codeMaddApp.vehicle.model')</span></dt>
+        <dd>
+          <span>{{ vehicle.model }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeMaddApp.vehicle.status">__jhiTransformTranslate__('codeMaddApp.vehicle.status')</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'codeMaddApp.VehicleStatus.' + vehicle.status }}">{{ vehicle.status }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"
+          >__jhiTransformTranslate__('entity.action.back')</span
+        >
+      </button>
+
+      <button type="button" [routerLink]="['/vehicle', vehicle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"
+          >__jhiTransformTranslate__('entity.action.edit')</span
+        >
+      </button>
+    </div>
+  </div>
+</div>

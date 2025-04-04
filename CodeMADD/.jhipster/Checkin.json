@@ -1,0 +1,34 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404095155",
+  "documentation": "Checkin entity.",
+  "dto": "mapstruct",
+  "entityTableName": "checkin",
+  "fields": [
+    {
+      "fieldName": "checkinTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "checkoutTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "faceVerified",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Checkin",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "trip",
+      "otherEntityRelationshipName": "checkins",
+      "relationshipName": "trip",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
