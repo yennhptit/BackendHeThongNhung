@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404170456",
+  "dto": "mapstruct",
+  "entityTableName": "vehicle",
+  "fields": [
+    {
+      "fieldName": "licensePlate",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "model",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "VehicleStatus",
+      "fieldValues": "AVAILABLE,IN_USE"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Vehicle",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "trip",
+      "otherEntityRelationshipName": "vehicle",
+      "relationshipName": "trip",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404170656",
+  "dto": "mapstruct",
+  "entityTableName": "checkin",
+  "fields": [
+    {
+      "fieldName": "checkinTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "checkoutTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "faceVerified",
+      "fieldType": "Boolean"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Checkin",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "trip",
+      "relationshipName": "trip",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

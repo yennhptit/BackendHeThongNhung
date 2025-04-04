@@ -1,0 +1,34 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404170756",
+  "dto": "mapstruct",
+  "entityTableName": "violation",
+  "fields": [
+    {
+      "fieldName": "value",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ViolationType",
+      "fieldValues": "ALCOHOL,DROWSINESS"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Violation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "driver",
+      "relationshipName": "trip",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

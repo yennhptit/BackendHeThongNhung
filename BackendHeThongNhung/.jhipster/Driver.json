@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404170356",
+  "dto": "mapstruct",
+  "entityTableName": "driver",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "rfidUid",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "licenseNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "faceData",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "DriverStatus",
+      "fieldValues": "ACTIVE,INACTIVE"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Driver",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "trip",
+      "otherEntityRelationshipName": "driver",
+      "relationshipName": "trip",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "violation",
+      "otherEntityRelationshipName": "trip",
+      "relationshipName": "violation",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
