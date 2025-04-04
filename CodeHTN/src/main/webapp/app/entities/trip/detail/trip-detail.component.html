@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="trip">
+      <h2 data-cy="tripDetailsHeading">
+        <span jhiTranslate="codeHtnApp.trip.detail.title">__jhiTransformTranslate__('codeHtnApp.trip.detail.title')</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">__jhiTransformTranslate__('global.field.id')</span></dt>
+        <dd>
+          <span>{{ trip.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeHtnApp.trip.startTime">__jhiTransformTranslate__('codeHtnApp.trip.startTime')</span></dt>
+        <dd>
+          <span>{{ trip.startTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeHtnApp.trip.endTime">__jhiTransformTranslate__('codeHtnApp.trip.endTime')</span></dt>
+        <dd>
+          <span>{{ trip.endTime | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeHtnApp.trip.status">__jhiTransformTranslate__('codeHtnApp.trip.status')</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'codeHtnApp.TripStatus.' + trip.status }}">{{ trip.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="codeHtnApp.trip.driver">__jhiTransformTranslate__('codeHtnApp.trip.driver')</span></dt>
+        <dd>
+          <div *ngIf="trip.driver">
+            <a [routerLink]="['/driver', trip.driver.id, 'view']">{{ trip.driver.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="codeHtnApp.trip.vehicle">__jhiTransformTranslate__('codeHtnApp.trip.vehicle')</span></dt>
+        <dd>
+          <div *ngIf="trip.vehicle">
+            <a [routerLink]="['/vehicle', trip.vehicle.id, 'view']">{{ trip.vehicle.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"
+          >__jhiTransformTranslate__('entity.action.back')</span
+        >
+      </button>
+
+      <button type="button" [routerLink]="['/trip', trip.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"
+          >__jhiTransformTranslate__('entity.action.edit')</span
+        >
+      </button>
+    </div>
+  </div>
+</div>

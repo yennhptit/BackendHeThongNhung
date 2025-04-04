@@ -1,0 +1,135 @@
+<div>
+  <h2 id="page-heading" data-cy="ViolationHeading">
+    <span jhiTranslate="codeHtnApp.violation.home.title">__jhiTransformTranslate__('codeHtnApp.violation.home.title')</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="codeHtnApp.violation.home.refreshListLabel"
+          >__jhiTransformTranslate__('codeHtnApp.violation.home.refreshListLabel')</span
+        >
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-violation"
+        [routerLink]="['/violation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="codeHtnApp.violation.home.createLabel">__jhiTransformTranslate__('codeHtnApp.violation.home.createLabel')</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="violations?.length === 0">
+    <span jhiTranslate="codeHtnApp.violation.home.notFound">__jhiTransformTranslate__('codeHtnApp.violation.home.notFound')</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="violations && violations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">__jhiTransformTranslate__('global.field.id')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="type">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.violation.type">__jhiTransformTranslate__('codeHtnApp.violation.type')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="value">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.violation.value">__jhiTransformTranslate__('codeHtnApp.violation.value')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="timestamp">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.violation.timestamp">__jhiTransformTranslate__('codeHtnApp.violation.timestamp')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="trip.id">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.violation.trip">__jhiTransformTranslate__('codeHtnApp.violation.trip')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let violation of violations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/violation', violation.id, 'view']">{{ violation.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'codeHtnApp.ViolationType.' + violation.type }}">{{ violation.type }}</td>
+          <td>{{ violation.value }}</td>
+          <td>{{ violation.timestamp | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="violation.trip">
+              <a [routerLink]="['/trip', violation.trip.id, 'view']">{{ violation.trip.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/violation', violation.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">__jhiTransformTranslate__('entity.action.view')</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/violation', violation.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">__jhiTransformTranslate__('entity.action.edit')</span>
+              </button>
+
+              <button type="submit" (click)="delete(violation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete"
+                  >__jhiTransformTranslate__('entity.action.delete')</span
+                >
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="violations && violations.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

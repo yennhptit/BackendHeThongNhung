@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20250404090353",
+  "documentation": "Violation entity.",
+  "dto": "mapstruct",
+  "entityTableName": "violation",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "ViolationType",
+      "fieldValues": "ALCOHOL,DROWSINESS"
+    },
+    {
+      "fieldName": "value",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "Instant"
+    }
+  ],
+  "name": "Violation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "trip",
+      "otherEntityRelationshipName": "violations",
+      "relationshipName": "trip",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

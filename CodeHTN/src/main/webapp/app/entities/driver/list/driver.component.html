@@ -1,0 +1,135 @@
+<div>
+  <h2 id="page-heading" data-cy="DriverHeading">
+    <span jhiTranslate="codeHtnApp.driver.home.title">__jhiTransformTranslate__('codeHtnApp.driver.home.title')</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="codeHtnApp.driver.home.refreshListLabel"
+          >__jhiTransformTranslate__('codeHtnApp.driver.home.refreshListLabel')</span
+        >
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-driver"
+        [routerLink]="['/driver/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="codeHtnApp.driver.home.createLabel">__jhiTransformTranslate__('codeHtnApp.driver.home.createLabel')</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="drivers?.length === 0">
+    <span jhiTranslate="codeHtnApp.driver.home.notFound">__jhiTransformTranslate__('codeHtnApp.driver.home.notFound')</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="drivers && drivers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">__jhiTransformTranslate__('global.field.id')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.driver.name">__jhiTransformTranslate__('codeHtnApp.driver.name')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="rfidUid">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.driver.rfidUid">__jhiTransformTranslate__('codeHtnApp.driver.rfidUid')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="licenseNumber">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.driver.licenseNumber">__jhiTransformTranslate__('codeHtnApp.driver.licenseNumber')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="faceData">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.driver.faceData">__jhiTransformTranslate__('codeHtnApp.driver.faceData')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.driver.createdAt">__jhiTransformTranslate__('codeHtnApp.driver.createdAt')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="codeHtnApp.driver.status">__jhiTransformTranslate__('codeHtnApp.driver.status')</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/driver', driver.id, 'view']">{{ driver.id }}</a>
+          </td>
+          <td>{{ driver.name }}</td>
+          <td>{{ driver.rfidUid }}</td>
+          <td>{{ driver.licenseNumber }}</td>
+          <td>{{ driver.faceData }}</td>
+          <td>{{ driver.createdAt | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'codeHtnApp.DriverStatus.' + driver.status }}">{{ driver.status }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/driver', driver.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">__jhiTransformTranslate__('entity.action.view')</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/driver', driver.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">__jhiTransformTranslate__('entity.action.edit')</span>
+              </button>
+
+              <button type="submit" (click)="delete(driver)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete"
+                  >__jhiTransformTranslate__('entity.action.delete')</span
+                >
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="drivers && drivers.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
