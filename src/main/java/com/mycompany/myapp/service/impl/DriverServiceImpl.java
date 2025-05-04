@@ -3,8 +3,15 @@ package com.mycompany.myapp.service.impl;
 import com.mycompany.myapp.domain.Driver;
 import com.mycompany.myapp.repository.DriverRepository;
 import com.mycompany.myapp.service.DriverService;
+import com.mycompany.myapp.service.GoogleDriveService;
 import com.mycompany.myapp.service.dto.DriverDTO;
+import com.mycompany.myapp.service.dto.request.DriverRequest;
 import com.mycompany.myapp.service.mapper.DriverMapper;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Service Implementation for managing {@link com.mycompany.myapp.domain.Driver}.
@@ -22,13 +30,46 @@ public class DriverServiceImpl implements DriverService {
 
     private final Logger log = LoggerFactory.getLogger(DriverServiceImpl.class);
 
+    private final GoogleDriveService googleDriveService;
+
     private final DriverRepository driverRepository;
 
     private final DriverMapper driverMapper;
 
-    public DriverServiceImpl(DriverRepository driverRepository, DriverMapper driverMapper) {
+    public DriverServiceImpl(GoogleDriveService googleDriveService, DriverRepository driverRepository, DriverMapper driverMapper) {
+        this.googleDriveService = googleDriveService;
         this.driverRepository = driverRepository;
         this.driverMapper = driverMapper;
+    }
+
+    private String generateRfidUid(Long id, Instant createdAt) {
+        String timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+            .withZone(ZoneId.of("UTC"))
+            .format(createdAt);
+        return "RFID-" + timestamp + "-" + String.format("%04d", id);
+    }
+
+    @Override
+    public DriverDTO save(DriverRequest driverRequest) {
+        try {
+            MultipartFile faceImage = driverRequest.getFaceImage();
+            String faceImageUrl = googleDriveService.uploadFile(faceImage);
+
+            Driver driver = new Driver();
+            driver.setName(driverRequest.getName());
+            driver.setLicenseNumber(driverRequest.getLicenseNumber());
+            driver.setFaceData(faceImageUrl);
+            driver.setCreatedAt(Instant.now());
+
+            driver = driverRepository.save(driver);
+
+            driver.setRfidUid(generateRfidUid(driver.getId(), driver.getCreatedAt()));
+
+            return driverMapper.toDto(driver);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error uploading image to Google Drive", e);
+        }
     }
 
     @Override

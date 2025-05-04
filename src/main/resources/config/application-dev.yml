@@ -13,8 +13,16 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+google:
+  drive:
+    application:
+      name: HTN
+    credentials:
+      path: credentials.json
+
 logging:
   level:
+    org.eclipse.paho.client.mqttv3: INFO
     ROOT: DEBUG
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG

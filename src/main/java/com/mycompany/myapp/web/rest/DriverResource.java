@@ -5,6 +5,7 @@ import com.mycompany.myapp.service.DriverQueryService;
 import com.mycompany.myapp.service.DriverService;
 import com.mycompany.myapp.service.criteria.DriverCriteria;
 import com.mycompany.myapp.service.dto.DriverDTO;
+import com.mycompany.myapp.service.dto.request.DriverRequest;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -52,6 +55,18 @@ public class DriverResource {
         this.driverQueryService = driverQueryService;
     }
 
+    @PostMapping(value = "/drivers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<DriverDTO> createDriver(@Valid @ModelAttribute DriverRequest driverRequest) {
+        try {
+            DriverDTO driverDTO = driverService.save(driverRequest);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                .body(driverDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     /**
      * {@code POST  /drivers} : Create a new driver.
      *
@@ -59,18 +74,18 @@ public class DriverResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new driverDTO, or with status {@code 400 (Bad Request)} if the driver has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/drivers")
-    public ResponseEntity<DriverDTO> createDriver(@Valid @RequestBody DriverDTO driverDTO) throws URISyntaxException {
-        log.debug("REST request to save Driver : {}", driverDTO);
-        if (driverDTO.getId() != null) {
-            throw new BadRequestAlertException("A new driver cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        DriverDTO result = driverService.save(driverDTO);
-        return ResponseEntity
-            .created(new URI("/api/drivers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
+//    @PostMapping("/drivers")
+//    public ResponseEntity<DriverDTO> createDriver(@Valid @RequestBody DriverDTO driverDTO) throws URISyntaxException {
+//        log.debug("REST request to save Driver : {}", driverDTO);
+//        if (driverDTO.getId() != null) {
+//            throw new BadRequestAlertException("A new driver cannot already have an ID", ENTITY_NAME, "idexists");
+//        }
+//        DriverDTO result = driverService.save(driverDTO);
+//        return ResponseEntity
+//            .created(new URI("/api/drivers/" + result.getId()))
+//            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+//            .body(result);
+//    }
 
     /**
      * {@code PUT  /drivers/:id} : Updates an existing driver.
