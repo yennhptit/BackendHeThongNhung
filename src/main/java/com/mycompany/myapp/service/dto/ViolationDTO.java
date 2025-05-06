@@ -21,6 +21,8 @@ public class ViolationDTO implements Serializable {
 
     private Boolean isDelete;
 
+    private Boolean isRead;
+
     private DriverDTO driver;
 
     public Long getId() {
@@ -63,6 +65,14 @@ public class ViolationDTO implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Boolean getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
+    }
+
     public DriverDTO getDriver() {
         return driver;
     }
@@ -101,6 +111,7 @@ public class ViolationDTO implements Serializable {
             ", timestamp='" + getTimestamp() + "'" +
             ", type='" + getType() + "'" +
             ", isDelete='" + getIsDelete() + "'" +
+            ", isRead='" + getIsRead() + "'" +
             ", driver=" + getDriver() +
             "}";
     }

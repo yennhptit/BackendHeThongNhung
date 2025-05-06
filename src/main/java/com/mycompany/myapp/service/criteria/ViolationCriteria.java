@@ -49,6 +49,8 @@ public class ViolationCriteria implements Serializable, Criteria {
 
     private BooleanFilter isDelete;
 
+    private BooleanFilter isRead;
+
     private LongFilter driverId;
 
     private Boolean distinct;
@@ -61,6 +63,7 @@ public class ViolationCriteria implements Serializable, Criteria {
         this.timestamp = other.timestamp == null ? null : other.timestamp.copy();
         this.type = other.type == null ? null : other.type.copy();
         this.isDelete = other.isDelete == null ? null : other.isDelete.copy();
+        this.isRead = other.isRead == null ? null : other.isRead.copy();
         this.driverId = other.driverId == null ? null : other.driverId.copy();
         this.distinct = other.distinct;
     }
@@ -145,6 +148,21 @@ public class ViolationCriteria implements Serializable, Criteria {
         this.isDelete = isDelete;
     }
 
+    public BooleanFilter getIsRead() {
+        return isRead;
+    }
+
+    public BooleanFilter isRead() {
+        if (isRead == null) {
+            isRead = new BooleanFilter();
+        }
+        return isRead;
+    }
+
+    public void setIsRead(BooleanFilter isRead) {
+        this.isRead = isRead;
+    }
+
     public LongFilter getDriverId() {
         return driverId;
     }
@@ -183,6 +201,7 @@ public class ViolationCriteria implements Serializable, Criteria {
             Objects.equals(timestamp, that.timestamp) &&
             Objects.equals(type, that.type) &&
             Objects.equals(isDelete, that.isDelete) &&
+            Objects.equals(isRead, that.isRead) &&
             Objects.equals(driverId, that.driverId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -190,7 +209,7 @@ public class ViolationCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, value, timestamp, type, isDelete, driverId, distinct);
+        return Objects.hash(id, value, timestamp, type, isDelete, isRead, driverId, distinct);
     }
 
     // prettier-ignore
@@ -202,6 +221,7 @@ public class ViolationCriteria implements Serializable, Criteria {
             (timestamp != null ? "timestamp=" + timestamp + ", " : "") +
             (type != null ? "type=" + type + ", " : "") +
             (isDelete != null ? "isDelete=" + isDelete + ", " : "") +
+            (isRead != null ? "isRead=" + isRead + ", " : "") +
             (driverId != null ? "driverId=" + driverId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

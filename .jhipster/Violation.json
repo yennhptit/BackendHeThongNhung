@@ -20,6 +20,10 @@
     {
       "fieldName": "isDelete",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isRead",
+      "fieldType": "Boolean"
     }
   ],
   "jpaMetamodelFiltering": true,

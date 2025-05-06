@@ -59,6 +59,12 @@ export const ViolationDetail = () => {
           </dt>
           <dd>{violationEntity.isDelete ? 'true' : 'false'}</dd>
           <dt>
+            <span id="isRead">
+              <Translate contentKey="backendHeThongNhungApp.violation.isRead">Is Read</Translate>
+            </span>
+          </dt>
+          <dd>{violationEntity.isRead ? 'true' : 'false'}</dd>
+          <dt>
             <Translate contentKey="backendHeThongNhungApp.violation.driver">Driver</Translate>
           </dt>
           <dd>{violationEntity.driver ? violationEntity.driver.id : ''}</dd>

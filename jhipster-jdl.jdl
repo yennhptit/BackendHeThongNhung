@@ -49,6 +49,7 @@ entity Violation {
     timestamp Instant
     type ViolationType
     isDelete Boolean
+    isRead Boolean
 }
 
 enum ViolationType {

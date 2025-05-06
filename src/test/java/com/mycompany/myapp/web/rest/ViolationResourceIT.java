@@ -48,6 +48,9 @@ class ViolationResourceIT {
     private static final Boolean DEFAULT_IS_DELETE = false;
     private static final Boolean UPDATED_IS_DELETE = true;
 
+    private static final Boolean DEFAULT_IS_READ = false;
+    private static final Boolean UPDATED_IS_READ = true;
+
     private static final String ENTITY_API_URL = "/api/violations";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -79,7 +82,8 @@ class ViolationResourceIT {
             .value(DEFAULT_VALUE)
             .timestamp(DEFAULT_TIMESTAMP)
             .type(DEFAULT_TYPE)
-            .isDelete(DEFAULT_IS_DELETE);
+            .isDelete(DEFAULT_IS_DELETE)
+            .isRead(DEFAULT_IS_READ);
         return violation;
     }
 
@@ -94,7 +98,8 @@ class ViolationResourceIT {
             .value(UPDATED_VALUE)
             .timestamp(UPDATED_TIMESTAMP)
             .type(UPDATED_TYPE)
-            .isDelete(UPDATED_IS_DELETE);
+            .isDelete(UPDATED_IS_DELETE)
+            .isRead(UPDATED_IS_READ);
         return violation;
     }
 
@@ -121,6 +126,7 @@ class ViolationResourceIT {
         assertThat(testViolation.getTimestamp()).isEqualTo(DEFAULT_TIMESTAMP);
         assertThat(testViolation.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testViolation.getIsDelete()).isEqualTo(DEFAULT_IS_DELETE);
+        assertThat(testViolation.getIsRead()).isEqualTo(DEFAULT_IS_READ);
     }
 
     @Test
@@ -157,7 +163,8 @@ class ViolationResourceIT {
             .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.doubleValue())))
             .andExpect(jsonPath("$.[*].timestamp").value(hasItem(DEFAULT_TIMESTAMP.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())))
+            .andExpect(jsonPath("$.[*].isRead").value(hasItem(DEFAULT_IS_READ.booleanValue())));
     }
 
     @Test
@@ -175,7 +182,8 @@ class ViolationResourceIT {
             .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.doubleValue()))
             .andExpect(jsonPath("$.timestamp").value(DEFAULT_TIMESTAMP.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.isDelete").value(DEFAULT_IS_DELETE.booleanValue()));
+            .andExpect(jsonPath("$.isDelete").value(DEFAULT_IS_DELETE.booleanValue()))
+            .andExpect(jsonPath("$.isRead").value(DEFAULT_IS_READ.booleanValue()));
     }
 
     @Test
@@ -406,6 +414,45 @@ class ViolationResourceIT {
 
     @Test
     @Transactional
+    void getAllViolationsByIsReadIsEqualToSomething() throws Exception {
+        // Initialize the database
+        violationRepository.saveAndFlush(violation);
+
+        // Get all the violationList where isRead equals to DEFAULT_IS_READ
+        defaultViolationShouldBeFound("isRead.equals=" + DEFAULT_IS_READ);
+
+        // Get all the violationList where isRead equals to UPDATED_IS_READ
+        defaultViolationShouldNotBeFound("isRead.equals=" + UPDATED_IS_READ);
+    }
+
+    @Test
+    @Transactional
+    void getAllViolationsByIsReadIsInShouldWork() throws Exception {
+        // Initialize the database
+        violationRepository.saveAndFlush(violation);
+
+        // Get all the violationList where isRead in DEFAULT_IS_READ or UPDATED_IS_READ
+        defaultViolationShouldBeFound("isRead.in=" + DEFAULT_IS_READ + "," + UPDATED_IS_READ);
+
+        // Get all the violationList where isRead equals to UPDATED_IS_READ
+        defaultViolationShouldNotBeFound("isRead.in=" + UPDATED_IS_READ);
+    }
+
+    @Test
+    @Transactional
+    void getAllViolationsByIsReadIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        violationRepository.saveAndFlush(violation);
+
+        // Get all the violationList where isRead is not null
+        defaultViolationShouldBeFound("isRead.specified=true");
+
+        // Get all the violationList where isRead is null
+        defaultViolationShouldNotBeFound("isRead.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllViolationsByDriverIsEqualToSomething() throws Exception {
         Driver driver;
         if (TestUtil.findAll(em, Driver.class).isEmpty()) {
@@ -438,7 +485,8 @@ class ViolationResourceIT {
             .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.doubleValue())))
             .andExpect(jsonPath("$.[*].timestamp").value(hasItem(DEFAULT_TIMESTAMP.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())))
+            .andExpect(jsonPath("$.[*].isRead").value(hasItem(DEFAULT_IS_READ.booleanValue())));
 
         // Check, that the count call also returns 1
         restViolationMockMvc
@@ -486,7 +534,12 @@ class ViolationResourceIT {
         Violation updatedViolation = violationRepository.findById(violation.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedViolation are not directly saved in db
         em.detach(updatedViolation);
-        updatedViolation.value(UPDATED_VALUE).timestamp(UPDATED_TIMESTAMP).type(UPDATED_TYPE).isDelete(UPDATED_IS_DELETE);
+        updatedViolation
+            .value(UPDATED_VALUE)
+            .timestamp(UPDATED_TIMESTAMP)
+            .type(UPDATED_TYPE)
+            .isDelete(UPDATED_IS_DELETE)
+            .isRead(UPDATED_IS_READ);
         ViolationDTO violationDTO = violationMapper.toDto(updatedViolation);
 
         restViolationMockMvc
@@ -505,6 +558,7 @@ class ViolationResourceIT {
         assertThat(testViolation.getTimestamp()).isEqualTo(UPDATED_TIMESTAMP);
         assertThat(testViolation.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testViolation.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
+        assertThat(testViolation.getIsRead()).isEqualTo(UPDATED_IS_READ);
     }
 
     @Test
@@ -584,7 +638,7 @@ class ViolationResourceIT {
         Violation partialUpdatedViolation = new Violation();
         partialUpdatedViolation.setId(violation.getId());
 
-        partialUpdatedViolation.isDelete(UPDATED_IS_DELETE);
+        partialUpdatedViolation.value(UPDATED_VALUE);
 
         restViolationMockMvc
             .perform(
@@ -598,10 +652,11 @@ class ViolationResourceIT {
         List<Violation> violationList = violationRepository.findAll();
         assertThat(violationList).hasSize(databaseSizeBeforeUpdate);
         Violation testViolation = violationList.get(violationList.size() - 1);
-        assertThat(testViolation.getValue()).isEqualTo(DEFAULT_VALUE);
+        assertThat(testViolation.getValue()).isEqualTo(UPDATED_VALUE);
         assertThat(testViolation.getTimestamp()).isEqualTo(DEFAULT_TIMESTAMP);
         assertThat(testViolation.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testViolation.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
+        assertThat(testViolation.getIsDelete()).isEqualTo(DEFAULT_IS_DELETE);
+        assertThat(testViolation.getIsRead()).isEqualTo(DEFAULT_IS_READ);
     }
 
     @Test
@@ -616,7 +671,12 @@ class ViolationResourceIT {
         Violation partialUpdatedViolation = new Violation();
         partialUpdatedViolation.setId(violation.getId());
 
-        partialUpdatedViolation.value(UPDATED_VALUE).timestamp(UPDATED_TIMESTAMP).type(UPDATED_TYPE).isDelete(UPDATED_IS_DELETE);
+        partialUpdatedViolation
+            .value(UPDATED_VALUE)
+            .timestamp(UPDATED_TIMESTAMP)
+            .type(UPDATED_TYPE)
+            .isDelete(UPDATED_IS_DELETE)
+            .isRead(UPDATED_IS_READ);
 
         restViolationMockMvc
             .perform(
@@ -634,6 +694,7 @@ class ViolationResourceIT {
         assertThat(testViolation.getTimestamp()).isEqualTo(UPDATED_TIMESTAMP);
         assertThat(testViolation.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testViolation.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
+        assertThat(testViolation.getIsRead()).isEqualTo(UPDATED_IS_READ);
     }
 
     @Test

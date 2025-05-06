@@ -102,6 +102,9 @@ public class ViolationQueryService extends QueryService<Violation> {
             if (criteria.getIsDelete() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDelete(), Violation_.isDelete));
             }
+            if (criteria.getIsRead() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsRead(), Violation_.isRead));
+            }
             if (criteria.getDriverId() != null) {
                 specification =
                     specification.and(

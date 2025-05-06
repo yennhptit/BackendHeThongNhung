@@ -119,6 +119,7 @@ export const ViolationUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField label="Is Delete" id="violation-isDelete" name="isDelete" data-cy="isDelete" check type="checkbox" />
+              <ValidatedField label="Is Read" id="violation-isRead" name="isRead" data-cy="isRead" check type="checkbox" />
               <ValidatedField id="violation-driver" name="driver" data-cy="driver" label="Driver" type="select">
                 <option value="" key="0" />
                 {drivers

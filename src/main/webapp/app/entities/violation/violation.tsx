@@ -131,6 +131,10 @@ export const Violation = () => {
                   <Translate contentKey="backendHeThongNhungApp.violation.isDelete">Is Delete</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDelete')} />
                 </th>
+                <th className="hand" onClick={sort('isRead')}>
+                  <Translate contentKey="backendHeThongNhungApp.violation.isRead">Is Read</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isRead')} />
+                </th>
                 <th>
                   <Translate contentKey="backendHeThongNhungApp.violation.driver">Driver</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -149,6 +153,7 @@ export const Violation = () => {
                   <td>{violation.timestamp ? <TextFormat type="date" value={violation.timestamp} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{violation.type}</td>
                   <td>{violation.isDelete ? 'true' : 'false'}</td>
+                  <td>{violation.isRead ? 'true' : 'false'}</td>
                   <td>{violation.driver ? <Link to={`/driver/${violation.driver.id}`}>{violation.driver.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
