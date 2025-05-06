@@ -40,7 +40,7 @@ class VehicleResourceIT {
     private static final String UPDATED_MODEL = "BBBBBBBBBB";
 
     private static final VehicleStatus DEFAULT_STATUS = VehicleStatus.AVAILABLE;
-    private static final VehicleStatus UPDATED_STATUS = VehicleStatus.IN_USE;
+    private static final VehicleStatus UPDATED_STATUS = VehicleStatus.RUNNING;
 
     private static final String ENTITY_API_URL = "/api/vehicles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

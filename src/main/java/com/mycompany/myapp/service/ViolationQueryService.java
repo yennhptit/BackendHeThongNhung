@@ -102,7 +102,7 @@ public class ViolationQueryService extends QueryService<Violation> {
             if (criteria.getTripId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getTripId(), root -> root.join(Violation_.trip, JoinType.LEFT).get(Driver_.id))
+                        buildSpecification(criteria.getTripId(), root -> root.join(Violation_.driver, JoinType.LEFT).get(Driver_.id))
                     );
             }
         }

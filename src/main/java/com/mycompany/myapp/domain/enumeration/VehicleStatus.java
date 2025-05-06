@@ -5,5 +5,6 @@ package com.mycompany.myapp.domain.enumeration;
  */
 public enum VehicleStatus {
     AVAILABLE,
-    IN_USE,
+    RUNNING,
+    UNAVAILABLE
 }

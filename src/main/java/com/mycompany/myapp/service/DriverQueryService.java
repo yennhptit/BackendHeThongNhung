@@ -93,8 +93,8 @@ public class DriverQueryService extends QueryService<Driver> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Driver_.name));
             }
-            if (criteria.getRfidUid() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getRfidUid(), Driver_.rfidUid));
+            if (criteria.getDriverId() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getDriverId(), Driver_.driverId));
             }
             if (criteria.getLicenseNumber() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLicenseNumber(), Driver_.licenseNumber));

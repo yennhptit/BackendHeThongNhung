@@ -1,10 +1,20 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.domain.Driver;
+import com.mycompany.myapp.domain.Trip;
+import com.mycompany.myapp.domain.Vehicle;
 import com.mycompany.myapp.domain.Violation;
+import com.mycompany.myapp.domain.enumeration.DriverStatus;
+import com.mycompany.myapp.domain.enumeration.TripStatus;
+import com.mycompany.myapp.domain.enumeration.VehicleStatus;
+import com.mycompany.myapp.domain.enumeration.ViolationType;
+import com.mycompany.myapp.repository.DriverRepository;
 import com.mycompany.myapp.repository.ViolationRepository;
 import com.mycompany.myapp.service.ViolationService;
 import com.mycompany.myapp.service.dto.ViolationDTO;
 import com.mycompany.myapp.service.mapper.ViolationMapper;
+
+import java.time.Instant;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +36,59 @@ public class ViolationServiceImpl implements ViolationService {
 
     private final ViolationMapper violationMapper;
 
-    public ViolationServiceImpl(ViolationRepository violationRepository, ViolationMapper violationMapper) {
+    private final DriverRepository driverRepository;
+
+
+    public ViolationServiceImpl(ViolationRepository violationRepository, ViolationMapper violationMapper, DriverRepository driverRepository) {
         this.violationRepository = violationRepository;
         this.violationMapper = violationMapper;
+        this.driverRepository = driverRepository;
+    }
+
+    public boolean saveAlcoholViolation(String driverId, float value) {
+
+        Optional<Driver> driverOtp = driverRepository.findByDriverId(driverId);
+
+        if (!driverOtp.isPresent()) {
+            System.out.println("Driver not found.");
+            return false;
+        }
+
+        Violation violation = new Violation();
+        Driver driver = driverOtp.get();
+
+        violation.setType(ViolationType.ALCOHOL);
+        violation.setValue(value);
+        violation.setTimestamp(Instant.now());
+
+        violation.setDriver(driver);
+        violation = violationRepository.save(violation);
+        System.out.println("Saved alcohol violation: " + violation);
+
+        return true;
+    }
+
+    public boolean saveDrowsinessViolation(String driverId) {
+
+        Optional<Driver> driverOtp = driverRepository.findByDriverId(driverId);
+
+        if (!driverOtp.isPresent()) {
+            System.out.println("Driver not found.");
+            return false;
+        }
+
+        Violation violation = new Violation();
+        Driver driver = driverOtp.get();
+
+        violation.setType(ViolationType.DROWSINESS);
+        violation.setValue(null);
+        violation.setTimestamp(Instant.now());
+
+        violation.setDriver(driver);
+        violation = violationRepository.save(violation);
+        System.out.println("Saved drowsiness violation: " + violation);
+
+        return true;
     }
 
     @Override

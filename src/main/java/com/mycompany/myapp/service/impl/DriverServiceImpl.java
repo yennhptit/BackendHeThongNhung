@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Driver;
+import com.mycompany.myapp.domain.enumeration.DriverStatus;
 import com.mycompany.myapp.repository.DriverRepository;
 import com.mycompany.myapp.service.DriverService;
 import com.mycompany.myapp.service.GoogleDriveService;
@@ -13,6 +14,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -42,11 +45,12 @@ public class DriverServiceImpl implements DriverService {
         this.driverMapper = driverMapper;
     }
 
-    private String generateRfidUid(Long id, Instant createdAt) {
-        String timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+    private String generateDriverId(Long id, Instant createdAt) {
+        String timestamp = DateTimeFormatter.ofPattern("yyMMddHHmmss")
             .withZone(ZoneId.of("UTC"))
             .format(createdAt);
-        return "RFID-" + timestamp + "-" + String.format("%04d", id);
+        String idPart = String.format("%04d", id % 10000);
+        return timestamp + idPart;
     }
 
     @Override
@@ -60,16 +64,21 @@ public class DriverServiceImpl implements DriverService {
             driver.setLicenseNumber(driverRequest.getLicenseNumber());
             driver.setFaceData(faceImageUrl);
             driver.setCreatedAt(Instant.now());
+            driver.setStatus(DriverStatus.INACTIVE);
 
             driver = driverRepository.save(driver);
 
-            driver.setRfidUid(generateRfidUid(driver.getId(), driver.getCreatedAt()));
+            driver.setDriverId(generateDriverId(driver.getId(), driver.getCreatedAt()));
 
             return driverMapper.toDto(driver);
 
         } catch (IOException e) {
             throw new RuntimeException("Error uploading image to Google Drive", e);
         }
+    }
+
+    public Optional<Driver> findByDriverId(String driverId) {
+        return driverRepository.findByDriverId(driverId);
     }
 
     @Override

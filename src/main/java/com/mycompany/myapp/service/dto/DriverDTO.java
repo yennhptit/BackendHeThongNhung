@@ -18,7 +18,7 @@ public class DriverDTO implements Serializable {
     @NotNull
     private String name;
 
-    private String rfidUid;
+    private String driverId;
 
     private String licenseNumber;
 
@@ -45,12 +45,12 @@ public class DriverDTO implements Serializable {
         this.name = name;
     }
 
-    public String getRfidUid() {
-        return rfidUid;
+    public String getDriverId() {
+        return driverId;
     }
 
-    public void setRfidUid(String rfidUid) {
-        this.rfidUid = rfidUid;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
     public String getLicenseNumber() {
@@ -112,7 +112,7 @@ public class DriverDTO implements Serializable {
         return "DriverDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rfidUid='" + getRfidUid() + "'" +
+            ", rfidUid='" + getDriverId() + "'" +
             ", licenseNumber='" + getLicenseNumber() + "'" +
             ", faceData='" + getFaceData() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +

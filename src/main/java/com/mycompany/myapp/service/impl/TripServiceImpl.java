@@ -1,10 +1,19 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.domain.Driver;
 import com.mycompany.myapp.domain.Trip;
+import com.mycompany.myapp.domain.Vehicle;
+import com.mycompany.myapp.domain.enumeration.DriverStatus;
+import com.mycompany.myapp.domain.enumeration.TripStatus;
+import com.mycompany.myapp.domain.enumeration.VehicleStatus;
+import com.mycompany.myapp.repository.DriverRepository;
 import com.mycompany.myapp.repository.TripRepository;
+import com.mycompany.myapp.repository.VehicleRepository;
 import com.mycompany.myapp.service.TripService;
 import com.mycompany.myapp.service.dto.TripDTO;
 import com.mycompany.myapp.service.mapper.TripMapper;
+
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +37,67 @@ public class TripServiceImpl implements TripService {
 
     private final TripRepository tripRepository;
 
+    private final DriverRepository driverRepository;
+
+    private final VehicleRepository vehicleRepository;
+
     private final TripMapper tripMapper;
 
-    public TripServiceImpl(TripRepository tripRepository, TripMapper tripMapper) {
+    public TripServiceImpl(TripRepository tripRepository, TripMapper tripMapper,
+                           DriverRepository driverRepository, VehicleRepository vehicleRepository) {
         this.tripRepository = tripRepository;
         this.tripMapper = tripMapper;
+        this.driverRepository = driverRepository;
+        this.vehicleRepository = vehicleRepository;
+    }
+
+    public boolean saveTrip(String driverId, Long vehicleId, boolean running) {
+        Optional<Driver> driverOtp = driverRepository.findByDriverId(driverId);
+        Optional<Vehicle> vehicleOtp = vehicleRepository.findById(vehicleId);
+
+        if (!driverOtp.isPresent() || !vehicleOtp.isPresent()) {
+            System.err.println("Driver or Vehicle not found");
+            return false;
+        }
+
+        Driver driver = driverOtp.get();
+        Vehicle vehicle = vehicleOtp.get();
+
+        if (running) {
+            // Bắt đầu chuyến đi mới
+            Trip trip = new Trip();
+            trip.setDriver(driver);
+            trip.setVehicle(vehicle);
+            trip.setStartTime(Instant.now());
+            trip.setStatus(TripStatus.ONGOING);
+
+            driver.setStatus(DriverStatus.ACTIVE);
+            vehicle.setStatus(VehicleStatus.RUNNING);
+
+            tripRepository.save(trip);
+            System.out.println("Saved trip successful.");
+            return true;
+
+        } else {
+            // Kết thúc chuyến đi hiện tại
+            Optional<Trip> tripOtp = tripRepository.findFirstByDriverAndVehicleAndStatus(driver, vehicle, TripStatus.ONGOING);
+            if (tripOtp.isPresent()) {
+                Trip trip = tripOtp.get();
+                trip.setEndTime(Instant.now());
+                trip.setStatus(TripStatus.COMPLETED);
+
+                driver.setStatus(DriverStatus.INACTIVE);
+                vehicle.setStatus(VehicleStatus.AVAILABLE);
+
+                tripRepository.save(trip);
+                System.out.println("Completed trip successful.");
+                return true;
+
+            } else {
+                System.out.println("Trip is already completed.");
+                return false;
+            }
+        }
     }
 
     @Override
@@ -71,20 +136,6 @@ public class TripServiceImpl implements TripService {
     public Page<TripDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Trips");
         return tripRepository.findAll(pageable).map(tripMapper::toDto);
-    }
-
-    /**
-     *  Get all the trips where Checkin is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<TripDTO> findAllWhereCheckinIsNull() {
-        log.debug("Request to get all trips where Checkin is null");
-        return StreamSupport
-            .stream(tripRepository.findAll().spliterator(), false)
-            .filter(trip -> trip.getCheckin() == null)
-            .map(tripMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

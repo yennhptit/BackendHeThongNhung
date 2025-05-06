@@ -1,4 +1,4 @@
-id;name;rfid_uid;license_number;face_data;created_at;status
+id;name;driver_id;license_number;face_data;created_at;status
 1;monthly and unabashedly;given sidecar lever;ugh refund now;../fake-data/blob/hipster.txt;2025-04-03T18:35:01;INACTIVE
 2;until um barium;whenever;hmph exotic psst;../fake-data/blob/hipster.txt;2025-04-04T13:05:54;INACTIVE
 3;afterwards geez yowza;tenderize till;across;../fake-data/blob/hipster.txt;2025-04-04T04:08:05;ACTIVE

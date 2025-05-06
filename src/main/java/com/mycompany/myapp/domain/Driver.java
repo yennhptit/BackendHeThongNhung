@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mycompany.myapp.domain.enumeration.DriverStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -28,8 +29,8 @@ public class Driver implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "rfid_uid")
-    private String rfidUid;
+    @Column(name = "driver_id")
+    private String driverId;
 
     @Column(name = "license_number")
     private String licenseNumber;
@@ -49,8 +50,8 @@ public class Driver implements Serializable {
     @JsonIgnoreProperties(value = { "driver", "vehicle", "checkin" }, allowSetters = true)
     private Set<Trip> trips = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trip")
-    @JsonIgnoreProperties(value = { "trip" }, allowSetters = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
+    @JsonIgnoreProperties(value = { "driver" }, allowSetters = true)
     private Set<Violation> violations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -81,17 +82,17 @@ public class Driver implements Serializable {
         this.name = name;
     }
 
-    public String getRfidUid() {
-        return this.rfidUid;
+    public String getDriverId() {
+        return this.driverId;
     }
 
-    public Driver rfidUid(String rfidUid) {
-        this.setRfidUid(rfidUid);
+    public Driver driverId(String driverId) {
+        this.setDriverId(driverId);
         return this;
     }
 
-    public void setRfidUid(String rfidUid) {
-        this.rfidUid = rfidUid;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
     public String getLicenseNumber() {
@@ -183,10 +184,10 @@ public class Driver implements Serializable {
 
     public void setViolations(Set<Violation> violations) {
         if (this.violations != null) {
-            this.violations.forEach(i -> i.setTrip(null));
+            this.violations.forEach(i -> i.setDriver(null));
         }
         if (violations != null) {
-            violations.forEach(i -> i.setTrip(this));
+            violations.forEach(i -> i.setDriver(this));
         }
         this.violations = violations;
     }
@@ -198,13 +199,13 @@ public class Driver implements Serializable {
 
     public Driver addViolation(Violation violation) {
         this.violations.add(violation);
-        violation.setTrip(this);
+        violation.setDriver(this);
         return this;
     }
 
     public Driver removeViolation(Violation violation) {
         this.violations.remove(violation);
-        violation.setTrip(null);
+        violation.setDriver(null);
         return this;
     }
 
@@ -233,7 +234,7 @@ public class Driver implements Serializable {
         return "Driver{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rfidUid='" + getRfidUid() + "'" +
+            ", driverId='" + getDriverId() + "'" +
             ", licenseNumber='" + getLicenseNumber() + "'" +
             ", faceData='" + getFaceData() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +

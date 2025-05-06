@@ -10,7 +10,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "rfidUid",
+      "fieldName": "driverId",
       "fieldType": "String"
     },
     {

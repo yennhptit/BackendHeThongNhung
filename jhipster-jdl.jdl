@@ -8,6 +8,7 @@ entity Driver {
     faceData TextBlob
     createdAt Instant
     status DriverStatus
+    isDelete Boolean
 }
 
 enum DriverStatus {
@@ -17,14 +18,16 @@ enum DriverStatus {
 
 // 2. Bảng Vehicle (Xe)
 entity Vehicle {
-    licensePlate String required 
-    model String 
+    licensePlate String required
+    model String
     status VehicleStatus
+    isDelete Boolean
 }
 
 enum VehicleStatus {
     AVAILABLE,
-    IN_USE
+    RUNNING,
+    UNAVAILABLE
 }
 
 // 3. Bảng Trip (Chuyến đi)
@@ -32,6 +35,7 @@ entity Trip {
     startTime Instant
     endTime Instant
     status TripStatus
+    isDelete Boolean
 }
 
 enum TripStatus {
@@ -39,18 +43,13 @@ enum TripStatus {
     COMPLETED
 }
 
-// 4. Bảng Checkin (Lịch sử điểm danh)
-entity Checkin {
-    checkinTime Instant
-    checkoutTime Instant
-    faceVerified Boolean
-}
 
 // 5. Bảng Violation (Vi phạm)
 entity Violation {
     value Float
     timestamp Instant
     type ViolationType
+    isDelete Boolean
 }
 
 enum ViolationType {
@@ -62,11 +61,7 @@ enum ViolationType {
 relationship OneToMany {
     Driver to Trip{driver}
     Vehicle to Trip{vehicle}
-     Driver to Violation{trip}
-}
-
-relationship OneToOne {
-    Checkin{trip} to Trip
+    Driver to Violation{driver}
 }
 
 

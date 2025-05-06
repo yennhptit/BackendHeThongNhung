@@ -33,7 +33,7 @@ public class Violation implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "trips", "violations" }, allowSetters = true)
-    private Driver trip;
+    private Driver driver;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -89,16 +89,16 @@ public class Violation implements Serializable {
         this.type = type;
     }
 
-    public Driver getTrip() {
-        return this.trip;
+    public Driver getDriver() {
+        return this.driver;
     }
 
-    public void setTrip(Driver driver) {
-        this.trip = driver;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
-    public Violation trip(Driver driver) {
-        this.setTrip(driver);
+    public Violation driver(Driver driver) {
+        this.setDriver(driver);
         return this;
     }
 

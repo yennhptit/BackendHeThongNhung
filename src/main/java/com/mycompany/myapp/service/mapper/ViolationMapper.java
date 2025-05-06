@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface ViolationMapper extends EntityMapper<ViolationDTO, Violation> {
-    @Mapping(target = "trip", source = "trip", qualifiedByName = "driverId")
+    @Mapping(target = "driver", source = "driver", qualifiedByName = "driverId")
     ViolationDTO toDto(Violation s);
 
     @Named("driverId")

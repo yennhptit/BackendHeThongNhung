@@ -39,8 +39,8 @@ class DriverResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_RFID_UID = "AAAAAAAAAA";
-    private static final String UPDATED_RFID_UID = "BBBBBBBBBB";
+    private static final String DEFAULT_DRIVER_ID = "AAAAAAAAAA";
+    private static final String UPDATED_DRIVER_ID = "BBBBBBBBBB";
 
     private static final String DEFAULT_LICENSE_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_LICENSE_NUMBER = "BBBBBBBBBB";
@@ -83,7 +83,7 @@ class DriverResourceIT {
     public static Driver createEntity(EntityManager em) {
         Driver driver = new Driver()
             .name(DEFAULT_NAME)
-            .rfidUid(DEFAULT_RFID_UID)
+            .driverId(DEFAULT_DRIVER_ID)
             .licenseNumber(DEFAULT_LICENSE_NUMBER)
             .faceData(DEFAULT_FACE_DATA)
             .createdAt(DEFAULT_CREATED_AT)
@@ -100,7 +100,7 @@ class DriverResourceIT {
     public static Driver createUpdatedEntity(EntityManager em) {
         Driver driver = new Driver()
             .name(UPDATED_NAME)
-            .rfidUid(UPDATED_RFID_UID)
+            .driverId(UPDATED_DRIVER_ID)
             .licenseNumber(UPDATED_LICENSE_NUMBER)
             .faceData(UPDATED_FACE_DATA)
             .createdAt(UPDATED_CREATED_AT)
@@ -128,7 +128,7 @@ class DriverResourceIT {
         assertThat(driverList).hasSize(databaseSizeBeforeCreate + 1);
         Driver testDriver = driverList.get(driverList.size() - 1);
         assertThat(testDriver.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testDriver.getRfidUid()).isEqualTo(DEFAULT_RFID_UID);
+        assertThat(testDriver.getDriverId()).isEqualTo(DEFAULT_DRIVER_ID);
         assertThat(testDriver.getLicenseNumber()).isEqualTo(DEFAULT_LICENSE_NUMBER);
         assertThat(testDriver.getFaceData()).isEqualTo(DEFAULT_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
@@ -185,7 +185,7 @@ class DriverResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(driver.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].rfidUid").value(hasItem(DEFAULT_RFID_UID)))
+            .andExpect(jsonPath("$.[*].driverId").value(hasItem(DEFAULT_DRIVER_ID)))
             .andExpect(jsonPath("$.[*].licenseNumber").value(hasItem(DEFAULT_LICENSE_NUMBER)))
             .andExpect(jsonPath("$.[*].faceData").value(hasItem(DEFAULT_FACE_DATA.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
@@ -205,7 +205,7 @@ class DriverResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(driver.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.rfidUid").value(DEFAULT_RFID_UID))
+            .andExpect(jsonPath("$.driverId").value(DEFAULT_DRIVER_ID))
             .andExpect(jsonPath("$.licenseNumber").value(DEFAULT_LICENSE_NUMBER))
             .andExpect(jsonPath("$.faceData").value(DEFAULT_FACE_DATA.toString()))
             .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
@@ -297,67 +297,67 @@ class DriverResourceIT {
 
     @Test
     @Transactional
-    void getAllDriversByRfidUidIsEqualToSomething() throws Exception {
+    void getAllDriversByDriverIdIsEqualToSomething() throws Exception {
         // Initialize the database
         driverRepository.saveAndFlush(driver);
 
-        // Get all the driverList where rfidUid equals to DEFAULT_RFID_UID
-        defaultDriverShouldBeFound("rfidUid.equals=" + DEFAULT_RFID_UID);
+        // Get all the driverList where driverId equals to DEFAULT_DRIVER_ID
+        defaultDriverShouldBeFound("driverId.equals=" + DEFAULT_DRIVER_ID);
 
-        // Get all the driverList where rfidUid equals to UPDATED_RFID_UID
-        defaultDriverShouldNotBeFound("rfidUid.equals=" + UPDATED_RFID_UID);
+        // Get all the driverList where driverId equals to UPDATED_DRIVER_ID
+        defaultDriverShouldNotBeFound("driverId.equals=" + UPDATED_DRIVER_ID);
     }
 
     @Test
     @Transactional
-    void getAllDriversByRfidUidIsInShouldWork() throws Exception {
+    void getAllDriversByDriverIdIsInShouldWork() throws Exception {
         // Initialize the database
         driverRepository.saveAndFlush(driver);
 
-        // Get all the driverList where rfidUid in DEFAULT_RFID_UID or UPDATED_RFID_UID
-        defaultDriverShouldBeFound("rfidUid.in=" + DEFAULT_RFID_UID + "," + UPDATED_RFID_UID);
+        // Get all the driverList where driverId in DEFAULT_DRIVER_ID or UPDATED_DRIVER_ID
+        defaultDriverShouldBeFound("driverId.in=" + DEFAULT_DRIVER_ID + "," + UPDATED_DRIVER_ID);
 
-        // Get all the driverList where rfidUid equals to UPDATED_RFID_UID
-        defaultDriverShouldNotBeFound("rfidUid.in=" + UPDATED_RFID_UID);
+        // Get all the driverList where driverId equals to UPDATED_DRIVER_ID
+        defaultDriverShouldNotBeFound("driverId.in=" + UPDATED_DRIVER_ID);
     }
 
     @Test
     @Transactional
-    void getAllDriversByRfidUidIsNullOrNotNull() throws Exception {
+    void getAllDriversByDriverIdIsNullOrNotNull() throws Exception {
         // Initialize the database
         driverRepository.saveAndFlush(driver);
 
-        // Get all the driverList where rfidUid is not null
-        defaultDriverShouldBeFound("rfidUid.specified=true");
+        // Get all the driverList where driverId is not null
+        defaultDriverShouldBeFound("driverId.specified=true");
 
-        // Get all the driverList where rfidUid is null
-        defaultDriverShouldNotBeFound("rfidUid.specified=false");
+        // Get all the driverList where driverId is null
+        defaultDriverShouldNotBeFound("driverId.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllDriversByRfidUidContainsSomething() throws Exception {
+    void getAllDriversByDriverIdContainsSomething() throws Exception {
         // Initialize the database
         driverRepository.saveAndFlush(driver);
 
-        // Get all the driverList where rfidUid contains DEFAULT_RFID_UID
-        defaultDriverShouldBeFound("rfidUid.contains=" + DEFAULT_RFID_UID);
+        // Get all the driverList where driverId contains DEFAULT_DRIVER_ID
+        defaultDriverShouldBeFound("driverId.contains=" + DEFAULT_DRIVER_ID);
 
-        // Get all the driverList where rfidUid contains UPDATED_RFID_UID
-        defaultDriverShouldNotBeFound("rfidUid.contains=" + UPDATED_RFID_UID);
+        // Get all the driverList where driverId contains UPDATED_DRIVER_ID
+        defaultDriverShouldNotBeFound("driverId.contains=" + UPDATED_DRIVER_ID);
     }
 
     @Test
     @Transactional
-    void getAllDriversByRfidUidNotContainsSomething() throws Exception {
+    void getAllDriversByDriverIdNotContainsSomething() throws Exception {
         // Initialize the database
         driverRepository.saveAndFlush(driver);
 
-        // Get all the driverList where rfidUid does not contain DEFAULT_RFID_UID
-        defaultDriverShouldNotBeFound("rfidUid.doesNotContain=" + DEFAULT_RFID_UID);
+        // Get all the driverList where driverId does not contain DEFAULT_DRIVER_ID
+        defaultDriverShouldNotBeFound("driverId.doesNotContain=" + DEFAULT_DRIVER_ID);
 
-        // Get all the driverList where rfidUid does not contain UPDATED_RFID_UID
-        defaultDriverShouldBeFound("rfidUid.doesNotContain=" + UPDATED_RFID_UID);
+        // Get all the driverList where driverId does not contain UPDATED_DRIVER_ID
+        defaultDriverShouldBeFound("driverId.doesNotContain=" + UPDATED_DRIVER_ID);
     }
 
     @Test
@@ -557,7 +557,7 @@ class DriverResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(driver.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].rfidUid").value(hasItem(DEFAULT_RFID_UID)))
+            .andExpect(jsonPath("$.[*].driverId").value(hasItem(DEFAULT_DRIVER_ID)))
             .andExpect(jsonPath("$.[*].licenseNumber").value(hasItem(DEFAULT_LICENSE_NUMBER)))
             .andExpect(jsonPath("$.[*].faceData").value(hasItem(DEFAULT_FACE_DATA.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
@@ -611,7 +611,7 @@ class DriverResourceIT {
         em.detach(updatedDriver);
         updatedDriver
             .name(UPDATED_NAME)
-            .rfidUid(UPDATED_RFID_UID)
+            .driverId(UPDATED_DRIVER_ID)
             .licenseNumber(UPDATED_LICENSE_NUMBER)
             .faceData(UPDATED_FACE_DATA)
             .createdAt(UPDATED_CREATED_AT)
@@ -631,7 +631,7 @@ class DriverResourceIT {
         assertThat(driverList).hasSize(databaseSizeBeforeUpdate);
         Driver testDriver = driverList.get(driverList.size() - 1);
         assertThat(testDriver.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testDriver.getRfidUid()).isEqualTo(UPDATED_RFID_UID);
+        assertThat(testDriver.getDriverId()).isEqualTo(UPDATED_DRIVER_ID);
         assertThat(testDriver.getLicenseNumber()).isEqualTo(UPDATED_LICENSE_NUMBER);
         assertThat(testDriver.getFaceData()).isEqualTo(UPDATED_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
@@ -715,7 +715,7 @@ class DriverResourceIT {
         Driver partialUpdatedDriver = new Driver();
         partialUpdatedDriver.setId(driver.getId());
 
-        partialUpdatedDriver.name(UPDATED_NAME).rfidUid(UPDATED_RFID_UID).licenseNumber(UPDATED_LICENSE_NUMBER);
+        partialUpdatedDriver.name(UPDATED_NAME).driverId(UPDATED_DRIVER_ID).licenseNumber(UPDATED_LICENSE_NUMBER);
 
         restDriverMockMvc
             .perform(
@@ -730,7 +730,7 @@ class DriverResourceIT {
         assertThat(driverList).hasSize(databaseSizeBeforeUpdate);
         Driver testDriver = driverList.get(driverList.size() - 1);
         assertThat(testDriver.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testDriver.getRfidUid()).isEqualTo(UPDATED_RFID_UID);
+        assertThat(testDriver.getDriverId()).isEqualTo(UPDATED_DRIVER_ID);
         assertThat(testDriver.getLicenseNumber()).isEqualTo(UPDATED_LICENSE_NUMBER);
         assertThat(testDriver.getFaceData()).isEqualTo(DEFAULT_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
@@ -751,7 +751,7 @@ class DriverResourceIT {
 
         partialUpdatedDriver
             .name(UPDATED_NAME)
-            .rfidUid(UPDATED_RFID_UID)
+            .driverId(UPDATED_DRIVER_ID)
             .licenseNumber(UPDATED_LICENSE_NUMBER)
             .faceData(UPDATED_FACE_DATA)
             .createdAt(UPDATED_CREATED_AT)
@@ -770,7 +770,7 @@ class DriverResourceIT {
         assertThat(driverList).hasSize(databaseSizeBeforeUpdate);
         Driver testDriver = driverList.get(driverList.size() - 1);
         assertThat(testDriver.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testDriver.getRfidUid()).isEqualTo(UPDATED_RFID_UID);
+        assertThat(testDriver.getDriverId()).isEqualTo(UPDATED_DRIVER_ID);
         assertThat(testDriver.getLicenseNumber()).isEqualTo(UPDATED_LICENSE_NUMBER);
         assertThat(testDriver.getFaceData()).isEqualTo(UPDATED_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);

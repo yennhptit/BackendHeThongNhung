@@ -1,6 +1,9 @@
 package com.mycompany.myapp.service.dto;
 
 import com.mycompany.myapp.domain.enumeration.ViolationType;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -19,7 +22,7 @@ public class ViolationDTO implements Serializable {
 
     private ViolationType type;
 
-    private DriverDTO trip;
+    private DriverDTO driver;
 
     public Long getId() {
         return id;
@@ -53,12 +56,12 @@ public class ViolationDTO implements Serializable {
         this.type = type;
     }
 
-    public DriverDTO getTrip() {
-        return trip;
+    public DriverDTO getDriver() {
+        return driver;
     }
 
-    public void setTrip(DriverDTO trip) {
-        this.trip = trip;
+    public void setDriver(DriverDTO driver) {
+        this.driver = driver;
     }
 
     @Override
@@ -90,7 +93,7 @@ public class ViolationDTO implements Serializable {
             ", value=" + getValue() +
             ", timestamp='" + getTimestamp() + "'" +
             ", type='" + getType() + "'" +
-            ", trip=" + getTrip() +
+            ", driver=" + getDriver() +
             "}";
     }
 }

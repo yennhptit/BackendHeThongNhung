@@ -363,7 +363,7 @@ class ViolationResourceIT {
         }
         em.persist(trip);
         em.flush();
-        violation.setTrip(trip);
+        violation.setDriver(trip);
         violationRepository.saveAndFlush(violation);
         Long tripId = trip.getId();
         // Get all the violationList where trip equals to tripId

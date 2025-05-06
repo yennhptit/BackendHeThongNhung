@@ -17,7 +17,7 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="rfid_uid" type="varchar(255)">
+            <column name="driver_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="license_number" type="varchar(255)">
@@ -55,7 +55,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="rfid_uid" type="string"/>
+            <column name="driver_id" type="string"/>
             <column name="license_number" type="string"/>
             <column name="face_data" type="clob"/>
             <column name="created_at" type="date"/>

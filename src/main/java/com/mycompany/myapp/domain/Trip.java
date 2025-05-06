@@ -32,16 +32,14 @@ public class Trip implements Serializable {
     private TripStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
     @JsonIgnoreProperties(value = { "trips", "violations" }, allowSetters = true)
     private Driver driver;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id")
     @JsonIgnoreProperties(value = { "trips" }, allowSetters = true)
     private Vehicle vehicle;
-
-    @JsonIgnoreProperties(value = { "trip" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "trip")
-    private Checkin checkin;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -120,25 +118,6 @@ public class Trip implements Serializable {
 
     public Trip vehicle(Vehicle vehicle) {
         this.setVehicle(vehicle);
-        return this;
-    }
-
-    public Checkin getCheckin() {
-        return this.checkin;
-    }
-
-    public void setCheckin(Checkin checkin) {
-        if (this.checkin != null) {
-            this.checkin.setTrip(null);
-        }
-        if (checkin != null) {
-            checkin.setTrip(this);
-        }
-        this.checkin = checkin;
-    }
-
-    public Trip checkin(Checkin checkin) {
-        this.setCheckin(checkin);
         return this;
     }
 
