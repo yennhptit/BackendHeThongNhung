@@ -104,14 +104,6 @@ public class TripResource {
 
     /**
      * {@code PATCH  /trips/:id} : Partial updates given fields of an existing trip, field will ignore if it is null
-     *
-     * @param id the id of the tripDTO to save.
-     * @param tripDTO the tripDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated tripDTO,
-     * or with status {@code 400 (Bad Request)} if the tripDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the tripDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the tripDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/trips/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<TripDTO> partialUpdateTrip(
@@ -140,10 +132,6 @@ public class TripResource {
 
     /**
      * {@code GET  /trips} : get all the trips.
-     *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of trips in body.
      */
     @GetMapping("/trips")
     public ResponseEntity<List<TripDTO>> getAllTrips(
@@ -159,9 +147,6 @@ public class TripResource {
 
     /**
      * {@code GET  /trips/count} : count all the trips.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/trips/count")
     public ResponseEntity<Long> countTrips(TripCriteria criteria) {
@@ -171,9 +156,6 @@ public class TripResource {
 
     /**
      * {@code GET  /trips/:id} : get the "id" trip.
-     *
-     * @param id the id of the tripDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tripDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/trips/{id}")
     public ResponseEntity<TripDTO> getTrip(@PathVariable Long id) {
@@ -184,9 +166,6 @@ public class TripResource {
 
     /**
      * {@code DELETE  /trips/:id} : delete the "id" trip.
-     *
-     * @param id the id of the tripDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/trips/{id}")
     public ResponseEntity<Void> deleteTrip(@PathVariable Long id) {

@@ -139,6 +139,10 @@ public class ViolationServiceImpl implements ViolationService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Violation : {}", id);
-        violationRepository.deleteById(id);
+//        violationRepository.deleteById(id);
+        violationRepository.findById(id).ifPresent(violation -> {
+            violation.setIsDelete(true);
+            violationRepository.save(violation);
+        });
     }
 }

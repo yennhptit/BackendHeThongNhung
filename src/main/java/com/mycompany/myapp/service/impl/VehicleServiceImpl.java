@@ -79,6 +79,10 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Vehicle : {}", id);
-        vehicleRepository.deleteById(id);
+//        vehicleRepository.deleteById(id);
+        vehicleRepository.findById(id).ifPresent(vehicle -> {
+            vehicle.setIsDelete(true);
+            vehicleRepository.save(vehicle);
+        });
     }
 }

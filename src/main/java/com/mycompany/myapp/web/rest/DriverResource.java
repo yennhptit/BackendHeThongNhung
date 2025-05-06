@@ -69,10 +69,6 @@ public class DriverResource {
 
     /**
      * {@code POST  /drivers} : Create a new driver.
-     *
-     * @param driverDTO the driverDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new driverDTO, or with status {@code 400 (Bad Request)} if the driver has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
 //    @PostMapping("/drivers")
 //    public ResponseEntity<DriverDTO> createDriver(@Valid @RequestBody DriverDTO driverDTO) throws URISyntaxException {
@@ -89,13 +85,6 @@ public class DriverResource {
 
     /**
      * {@code PUT  /drivers/:id} : Updates an existing driver.
-     *
-     * @param id the id of the driverDTO to save.
-     * @param driverDTO the driverDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated driverDTO,
-     * or with status {@code 400 (Bad Request)} if the driverDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the driverDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/drivers/{id}")
     public ResponseEntity<DriverDTO> updateDriver(
@@ -123,14 +112,6 @@ public class DriverResource {
 
     /**
      * {@code PATCH  /drivers/:id} : Partial updates given fields of an existing driver, field will ignore if it is null
-     *
-     * @param id the id of the driverDTO to save.
-     * @param driverDTO the driverDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated driverDTO,
-     * or with status {@code 400 (Bad Request)} if the driverDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the driverDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the driverDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/drivers/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<DriverDTO> partialUpdateDriver(
@@ -159,10 +140,6 @@ public class DriverResource {
 
     /**
      * {@code GET  /drivers} : get all the drivers.
-     *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of drivers in body.
      */
     @GetMapping("/drivers")
     public ResponseEntity<List<DriverDTO>> getAllDrivers(
@@ -178,9 +155,6 @@ public class DriverResource {
 
     /**
      * {@code GET  /drivers/count} : count all the drivers.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/drivers/count")
     public ResponseEntity<Long> countDrivers(DriverCriteria criteria) {
@@ -190,9 +164,6 @@ public class DriverResource {
 
     /**
      * {@code GET  /drivers/:id} : get the "id" driver.
-     *
-     * @param id the id of the driverDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the driverDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/drivers/{id}")
     public ResponseEntity<DriverDTO> getDriver(@PathVariable Long id) {
@@ -203,9 +174,6 @@ public class DriverResource {
 
     /**
      * {@code DELETE  /drivers/:id} : delete the "id" driver.
-     *
-     * @param id the id of the driverDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/drivers/{id}")
     public ResponseEntity<Void> deleteDriver(@PathVariable Long id) {

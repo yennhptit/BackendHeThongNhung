@@ -148,6 +148,10 @@ public class TripServiceImpl implements TripService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Trip : {}", id);
-        tripRepository.deleteById(id);
+//        tripRepository.deleteById(id);
+        tripRepository.findById(id).ifPresent(trip -> {
+            trip.setIsDelete(true);
+            tripRepository.save(trip);
+        });
     }
 }

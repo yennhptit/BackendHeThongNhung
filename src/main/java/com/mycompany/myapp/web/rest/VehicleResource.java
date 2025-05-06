@@ -54,11 +54,7 @@ public class VehicleResource {
 
     /**
      * {@code POST  /vehicles} : Create a new vehicle.
-     *
-     * @param vehicleDTO the vehicleDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new vehicleDTO, or with status {@code 400 (Bad Request)} if the vehicle has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    */
     @PostMapping("/vehicles")
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) throws URISyntaxException {
         log.debug("REST request to save Vehicle : {}", vehicleDTO);
@@ -74,14 +70,7 @@ public class VehicleResource {
 
     /**
      * {@code PUT  /vehicles/:id} : Updates an existing vehicle.
-     *
-     * @param id the id of the vehicleDTO to save.
-     * @param vehicleDTO the vehicleDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated vehicleDTO,
-     * or with status {@code 400 (Bad Request)} if the vehicleDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the vehicleDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    */
     @PutMapping("/vehicles/{id}")
     public ResponseEntity<VehicleDTO> updateVehicle(
         @PathVariable(value = "id", required = false) final Long id,
@@ -108,15 +97,7 @@ public class VehicleResource {
 
     /**
      * {@code PATCH  /vehicles/:id} : Partial updates given fields of an existing vehicle, field will ignore if it is null
-     *
-     * @param id the id of the vehicleDTO to save.
-     * @param vehicleDTO the vehicleDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated vehicleDTO,
-     * or with status {@code 400 (Bad Request)} if the vehicleDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the vehicleDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the vehicleDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    */
     @PatchMapping(value = "/vehicles/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<VehicleDTO> partialUpdateVehicle(
         @PathVariable(value = "id", required = false) final Long id,
@@ -144,11 +125,7 @@ public class VehicleResource {
 
     /**
      * {@code GET  /vehicles} : get all the vehicles.
-     *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of vehicles in body.
-     */
+    */
     @GetMapping("/vehicles")
     public ResponseEntity<List<VehicleDTO>> getAllVehicles(
         VehicleCriteria criteria,
@@ -163,10 +140,7 @@ public class VehicleResource {
 
     /**
      * {@code GET  /vehicles/count} : count all the vehicles.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
+    */
     @GetMapping("/vehicles/count")
     public ResponseEntity<Long> countVehicles(VehicleCriteria criteria) {
         log.debug("REST request to count Vehicles by criteria: {}", criteria);
@@ -175,10 +149,7 @@ public class VehicleResource {
 
     /**
      * {@code GET  /vehicles/:id} : get the "id" vehicle.
-     *
-     * @param id the id of the vehicleDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the vehicleDTO, or with status {@code 404 (Not Found)}.
-     */
+    */
     @GetMapping("/vehicles/{id}")
     public ResponseEntity<VehicleDTO> getVehicle(@PathVariable Long id) {
         log.debug("REST request to get Vehicle : {}", id);
@@ -188,10 +159,7 @@ public class VehicleResource {
 
     /**
      * {@code DELETE  /vehicles/:id} : delete the "id" vehicle.
-     *
-     * @param id the id of the vehicleDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
+    */
     @DeleteMapping("/vehicles/{id}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
         log.debug("REST request to delete Vehicle : {}", id);

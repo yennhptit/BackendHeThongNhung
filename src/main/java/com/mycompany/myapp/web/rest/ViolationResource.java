@@ -56,11 +56,7 @@ public class ViolationResource {
 
     /**
      * {@code POST  /violations} : Create a new violation.
-     *
-     * @param violationDTO the violationDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new violationDTO, or with status {@code 400 (Bad Request)} if the violation has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    */
     @PostMapping("/violations")
     public ResponseEntity<ViolationDTO> createViolation(@RequestBody ViolationDTO violationDTO) throws URISyntaxException {
         log.debug("REST request to save Violation : {}", violationDTO);
@@ -76,14 +72,7 @@ public class ViolationResource {
 
     /**
      * {@code PUT  /violations/:id} : Updates an existing violation.
-     *
-     * @param id the id of the violationDTO to save.
-     * @param violationDTO the violationDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated violationDTO,
-     * or with status {@code 400 (Bad Request)} if the violationDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the violationDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    */
     @PutMapping("/violations/{id}")
     public ResponseEntity<ViolationDTO> updateViolation(
         @PathVariable(value = "id", required = false) final Long id,
@@ -110,15 +99,7 @@ public class ViolationResource {
 
     /**
      * {@code PATCH  /violations/:id} : Partial updates given fields of an existing violation, field will ignore if it is null
-     *
-     * @param id the id of the violationDTO to save.
-     * @param violationDTO the violationDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated violationDTO,
-     * or with status {@code 400 (Bad Request)} if the violationDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the violationDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the violationDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    */
     @PatchMapping(value = "/violations/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ViolationDTO> partialUpdateViolation(
         @PathVariable(value = "id", required = false) final Long id,
@@ -146,11 +127,7 @@ public class ViolationResource {
 
     /**
      * {@code GET  /violations} : get all the violations.
-     *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of violations in body.
-     */
+    */
     @GetMapping("/violations")
     public ResponseEntity<List<ViolationDTO>> getAllViolations(
         ViolationCriteria criteria,
@@ -165,10 +142,7 @@ public class ViolationResource {
 
     /**
      * {@code GET  /violations/count} : count all the violations.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
+    */
     @GetMapping("/violations/count")
     public ResponseEntity<Long> countViolations(ViolationCriteria criteria) {
         log.debug("REST request to count Violations by criteria: {}", criteria);
@@ -177,10 +151,7 @@ public class ViolationResource {
 
     /**
      * {@code GET  /violations/:id} : get the "id" violation.
-     *
-     * @param id the id of the violationDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the violationDTO, or with status {@code 404 (Not Found)}.
-     */
+    */
     @GetMapping("/violations/{id}")
     public ResponseEntity<ViolationDTO> getViolation(@PathVariable Long id) {
         log.debug("REST request to get Violation : {}", id);
@@ -190,10 +161,7 @@ public class ViolationResource {
 
     /**
      * {@code DELETE  /violations/:id} : delete the "id" violation.
-     *
-     * @param id the id of the violationDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
+    */
     @DeleteMapping("/violations/{id}")
     public ResponseEntity<Void> deleteViolation(@PathVariable Long id) {
         log.debug("REST request to delete Violation : {}", id);

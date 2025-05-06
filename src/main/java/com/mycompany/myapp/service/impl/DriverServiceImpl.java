@@ -129,6 +129,11 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Driver : {}", id);
-        driverRepository.deleteById(id);
+//        driverRepository.deleteById(id);
+        driverRepository.findById(id).ifPresent(driver -> {
+            driver.setIsDelete(true);
+            driverRepository.save(driver);
+        });
     }
+
 }
