@@ -6,6 +6,7 @@ import com.mycompany.myapp.service.VehicleService;
 import com.mycompany.myapp.service.criteria.VehicleCriteria;
 import com.mycompany.myapp.service.dto.VehicleDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -53,9 +54,7 @@ public class VehicleResource {
         this.vehicleQueryService = vehicleQueryService;
     }
 
-    /**
-     * {@code POST  /vehicles} : Create a new vehicle.
-    */
+    @Operation(summary = "Create a new vehicle", description = "Add a new vehicle to the system")
     @PostMapping("/vehicles")
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) throws URISyntaxException {
         log.debug("REST request to save Vehicle : {}", vehicleDTO);
@@ -69,9 +68,7 @@ public class VehicleResource {
             .body(result);
     }
 
-    /**
-     * {@code PUT  /vehicles/:id} : Updates an existing vehicle.
-    */
+    @Operation(summary = "Update an existing vehicle", description = "Update a vehicle by its ID")
     @PutMapping("/vehicles/{id}")
     public ResponseEntity<VehicleDTO> updateVehicle(
         @PathVariable(value = "id", required = false) final Long id,
@@ -96,37 +93,7 @@ public class VehicleResource {
             .body(result);
     }
 
-    /**
-     * {@code PATCH  /vehicles/:id} : Partial updates given fields of an existing vehicle, field will ignore if it is null
-    */
-//    @PatchMapping(value = "/vehicles/{id}", consumes = { "application/json", "application/merge-patch+json" })
-//    public ResponseEntity<VehicleDTO> partialUpdateVehicle(
-//        @PathVariable(value = "id", required = false) final Long id,
-//        @NotNull @RequestBody VehicleDTO vehicleDTO
-//    ) throws URISyntaxException {
-//        log.debug("REST request to partial update Vehicle partially : {}, {}", id, vehicleDTO);
-//        if (vehicleDTO.getId() == null) {
-//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-//        }
-//        if (!Objects.equals(id, vehicleDTO.getId())) {
-//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-//        }
-//
-//        if (!vehicleRepository.existsById(id)) {
-//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-//        }
-//
-//        Optional<VehicleDTO> result = vehicleService.partialUpdate(vehicleDTO);
-//
-//        return ResponseUtil.wrapOrNotFound(
-//            result,
-//            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, vehicleDTO.getId().toString())
-//        );
-//    }
-
-    /**
-     * {@code GET  /vehicles} : get all the vehicles.
-    */
+    @Operation(summary = "Get all vehicles with pagination", description = "Retrieve a paginated list of all vehicles")
     @GetMapping("/vehicles")
     public ResponseEntity<List<VehicleDTO>> getAllVehicles(
         @RequestParam(defaultValue = "0") int pageNumber,
@@ -141,6 +108,7 @@ public class VehicleResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @Operation(summary = "Get all vehicles including deleted", description = "Retrieve all vehicles including those marked as deleted")
     @GetMapping("/vehicles/all")
     public ResponseEntity<List<VehicleDTO>> getAllTripsIncludingDeleted(
         @RequestParam(defaultValue = "0") int pageNumber,
@@ -152,18 +120,7 @@ public class VehicleResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    /**
-     * {@code GET  /vehicles/count} : count all the vehicles.
-    */
-//    @GetMapping("/vehicles/count")
-//    public ResponseEntity<Long> countVehicles(VehicleCriteria criteria) {
-//        log.debug("REST request to count Vehicles by criteria: {}", criteria);
-//        return ResponseEntity.ok().body(vehicleQueryService.countByCriteria(criteria));
-//    }
-
-    /**
-     * {@code GET  /vehicles/:id} : get the "id" vehicle.
-    */
+    @Operation(summary = "Get a vehicle by ID", description = "Retrieve details of a specific vehicle by its ID")
     @GetMapping("/vehicles/{id}")
     public ResponseEntity<VehicleDTO> getVehicle(@PathVariable Long id) {
         log.debug("REST request to get Vehicle : {}", id);
@@ -171,9 +128,7 @@ public class VehicleResource {
         return ResponseUtil.wrapOrNotFound(vehicleDTO);
     }
 
-    /**
-     * {@code DELETE  /vehicles/:id} : delete the "id" vehicle.
-    */
+    @Operation(summary = "Delete a vehicle", description = "Delete a vehicle by its ID")
     @DeleteMapping("/vehicles/{id}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
         log.debug("REST request to delete Vehicle : {}", id);

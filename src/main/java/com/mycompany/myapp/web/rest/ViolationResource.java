@@ -11,6 +11,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,25 +57,7 @@ public class ViolationResource {
         this.violationQueryService = violationQueryService;
     }
 
-    /**
-     * {@code POST  /violations} : Create a new violation.
-    */
-    @PostMapping("/violations")
-    public ResponseEntity<ViolationDTO> createViolation(@RequestBody ViolationDTO violationDTO) throws URISyntaxException {
-        log.debug("REST request to save Violation : {}", violationDTO);
-        if (violationDTO.getId() != null) {
-            throw new BadRequestAlertException("A new violation cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        ViolationDTO result = violationService.save(violationDTO);
-        return ResponseEntity
-            .created(new URI("/api/violations/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * {@code PUT  /violations/:id} : Updates an existing violation.
-    */
+    @Operation(summary = "Update an existing violation", description = "Update a violation by its ID")
     @PutMapping("/violations/{id}")
     public ResponseEntity<ViolationDTO> updateViolation(
         @PathVariable(value = "id", required = false) final Long id,
@@ -98,37 +82,7 @@ public class ViolationResource {
             .body(result);
     }
 
-    /**
-     * {@code PATCH  /violations/:id} : Partial updates given fields of an existing violation, field will ignore if it is null
-    */
-//    @PatchMapping(value = "/violations/{id}", consumes = { "application/json", "application/merge-patch+json" })
-//    public ResponseEntity<ViolationDTO> partialUpdateViolation(
-//        @PathVariable(value = "id", required = false) final Long id,
-//        @RequestBody ViolationDTO violationDTO
-//    ) throws URISyntaxException {
-//        log.debug("REST request to partial update Violation partially : {}, {}", id, violationDTO);
-//        if (violationDTO.getId() == null) {
-//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-//        }
-//        if (!Objects.equals(id, violationDTO.getId())) {
-//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-//        }
-//
-//        if (!violationRepository.existsById(id)) {
-//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-//        }
-//
-//        Optional<ViolationDTO> result = violationService.partialUpdate(violationDTO);
-//
-//        return ResponseUtil.wrapOrNotFound(
-//            result,
-//            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, violationDTO.getId().toString())
-//        );
-//    }
-
-    /**
-     * {@code GET  /violations} : get all the violations.
-    */
+    @Operation(summary = "Get all violations with pagination", description = "Retrieve a paginated list of all violations")
     @GetMapping("/violations")
     public ResponseEntity<List<ViolationDTO>> getAllViolations(
         @RequestParam(defaultValue = "0") int pageNumber,
@@ -143,6 +97,7 @@ public class ViolationResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @Operation(summary = "Get all violations including deleted", description = "Retrieve all violations including those marked as deleted")
     @GetMapping("/violations/all")
     public ResponseEntity<List<ViolationDTO>> getAllTripsIncludingDeleted(
         @RequestParam(defaultValue = "0") int pageNumber,
@@ -153,18 +108,8 @@ public class ViolationResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-    /**
-     * {@code GET  /violations/count} : count all the violations.
-    */
-//    @GetMapping("/violations/count")
-//    public ResponseEntity<Long> countViolations(ViolationCriteria criteria) {
-//        log.debug("REST request to count Violations by criteria: {}", criteria);
-//        return ResponseEntity.ok().body(violationQueryService.countByCriteria(criteria));
-//    }
 
-    /**
-     * {@code GET  /violations/:id} : get the "id" violation.
-    */
+    @Operation(summary = "Get a violation by ID", description = "Retrieve details of a specific violation by ID")
     @GetMapping("/violations/{id}")
     public ResponseEntity<ViolationDTO> getViolation(@PathVariable Long id) {
         log.debug("REST request to get Violation : {}", id);
@@ -172,9 +117,7 @@ public class ViolationResource {
         return ResponseUtil.wrapOrNotFound(violationDTO);
     }
 
-    /**
-     * {@code DELETE  /violations/:id} : delete the "id" violation.
-    */
+    @Operation(summary = "Delete a violation", description = "Delete a violation by its ID")
     @DeleteMapping("/violations/{id}")
     public ResponseEntity<Void> deleteViolation(@PathVariable Long id) {
         log.debug("REST request to delete Violation : {}", id);
