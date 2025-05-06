@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
-import com.mycompany.myapp.domain.Checkin;
 import com.mycompany.myapp.domain.Driver;
 import com.mycompany.myapp.domain.Trip;
 import com.mycompany.myapp.domain.Vehicle;
@@ -342,29 +341,6 @@ class TripResourceIT {
 
         // Get all the tripList where vehicle equals to (vehicleId + 1)
         defaultTripShouldNotBeFound("vehicleId.equals=" + (vehicleId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllTripsByCheckinIsEqualToSomething() throws Exception {
-        Checkin checkin;
-        if (TestUtil.findAll(em, Checkin.class).isEmpty()) {
-            tripRepository.saveAndFlush(trip);
-            checkin = CheckinResourceIT.createEntity(em);
-        } else {
-            checkin = TestUtil.findAll(em, Checkin.class).get(0);
-        }
-        em.persist(checkin);
-        em.flush();
-        trip.setCheckin(checkin);
-        checkin.setTrip(trip);
-        tripRepository.saveAndFlush(trip);
-        Long checkinId = checkin.getId();
-        // Get all the tripList where checkin equals to checkinId
-        defaultTripShouldBeFound("checkinId.equals=" + checkinId);
-
-        // Get all the tripList where checkin equals to (checkinId + 1)
-        defaultTripShouldNotBeFound("checkinId.equals=" + (checkinId + 1));
     }
 
     /**

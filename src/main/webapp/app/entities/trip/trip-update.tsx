@@ -12,8 +12,6 @@ import { IDriver } from 'app/shared/model/driver.model';
 import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
 import { IVehicle } from 'app/shared/model/vehicle.model';
 import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
-import { ICheckin } from 'app/shared/model/checkin.model';
-import { getEntities as getCheckins } from 'app/entities/checkin/checkin.reducer';
 import { ITrip } from 'app/shared/model/trip.model';
 import { TripStatus } from 'app/shared/model/enumerations/trip-status.model';
 import { getEntity, updateEntity, createEntity, reset } from './trip.reducer';
@@ -28,7 +26,6 @@ export const TripUpdate = () => {
 
   const drivers = useAppSelector(state => state.driver.entities);
   const vehicles = useAppSelector(state => state.vehicle.entities);
-  const checkins = useAppSelector(state => state.checkin.entities);
   const tripEntity = useAppSelector(state => state.trip.entity);
   const loading = useAppSelector(state => state.trip.loading);
   const updating = useAppSelector(state => state.trip.updating);
@@ -48,7 +45,6 @@ export const TripUpdate = () => {
 
     dispatch(getDrivers({}));
     dispatch(getVehicles({}));
-    dispatch(getCheckins({}));
   }, []);
 
   useEffect(() => {

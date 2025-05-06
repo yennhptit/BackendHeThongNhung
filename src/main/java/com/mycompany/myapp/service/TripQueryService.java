@@ -111,12 +111,6 @@ public class TripQueryService extends QueryService<Trip> {
                         buildSpecification(criteria.getVehicleId(), root -> root.join(Trip_.vehicle, JoinType.LEFT).get(Vehicle_.id))
                     );
             }
-            if (criteria.getCheckinId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getCheckinId(), root -> root.join(Trip_.checkin, JoinType.LEFT).get(Checkin_.id))
-                    );
-            }
         }
         return specification;
     }

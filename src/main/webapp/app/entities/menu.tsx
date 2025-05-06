@@ -15,9 +15,6 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/trip">
         Trip
       </MenuItem>
-      <MenuItem icon="asterisk" to="/checkin">
-        Checkin
-      </MenuItem>
       <MenuItem icon="asterisk" to="/violation">
         Violation
       </MenuItem>

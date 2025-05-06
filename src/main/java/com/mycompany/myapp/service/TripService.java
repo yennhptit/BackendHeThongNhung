@@ -43,13 +43,6 @@ public interface TripService {
     Page<TripDTO> findAll(Pageable pageable);
 
     /**
-     * Get all the TripDTO where Checkin is {@code null}.
-     *
-     * @return the {@link List} of entities.
-     */
-    List<TripDTO> findAllWhereCheckinIsNull();
-
-    /**
      * Get the "id" trip.
      *
      * @param id the id of the entity.

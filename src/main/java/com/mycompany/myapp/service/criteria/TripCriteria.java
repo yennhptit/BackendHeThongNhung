@@ -51,8 +51,6 @@ public class TripCriteria implements Serializable, Criteria {
 
     private LongFilter vehicleId;
 
-    private LongFilter checkinId;
-
     private Boolean distinct;
 
     public TripCriteria() {}
@@ -64,7 +62,6 @@ public class TripCriteria implements Serializable, Criteria {
         this.status = other.status == null ? null : other.status.copy();
         this.driverId = other.driverId == null ? null : other.driverId.copy();
         this.vehicleId = other.vehicleId == null ? null : other.vehicleId.copy();
-        this.checkinId = other.checkinId == null ? null : other.checkinId.copy();
         this.distinct = other.distinct;
     }
 
@@ -163,21 +160,6 @@ public class TripCriteria implements Serializable, Criteria {
         this.vehicleId = vehicleId;
     }
 
-    public LongFilter getCheckinId() {
-        return checkinId;
-    }
-
-    public LongFilter checkinId() {
-        if (checkinId == null) {
-            checkinId = new LongFilter();
-        }
-        return checkinId;
-    }
-
-    public void setCheckinId(LongFilter checkinId) {
-        this.checkinId = checkinId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -202,14 +184,13 @@ public class TripCriteria implements Serializable, Criteria {
             Objects.equals(status, that.status) &&
             Objects.equals(driverId, that.driverId) &&
             Objects.equals(vehicleId, that.vehicleId) &&
-            Objects.equals(checkinId, that.checkinId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startTime, endTime, status, driverId, vehicleId, checkinId, distinct);
+        return Objects.hash(id, startTime, endTime, status, driverId, vehicleId, distinct);
     }
 
     // prettier-ignore
@@ -222,7 +203,6 @@ public class TripCriteria implements Serializable, Criteria {
             (status != null ? "status=" + status + ", " : "") +
             (driverId != null ? "driverId=" + driverId + ", " : "") +
             (vehicleId != null ? "vehicleId=" + vehicleId + ", " : "") +
-            (checkinId != null ? "checkinId=" + checkinId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }
