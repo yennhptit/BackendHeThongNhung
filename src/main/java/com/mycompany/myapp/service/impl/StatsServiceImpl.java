@@ -45,8 +45,9 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public MonthlyStatsDTO getMonthlyStats(Instant timeNow) {
-        ZoneId zone = ZoneOffset.UTC; // hoặc ZoneId.of("Asia/Ho_Chi_Minh")
+    public MonthlyStatsDTO getMonthlyStats() {
+        ZoneId zone = ZoneOffset.UTC; // Hoặc ZoneId.of("Asia/Ho_Chi_Minh")
+        Instant timeNow = Instant.now();
 
         LocalDateTime nowLdt = LocalDateTime.ofInstant(timeNow, zone);
         YearMonth thisMonth = YearMonth.from(nowLdt);
@@ -63,14 +64,23 @@ public class StatsServiceImpl implements StatsService {
         dto.setCurrentMonthVehicles(vehicleRepository.countByCreatedAtBetween(startOfThisMonth, timeNow));
         dto.setPreviousMonthVehicles(vehicleRepository.countByCreatedAtBetween(startOfLastMonth, endOfLastMonth));
 
-        dto.setCurrentMonthDrowsinessViolations(violationRepository.countByTypeAndTimestampBetween(ViolationType.DROWSINESS, startOfThisMonth, timeNow));
-        dto.setPreviousMonthDrowsinessViolations(violationRepository.countByTypeAndTimestampBetween(ViolationType.DROWSINESS, startOfLastMonth, endOfLastMonth));
+        dto.setCurrentMonthDrowsinessViolations(
+            violationRepository.countByTypeAndTimestampBetween(ViolationType.DROWSINESS, startOfThisMonth, timeNow)
+        );
+        dto.setPreviousMonthDrowsinessViolations(
+            violationRepository.countByTypeAndTimestampBetween(ViolationType.DROWSINESS, startOfLastMonth, endOfLastMonth)
+        );
 
-        dto.setCurrentMonthAlcoholViolations(violationRepository.countByTypeAndTimestampBetween(ViolationType.ALCOHOL, startOfThisMonth, timeNow));
-        dto.setPreviousMonthAlcoholViolations(violationRepository.countByTypeAndTimestampBetween(ViolationType.ALCOHOL, startOfLastMonth, endOfLastMonth));
+        dto.setCurrentMonthAlcoholViolations(
+            violationRepository.countByTypeAndTimestampBetween(ViolationType.ALCOHOL, startOfThisMonth, timeNow)
+        );
+        dto.setPreviousMonthAlcoholViolations(
+            violationRepository.countByTypeAndTimestampBetween(ViolationType.ALCOHOL, startOfLastMonth, endOfLastMonth)
+        );
 
         return dto;
     }
+
 
     @Override
     public Map<LocalDate, Long> getDailyViolationCounts(ViolationType type) {

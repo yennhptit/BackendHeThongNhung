@@ -30,8 +30,8 @@ public class StatsResource {
     @Operation(summary = "Get monthly statistics",
         description = "Retrieve monthly statistics for drivers, vehicles, and violations.")
     @GetMapping("/monthly")
-    public ResponseEntity<MonthlyStatsDTO> getMonthlyStats(@RequestParam("time") Instant timeNow) {
-        MonthlyStatsDTO stats = statsService.getMonthlyStats(timeNow);
+    public ResponseEntity<MonthlyStatsDTO> getMonthlyStats() {
+        MonthlyStatsDTO stats = statsService.getMonthlyStats();
         return ResponseEntity.ok(stats);
     }
 
