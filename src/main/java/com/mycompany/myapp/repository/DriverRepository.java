@@ -1,6 +1,8 @@
 package com.mycompany.myapp.repository;
 
 import com.mycompany.myapp.domain.Driver;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,8 @@ import java.util.Optional;
 public interface DriverRepository extends JpaRepository<Driver, Long>, JpaSpecificationExecutor<Driver> {
 
     Optional<Driver> findByDriverId(String driverId);
+
+    Page<Driver> findAllByIsDeleteFalse(Pageable pageable);
 
     long countByCreatedAtBetween(Instant start, Instant end);
 }

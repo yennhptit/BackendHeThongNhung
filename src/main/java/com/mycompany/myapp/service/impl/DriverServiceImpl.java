@@ -124,6 +124,13 @@ public class DriverServiceImpl implements DriverService {
     @Transactional(readOnly = true)
     public Page<DriverDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Drivers");
+        return driverRepository.findAllByIsDeleteFalse(pageable).map(driverMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DriverDTO> findAllIncludingDeleted(Pageable pageable) {
+        log.debug("Request to get all Drivers including deleted");
         return driverRepository.findAll(pageable).map(driverMapper::toDto);
     }
 

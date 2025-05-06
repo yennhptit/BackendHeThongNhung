@@ -41,6 +41,8 @@ public interface TripService {
      */
     Page<TripDTO> findAll(Pageable pageable);
 
+    Page<TripDTO> findAllIncludingDeleted(Pageable pageable);
+
     /**
      * Get the "id" trip.
      *

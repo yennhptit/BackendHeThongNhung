@@ -106,30 +106,30 @@ public class TripResource {
     /**
      * {@code PATCH  /trips/:id} : Partial updates given fields of an existing trip, field will ignore if it is null
      */
-    @PatchMapping(value = "/trips/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<TripDTO> partialUpdateTrip(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TripDTO tripDTO
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Trip partially : {}, {}", id, tripDTO);
-        if (tripDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, tripDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!tripRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<TripDTO> result = tripService.partialUpdate(tripDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, tripDTO.getId().toString())
-        );
-    }
+//    @PatchMapping(value = "/trips/{id}", consumes = { "application/json", "application/merge-patch+json" })
+//    public ResponseEntity<TripDTO> partialUpdateTrip(
+//        @PathVariable(value = "id", required = false) final Long id,
+//        @RequestBody TripDTO tripDTO
+//    ) throws URISyntaxException {
+//        log.debug("REST request to partial update Trip partially : {}, {}", id, tripDTO);
+//        if (tripDTO.getId() == null) {
+//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//        }
+//        if (!Objects.equals(id, tripDTO.getId())) {
+//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//        }
+//
+//        if (!tripRepository.existsById(id)) {
+//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//        }
+//
+//        Optional<TripDTO> result = tripService.partialUpdate(tripDTO);
+//
+//        return ResponseUtil.wrapOrNotFound(
+//            result,
+//            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, tripDTO.getId().toString())
+//        );
+//    }
 
     /**
      * {@code GET  /trips} : get all the trips.
@@ -148,14 +148,25 @@ public class TripResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/trips/all")
+    public ResponseEntity<List<TripDTO>> getAllTripsIncludingDeleted(
+        @RequestParam(defaultValue = "0") int pageNumber,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<TripDTO> page = tripService.findAllIncludingDeleted(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /trips/count} : count all the trips.
      */
-    @GetMapping("/trips/count")
-    public ResponseEntity<Long> countTrips(TripCriteria criteria) {
-        log.debug("REST request to count Trips by criteria: {}", criteria);
-        return ResponseEntity.ok().body(tripQueryService.countByCriteria(criteria));
-    }
+//    @GetMapping("/trips/count")
+//    public ResponseEntity<Long> countTrips(TripCriteria criteria) {
+//        log.debug("REST request to count Trips by criteria: {}", criteria);
+//        return ResponseEntity.ok().body(tripQueryService.countByCriteria(criteria));
+//    }
 
     /**
      * {@code GET  /trips/:id} : get the "id" trip.

@@ -41,6 +41,8 @@ public interface ViolationService {
      */
     Page<ViolationDTO> findAll(Pageable pageable);
 
+    Page<ViolationDTO> findAllIncludingDeleted(Pageable pageable);
+
     /**
      * Get the "id" violation.
      *

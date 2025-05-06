@@ -41,6 +41,8 @@ public interface VehicleService {
      */
     Page<VehicleDTO> findAll(Pageable pageable);
 
+    Page<VehicleDTO> findAllIncludingDeleted(Pageable pageable);
+
     /**
      * Get the "id" vehicle.
      *

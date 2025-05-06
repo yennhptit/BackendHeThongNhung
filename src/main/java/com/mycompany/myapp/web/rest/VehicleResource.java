@@ -99,30 +99,30 @@ public class VehicleResource {
     /**
      * {@code PATCH  /vehicles/:id} : Partial updates given fields of an existing vehicle, field will ignore if it is null
     */
-    @PatchMapping(value = "/vehicles/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<VehicleDTO> partialUpdateVehicle(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody VehicleDTO vehicleDTO
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Vehicle partially : {}, {}", id, vehicleDTO);
-        if (vehicleDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, vehicleDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!vehicleRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<VehicleDTO> result = vehicleService.partialUpdate(vehicleDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, vehicleDTO.getId().toString())
-        );
-    }
+//    @PatchMapping(value = "/vehicles/{id}", consumes = { "application/json", "application/merge-patch+json" })
+//    public ResponseEntity<VehicleDTO> partialUpdateVehicle(
+//        @PathVariable(value = "id", required = false) final Long id,
+//        @NotNull @RequestBody VehicleDTO vehicleDTO
+//    ) throws URISyntaxException {
+//        log.debug("REST request to partial update Vehicle partially : {}, {}", id, vehicleDTO);
+//        if (vehicleDTO.getId() == null) {
+//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//        }
+//        if (!Objects.equals(id, vehicleDTO.getId())) {
+//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//        }
+//
+//        if (!vehicleRepository.existsById(id)) {
+//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//        }
+//
+//        Optional<VehicleDTO> result = vehicleService.partialUpdate(vehicleDTO);
+//
+//        return ResponseUtil.wrapOrNotFound(
+//            result,
+//            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, vehicleDTO.getId().toString())
+//        );
+//    }
 
     /**
      * {@code GET  /vehicles} : get all the vehicles.
@@ -141,14 +141,25 @@ public class VehicleResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/vehicles/all")
+    public ResponseEntity<List<VehicleDTO>> getAllTripsIncludingDeleted(
+        @RequestParam(defaultValue = "0") int pageNumber,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<VehicleDTO> page = vehicleService.findAllIncludingDeleted(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /vehicles/count} : count all the vehicles.
     */
-    @GetMapping("/vehicles/count")
-    public ResponseEntity<Long> countVehicles(VehicleCriteria criteria) {
-        log.debug("REST request to count Vehicles by criteria: {}", criteria);
-        return ResponseEntity.ok().body(vehicleQueryService.countByCriteria(criteria));
-    }
+//    @GetMapping("/vehicles/count")
+//    public ResponseEntity<Long> countVehicles(VehicleCriteria criteria) {
+//        log.debug("REST request to count Vehicles by criteria: {}", criteria);
+//        return ResponseEntity.ok().body(vehicleQueryService.countByCriteria(criteria));
+//    }
 
     /**
      * {@code GET  /vehicles/:id} : get the "id" vehicle.

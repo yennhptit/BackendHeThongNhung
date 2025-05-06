@@ -114,30 +114,30 @@ public class DriverResource {
     /**
      * {@code PATCH  /drivers/:id} : Partial updates given fields of an existing driver, field will ignore if it is null
      */
-    @PatchMapping(value = "/drivers/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<DriverDTO> partialUpdateDriver(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody DriverDTO driverDTO
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Driver partially : {}, {}", id, driverDTO);
-        if (driverDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, driverDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!driverRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<DriverDTO> result = driverService.partialUpdate(driverDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, driverDTO.getId().toString())
-        );
-    }
+//    @PatchMapping(value = "/drivers/{id}", consumes = { "application/json", "application/merge-patch+json" })
+//    public ResponseEntity<DriverDTO> partialUpdateDriver(
+//        @PathVariable(value = "id", required = false) final Long id,
+//        @NotNull @RequestBody DriverDTO driverDTO
+//    ) throws URISyntaxException {
+//        log.debug("REST request to partial update Driver partially : {}, {}", id, driverDTO);
+//        if (driverDTO.getId() == null) {
+//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//        }
+//        if (!Objects.equals(id, driverDTO.getId())) {
+//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//        }
+//
+//        if (!driverRepository.existsById(id)) {
+//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//        }
+//
+//        Optional<DriverDTO> result = driverService.partialUpdate(driverDTO);
+//
+//        return ResponseUtil.wrapOrNotFound(
+//            result,
+//            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, driverDTO.getId().toString())
+//        );
+//    }
 
     /**
      * {@code GET  /drivers} : get all the drivers.
@@ -158,14 +158,25 @@ public class DriverResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/drivers/all")
+    public ResponseEntity<List<DriverDTO>> getAllTripsIncludingDeleted(
+        @RequestParam(defaultValue = "0") int pageNumber,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<DriverDTO> page = driverService.findAllIncludingDeleted(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /drivers/count} : count all the drivers.
      */
-    @GetMapping("/drivers/count")
-    public ResponseEntity<Long> countDrivers(DriverCriteria criteria) {
-        log.debug("REST request to count Drivers by criteria: {}", criteria);
-        return ResponseEntity.ok().body(driverQueryService.countByCriteria(criteria));
-    }
+//    @GetMapping("/drivers/count")
+//    public ResponseEntity<Long> countDrivers(DriverCriteria criteria) {
+//        log.debug("REST request to count Drivers by criteria: {}", criteria);
+//        return ResponseEntity.ok().body(driverQueryService.countByCriteria(criteria));
+//    }
 
     /**
      * {@code GET  /drivers/:id} : get the "id" driver.

@@ -11,6 +11,7 @@ import com.mycompany.myapp.domain.enumeration.ViolationType;
 import com.mycompany.myapp.repository.DriverRepository;
 import com.mycompany.myapp.repository.ViolationRepository;
 import com.mycompany.myapp.service.ViolationService;
+import com.mycompany.myapp.service.dto.VehicleDTO;
 import com.mycompany.myapp.service.dto.ViolationDTO;
 import com.mycompany.myapp.service.mapper.ViolationMapper;
 
@@ -126,6 +127,13 @@ public class ViolationServiceImpl implements ViolationService {
     @Transactional(readOnly = true)
     public Page<ViolationDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Violations");
+        return violationRepository.findAllByIsDeleteFalse(pageable).map(violationMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ViolationDTO> findAllIncludingDeleted(Pageable pageable) {
+        log.debug("Request to get all Violations including deleted");
         return violationRepository.findAll(pageable).map(violationMapper::toDto);
     }
 

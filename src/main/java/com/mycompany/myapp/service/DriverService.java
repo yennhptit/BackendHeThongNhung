@@ -46,6 +46,8 @@ public interface DriverService {
      */
     Page<DriverDTO> findAll(Pageable pageable);
 
+    Page<DriverDTO> findAllIncludingDeleted(Pageable pageable);
+
     /**
      * Get the "id" driver.
      *

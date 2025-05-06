@@ -134,7 +134,14 @@ public class TripServiceImpl implements TripService {
     @Override
     @Transactional(readOnly = true)
     public Page<TripDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Trips");
+        log.debug("Request to get all Trips without deleted");
+        return tripRepository.findAllByIsDeleteFalse(pageable).map(tripMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TripDTO> findAllIncludingDeleted(Pageable pageable) {
+        log.debug("Request to get all Trips including deleted");
         return tripRepository.findAll(pageable).map(tripMapper::toDto);
     }
 

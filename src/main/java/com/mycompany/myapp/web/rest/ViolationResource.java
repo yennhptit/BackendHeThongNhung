@@ -101,30 +101,30 @@ public class ViolationResource {
     /**
      * {@code PATCH  /violations/:id} : Partial updates given fields of an existing violation, field will ignore if it is null
     */
-    @PatchMapping(value = "/violations/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ViolationDTO> partialUpdateViolation(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ViolationDTO violationDTO
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Violation partially : {}, {}", id, violationDTO);
-        if (violationDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, violationDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!violationRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<ViolationDTO> result = violationService.partialUpdate(violationDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, violationDTO.getId().toString())
-        );
-    }
+//    @PatchMapping(value = "/violations/{id}", consumes = { "application/json", "application/merge-patch+json" })
+//    public ResponseEntity<ViolationDTO> partialUpdateViolation(
+//        @PathVariable(value = "id", required = false) final Long id,
+//        @RequestBody ViolationDTO violationDTO
+//    ) throws URISyntaxException {
+//        log.debug("REST request to partial update Violation partially : {}, {}", id, violationDTO);
+//        if (violationDTO.getId() == null) {
+//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+//        }
+//        if (!Objects.equals(id, violationDTO.getId())) {
+//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+//        }
+//
+//        if (!violationRepository.existsById(id)) {
+//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//        }
+//
+//        Optional<ViolationDTO> result = violationService.partialUpdate(violationDTO);
+//
+//        return ResponseUtil.wrapOrNotFound(
+//            result,
+//            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, violationDTO.getId().toString())
+//        );
+//    }
 
     /**
      * {@code GET  /violations} : get all the violations.
@@ -143,14 +143,24 @@ public class ViolationResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/violations/all")
+    public ResponseEntity<List<ViolationDTO>> getAllTripsIncludingDeleted(
+        @RequestParam(defaultValue = "0") int pageNumber,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<ViolationDTO> page = violationService.findAllIncludingDeleted(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
     /**
      * {@code GET  /violations/count} : count all the violations.
     */
-    @GetMapping("/violations/count")
-    public ResponseEntity<Long> countViolations(ViolationCriteria criteria) {
-        log.debug("REST request to count Violations by criteria: {}", criteria);
-        return ResponseEntity.ok().body(violationQueryService.countByCriteria(criteria));
-    }
+//    @GetMapping("/violations/count")
+//    public ResponseEntity<Long> countViolations(ViolationCriteria criteria) {
+//        log.debug("REST request to count Violations by criteria: {}", criteria);
+//        return ResponseEntity.ok().body(violationQueryService.countByCriteria(criteria));
+//    }
 
     /**
      * {@code GET  /violations/:id} : get the "id" violation.

@@ -3,6 +3,7 @@ package com.mycompany.myapp.repository;
 import com.mycompany.myapp.domain.Driver;
 import com.mycompany.myapp.domain.Violation;
 import com.mycompany.myapp.domain.enumeration.ViolationType;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +19,8 @@ import java.util.List;
 @Repository
 public interface ViolationRepository extends JpaRepository<Violation, Long>, JpaSpecificationExecutor<Violation> {
     List<Violation> findAllByDriver(Driver driver);
+
+    Page<Violation> findAllByIsDeleteFalse(Pageable pageable);
 
     long countByTypeAndTimestampBetween(ViolationType type, Instant start, Instant end);
 

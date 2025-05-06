@@ -70,6 +70,13 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional(readOnly = true)
     public Page<VehicleDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Vehicles");
+        return vehicleRepository.findAllByIsDeleteFalse(pageable).map(vehicleMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VehicleDTO> findAllIncludingDeleted(Pageable pageable) {
+        log.debug("Request to get all Vehicles including deleted");
         return vehicleRepository.findAll(pageable).map(vehicleMapper::toDto);
     }
 
