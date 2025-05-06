@@ -32,7 +32,7 @@ public class Trip implements Serializable {
     private TripStatus status;
 
     @Column(name = "is_delete", nullable = false)
-    private Boolean isDelete;
+    private Boolean isDelete = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")

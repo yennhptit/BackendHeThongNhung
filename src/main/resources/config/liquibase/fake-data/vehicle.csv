@@ -1,11 +1,21 @@
-id;license_plate;model;status;is_delete
-1;madly;indelible when patiently;RUNNING;true
-2;under;because huzzah;UNAVAILABLE;true
-3;withdraw;in parallel onto;UNAVAILABLE;true
-4;homeschool frantically oh;veil bah;UNAVAILABLE;false
-5;gee;inasmuch;UNAVAILABLE;false
-6;woefully;before;UNAVAILABLE;false
-7;great positively;bucketful;RUNNING;false
-8;second fake nonstop;wherever pyramid in;UNAVAILABLE;true
-9;tough-guy proud gleaming;ouch seal up;AVAILABLE;false
-10;yuck locker easy-going;pilfer piercing unloose;UNAVAILABLE;false
+id;license_plate;model;status;is_delete;created_at
+1;29A-12345;ToyotaTCorollaTCross;AVAILABLE;0;2025-05-06T14:09:03
+2;30A-67890;HondaTCR-V;RUNNING;0;2025-05-06T14:09:45
+3;29B-13579;FordTRanger;UNAVAILABLE;0;2025-05-06T14:09:55
+4;30B-24680;HyundaiTTucson;AVAILABLE;0;2025-05-06T14:10:07
+5;29C-11223;MazdaTCX-5;RUNNING;0;2025-05-06T14:10:20
+6;30C-44556;KiaTSeltos;AVAILABLE;0;2025-05-06T14:10:32
+7;29D-77889;VinFastTVFTe34;UNAVAILABLE;0;2025-05-06T14:10:43
+8;30D-99000;Mercedes-BenzTC200;AVAILABLE;0;2025-05-06T14:10:53
+9;29E-54321;BMWTX3;RUNNING;0;2025-05-06T14:11:02
+10;30E-98765;AudiTQ5;AVAILABLE;0;2025-05-06T14:11:22
+11;29F-12121;LexusTRX350;UNAVAILABLE;0;2025-05-06T14:12:48
+12;30F-34343;VolvoTXC60;RUNNING;0;2025-05-06T14:12:58
+13;29G-56565;SubaruTOutback;RUNNING;0;2025-05-06T14:13:14
+14;30G-78787;MitsubishiTOutlander;AVAILABLE;0;2025-05-06T14:13:26
+15;29H-90909;ChevroletTTrailblazer;UNAVAILABLE;0;2025-05-06T14:13:38
+16;30H-01010;PeugeotT5008;AVAILABLE;0;2025-05-06T14:13:46
+17;29K-23232;LandTRoverTDiscovery;RUNNING;0;2025-05-06T14:14:02
+18;30K-45454;JeepTWrangler;AVAILABLE;0;2025-05-06T14:14:41
+19;29L-67676;VolkswagenTTiguan;UNAVAILABLE;0;2025-05-06T14:14:51
+20;30L-89898;SkodaTKodiaq;AVAILABLE;0;2025-05-06T14:15:01

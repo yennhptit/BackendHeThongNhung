@@ -46,7 +46,7 @@ public class Driver implements Serializable {
     private DriverStatus status;
 
     @Column(name = "is_delete", nullable = false)
-    private Boolean isDelete;
+    private Boolean isDelete = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     @JsonIgnoreProperties(value = { "driver", "vehicle" }, allowSetters = true)

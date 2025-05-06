@@ -39,7 +39,7 @@ public class Vehicle implements Serializable {
     private Instant createdAt;
 
     @Column(name = "is_delete", nullable = false)
-    private Boolean isDelete;
+    private Boolean isDelete = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
     @JsonIgnoreProperties(value = { "driver", "vehicle" }, allowSetters = true)
@@ -49,6 +49,12 @@ public class Vehicle implements Serializable {
     @PrePersist
     public void prePersist() {
         this.createdAt = Instant.now();
+        if (this.isDelete == null) {
+            this.isDelete = false;
+        }
+        if (this.status == null) {
+            this.status = VehicleStatus.AVAILABLE;
+        }
     }
 
     public Long getId() {

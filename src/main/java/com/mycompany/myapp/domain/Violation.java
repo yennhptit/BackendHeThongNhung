@@ -32,10 +32,10 @@ public class Violation implements Serializable {
     private ViolationType type;
 
     @Column(name = "is_delete", nullable = false)
-    private Boolean isDelete;
+    private Boolean isDelete = false;
 
     @Column(name = "is_read", nullable = false)
-    private Boolean isRead;
+    private Boolean isRead = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "trips", "violations" }, allowSetters = true)
