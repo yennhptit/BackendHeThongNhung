@@ -78,17 +78,22 @@ public class TripResource {
 
     @Operation(summary = "Get all trips with pagination", description = "Retrieve a paginated list of all trips")
     @GetMapping("/trips")
-    public ResponseEntity<List<TripDTO>> getAllTrips(
-        @RequestParam(defaultValue = "0") int pageNumber,
-        @RequestParam(defaultValue = "10") int pageSize
-    ) {
-        log.debug("REST request to get all Trips with pagination");
+//    public ResponseEntity<List<TripDTO>> getAllTrips(
+//        @RequestParam(defaultValue = "0") int pageNumber,
+//        @RequestParam(defaultValue = "10") int pageSize
+//    ) {
+//        log.debug("REST request to get all Trips with pagination");
+//
+//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//        Page<TripDTO> page = tripService.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+//
+//        return ResponseEntity.ok().headers(headers).body(page.getContent());
+//    }
+    public ResponseEntity<List<TripDTO>> getAllTrips() {
+        List<TripDTO> tripDTOS = tripService.findAll();
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<TripDTO> page = tripService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return ResponseEntity.ok().body(tripDTOS);
     }
 
     @Operation(summary = "Get all trips including deleted", description = "Retrieve all trips including those marked as deleted")

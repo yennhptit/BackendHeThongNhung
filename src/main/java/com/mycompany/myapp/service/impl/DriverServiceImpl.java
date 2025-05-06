@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -132,6 +134,15 @@ public class DriverServiceImpl implements DriverService {
     public Page<DriverDTO> findAllIncludingDeleted(Pageable pageable) {
         log.debug("Request to get all Drivers including deleted");
         return driverRepository.findAll(pageable).map(driverMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DriverDTO> findAll() {
+        return driverRepository.findAll()
+            .stream()
+            .map(driverMapper::toDto)
+            .collect(Collectors.toList());
     }
 
     @Override

@@ -4,9 +4,14 @@ import com.mycompany.myapp.domain.Vehicle;
 import com.mycompany.myapp.repository.TripRepository;
 import com.mycompany.myapp.repository.VehicleRepository;
 import com.mycompany.myapp.service.VehicleService;
+import com.mycompany.myapp.service.dto.TripDTO;
 import com.mycompany.myapp.service.dto.VehicleDTO;
 import com.mycompany.myapp.service.mapper.VehicleMapper;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -78,6 +83,15 @@ public class VehicleServiceImpl implements VehicleService {
     public Page<VehicleDTO> findAllIncludingDeleted(Pageable pageable) {
         log.debug("Request to get all Vehicles including deleted");
         return vehicleRepository.findAll(pageable).map(vehicleMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VehicleDTO> findAll() {
+        return vehicleRepository.findAll()
+            .stream()
+            .map(vehicleMapper::toDto)
+            .collect(Collectors.toList());
     }
 
     @Override

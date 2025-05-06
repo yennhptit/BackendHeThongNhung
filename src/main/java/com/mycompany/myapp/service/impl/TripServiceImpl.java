@@ -147,6 +147,15 @@ public class TripServiceImpl implements TripService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TripDTO> findAll() {
+        return tripRepository.findAll()
+            .stream()
+            .map(tripMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<TripDTO> findOne(Long id) {
         log.debug("Request to get Trip : {}", id);
         return tripRepository.findById(id).map(tripMapper::toDto);

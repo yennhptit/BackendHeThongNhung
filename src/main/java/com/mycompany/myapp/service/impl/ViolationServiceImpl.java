@@ -1,22 +1,19 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Driver;
-import com.mycompany.myapp.domain.Trip;
-import com.mycompany.myapp.domain.Vehicle;
 import com.mycompany.myapp.domain.Violation;
-import com.mycompany.myapp.domain.enumeration.DriverStatus;
-import com.mycompany.myapp.domain.enumeration.TripStatus;
-import com.mycompany.myapp.domain.enumeration.VehicleStatus;
 import com.mycompany.myapp.domain.enumeration.ViolationType;
 import com.mycompany.myapp.repository.DriverRepository;
 import com.mycompany.myapp.repository.ViolationRepository;
 import com.mycompany.myapp.service.ViolationService;
-import com.mycompany.myapp.service.dto.VehicleDTO;
 import com.mycompany.myapp.service.dto.ViolationDTO;
 import com.mycompany.myapp.service.mapper.ViolationMapper;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -135,6 +132,15 @@ public class ViolationServiceImpl implements ViolationService {
     public Page<ViolationDTO> findAllIncludingDeleted(Pageable pageable) {
         log.debug("Request to get all Violations including deleted");
         return violationRepository.findAll(pageable).map(violationMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ViolationDTO> findAll() {
+        return violationRepository.findAll()
+            .stream()
+            .map(violationMapper::toDto)
+            .collect(Collectors.toList());
     }
 
     @Override

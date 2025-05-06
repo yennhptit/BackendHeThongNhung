@@ -97,19 +97,24 @@ public class DriverResource {
 
     @Operation(summary = "Get all drivers with pagination", description = "Retrieve a paginated list of all drivers")
     @GetMapping("/drivers")
-    public ResponseEntity<List<DriverDTO>> getAllDrivers(
-        @RequestParam(defaultValue = "0") int pageNumber,
-        @RequestParam(defaultValue = "10") int pageSize
-    ) {
-        log.debug("REST request to get all Drivers with pagination");
+//    public ResponseEntity<List<DriverDTO>> getAllDrivers(
+//        @RequestParam(defaultValue = "0") int pageNumber,
+//        @RequestParam(defaultValue = "10") int pageSize
+//    ) {
+//        log.debug("REST request to get all Drivers with pagination");
+//
+//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//        Page<DriverDTO> page = driverService.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(
+//            ServletUriComponentsBuilder.fromCurrentRequest(), page
+//        );
+//
+//        return ResponseEntity.ok().headers(headers).body(page.getContent());
+//    }
+    public ResponseEntity<List<DriverDTO>> getAllDrivers() {
+        List<DriverDTO> driverDTOS = driverService.findAll();
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<DriverDTO> page = driverService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(
-            ServletUriComponentsBuilder.fromCurrentRequest(), page
-        );
-
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return ResponseEntity.ok().body(driverDTOS);
     }
 
     @Operation(summary = "Get all drivers including deleted", description = "Retrieve all drivers including those marked as deleted")

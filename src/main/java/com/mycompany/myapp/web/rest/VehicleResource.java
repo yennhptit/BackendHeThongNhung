@@ -95,17 +95,23 @@ public class VehicleResource {
 
     @Operation(summary = "Get all vehicles with pagination", description = "Retrieve a paginated list of all vehicles")
     @GetMapping("/vehicles")
-    public ResponseEntity<List<VehicleDTO>> getAllVehicles(
-        @RequestParam(defaultValue = "0") int pageNumber,
-        @RequestParam(defaultValue = "10") int pageSize
-    ) {
-        log.debug("REST request to get all Vehicles with pagination");
+//    public ResponseEntity<List<VehicleDTO>> getAllVehicles(
+//        @RequestParam(defaultValue = "0") int pageNumber,
+//        @RequestParam(defaultValue = "10") int pageSize
+//    ) {
+//        log.debug("REST request to get all Vehicles with pagination");
+//
+//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//        Page<VehicleDTO> page = vehicleService.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+//
+//        return ResponseEntity.ok().headers(headers).body(page.getContent());
+//    }
+    public ResponseEntity<List<VehicleDTO>> getAllVehicles() {
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<VehicleDTO> page = vehicleService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        List<VehicleDTO> vehicleDTOS = vehicleService.findAll();
 
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return ResponseEntity.ok().body(vehicleDTOS);
     }
 
     @Operation(summary = "Get all vehicles including deleted", description = "Retrieve all vehicles including those marked as deleted")

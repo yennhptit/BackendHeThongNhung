@@ -84,17 +84,22 @@ public class ViolationResource {
 
     @Operation(summary = "Get all violations with pagination", description = "Retrieve a paginated list of all violations")
     @GetMapping("/violations")
-    public ResponseEntity<List<ViolationDTO>> getAllViolations(
-        @RequestParam(defaultValue = "0") int pageNumber,
-        @RequestParam(defaultValue = "10") int pageSize
-    ) {
-        log.debug("REST request to get all Violations with pagination");
+//    public ResponseEntity<List<ViolationDTO>> getAllViolations(
+//        @RequestParam(defaultValue = "0") int pageNumber,
+//        @RequestParam(defaultValue = "10") int pageSize
+//    ) {
+//        log.debug("REST request to get all Violations with pagination");
+//
+//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//        Page<ViolationDTO> page = violationService.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+//
+//        return ResponseEntity.ok().headers(headers).body(page.getContent());
+//    }
+    public ResponseEntity<List<ViolationDTO>> getAllViolations() {
+        List<ViolationDTO> violationDTOS = violationService.findAll();
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<ViolationDTO> page = violationService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return ResponseEntity.ok().body(violationDTOS);
     }
 
     @Operation(summary = "Get all violations including deleted", description = "Retrieve all violations including those marked as deleted")

@@ -1,6 +1,8 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.DriverDTO;
+
+import java.util.List;
 import java.util.Optional;
 
 import com.mycompany.myapp.service.dto.request.DriverRequest;
@@ -47,6 +49,8 @@ public interface DriverService {
     Page<DriverDTO> findAll(Pageable pageable);
 
     Page<DriverDTO> findAllIncludingDeleted(Pageable pageable);
+
+    List<DriverDTO> findAll();
 
     /**
      * Get the "id" driver.

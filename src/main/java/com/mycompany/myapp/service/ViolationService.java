@@ -1,6 +1,8 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.ViolationDTO;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +44,8 @@ public interface ViolationService {
     Page<ViolationDTO> findAll(Pageable pageable);
 
     Page<ViolationDTO> findAllIncludingDeleted(Pageable pageable);
+
+    List<ViolationDTO> findAll();
 
     /**
      * Get the "id" violation.
