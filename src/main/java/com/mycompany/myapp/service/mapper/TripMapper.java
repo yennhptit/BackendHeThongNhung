@@ -11,19 +11,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Trip} and its DTO {@link TripDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DriverMapper.class, VehicleMapper.class})
 public interface TripMapper extends EntityMapper<TripDTO, Trip> {
-    @Mapping(target = "driver", source = "driver", qualifiedByName = "driverId")
-    @Mapping(target = "vehicle", source = "vehicle", qualifiedByName = "vehicleId")
+
+    @Mapping(source = "driver", target = "driver")
+    @Mapping(source = "vehicle", target = "vehicle")
     TripDTO toDto(Trip s);
 
-    @Named("driverId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    DriverDTO toDtoDriverId(Driver driver);
-
-    @Named("vehicleId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    VehicleDTO toDtoVehicleId(Vehicle vehicle);
+    @Mapping(source = "driver", target = "driver")
+    @Mapping(source = "vehicle", target = "vehicle")
+    Trip toEntity(TripDTO tripDTO);
 }

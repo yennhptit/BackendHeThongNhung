@@ -3,6 +3,8 @@ package com.mycompany.myapp.service.impl;
 import com.mycompany.myapp.domain.Driver;
 import com.mycompany.myapp.domain.enumeration.DriverStatus;
 import com.mycompany.myapp.repository.DriverRepository;
+import com.mycompany.myapp.repository.TripRepository;
+import com.mycompany.myapp.repository.ViolationRepository;
 import com.mycompany.myapp.service.DriverService;
 import com.mycompany.myapp.service.GoogleDriveService;
 import com.mycompany.myapp.service.dto.DriverDTO;
@@ -37,11 +39,17 @@ public class DriverServiceImpl implements DriverService {
 
     private final DriverRepository driverRepository;
 
+    private final TripRepository tripRepository;
+
+    private final ViolationRepository violationRepository;
+
     private final DriverMapper driverMapper;
 
-    public DriverServiceImpl(GoogleDriveService googleDriveService, DriverRepository driverRepository, DriverMapper driverMapper) {
+    public DriverServiceImpl(GoogleDriveService googleDriveService, DriverRepository driverRepository, DriverMapper driverMapper, TripRepository tripRepository, ViolationRepository violationRepository) {
         this.googleDriveService = googleDriveService;
         this.driverRepository = driverRepository;
+        this.tripRepository = tripRepository;
+        this.violationRepository = violationRepository;
         this.driverMapper = driverMapper;
     }
 
@@ -129,10 +137,21 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Driver : {}", id);
-//        driverRepository.deleteById(id);
         driverRepository.findById(id).ifPresent(driver -> {
             driver.setIsDelete(true);
             driverRepository.save(driver);
+
+            // Xóa Trip
+            tripRepository.findAllByDriver(driver).forEach(trip -> {
+                trip.setIsDelete(true);
+                tripRepository.save(trip);
+            });
+
+            // Xóa Violation
+            violationRepository.findAllByDriver(driver).forEach(violation -> {
+                violation.setIsDelete(true);
+                violationRepository.save(violation);
+            });
         });
     }
 

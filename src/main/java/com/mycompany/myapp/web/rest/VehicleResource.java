@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -128,13 +129,15 @@ public class VehicleResource {
     */
     @GetMapping("/vehicles")
     public ResponseEntity<List<VehicleDTO>> getAllVehicles(
-        VehicleCriteria criteria,
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+        @RequestParam(defaultValue = "0") int pageNumber,
+        @RequestParam(defaultValue = "10") int pageSize
     ) {
-        log.debug("REST request to get Vehicles by criteria: {}", criteria);
+        log.debug("REST request to get all Vehicles with pagination");
 
-        Page<VehicleDTO> page = vehicleQueryService.findByCriteria(criteria, pageable);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<VehicleDTO> page = vehicleService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

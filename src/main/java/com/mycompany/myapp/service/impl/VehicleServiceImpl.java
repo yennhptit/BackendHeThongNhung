@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Vehicle;
+import com.mycompany.myapp.repository.TripRepository;
 import com.mycompany.myapp.repository.VehicleRepository;
 import com.mycompany.myapp.service.VehicleService;
 import com.mycompany.myapp.service.dto.VehicleDTO;
@@ -24,10 +25,13 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
 
+    private final TripRepository tripRepository;
+
     private final VehicleMapper vehicleMapper;
 
-    public VehicleServiceImpl(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper) {
+    public VehicleServiceImpl(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper, TripRepository tripRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.tripRepository = tripRepository;
         this.vehicleMapper = vehicleMapper;
     }
 
@@ -79,10 +83,14 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Vehicle : {}", id);
-//        vehicleRepository.deleteById(id);
         vehicleRepository.findById(id).ifPresent(vehicle -> {
             vehicle.setIsDelete(true);
             vehicleRepository.save(vehicle);
+
+            tripRepository.findAllByVehicle(vehicle).forEach(trip -> {
+                trip.setIsDelete(true);
+                tripRepository.save(trip);
+            });
         });
     }
 }

@@ -9,13 +9,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Violation} and its DTO {@link ViolationDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DriverMapper.class})
 public interface ViolationMapper extends EntityMapper<ViolationDTO, Violation> {
-    @Mapping(target = "driver", source = "driver", qualifiedByName = "driverId")
+
+    @Mapping(target = "driver", source = "driver")
     ViolationDTO toDto(Violation s);
 
-    @Named("driverId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    DriverDTO toDtoDriverId(Driver driver);
+    @Mapping(target = "driver", source = "driver")
+    Violation toEntity(ViolationDTO dto);
 }

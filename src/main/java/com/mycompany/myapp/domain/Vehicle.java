@@ -5,6 +5,7 @@ import com.mycompany.myapp.domain.enumeration.VehicleStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +35,9 @@ public class Vehicle implements Serializable {
     @Column(name = "status")
     private VehicleStatus status;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
     @Column(name = "is_delete", nullable = false)
     private Boolean isDelete;
 
@@ -42,6 +46,10 @@ public class Vehicle implements Serializable {
     private Set<Trip> trips = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+    }
 
     public Long getId() {
         return this.id;

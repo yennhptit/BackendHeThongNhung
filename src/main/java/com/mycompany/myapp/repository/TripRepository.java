@@ -7,6 +7,7 @@ import com.mycompany.myapp.domain.enumeration.TripStatus;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,7 @@ import java.util.Optional;
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Long>, JpaSpecificationExecutor<Trip> {
     Optional<Trip> findFirstByDriverAndVehicleAndStatus(Driver driver, Vehicle vehicle, TripStatus tripStatus);
+    List<Trip> findAllByDriver(Driver driver);
+
+    List<Trip> findAllByVehicle(Vehicle vehicle);
 }
