@@ -7,8 +7,11 @@ export interface ITrip {
   startTime?: string | null;
   endTime?: string | null;
   status?: keyof typeof TripStatus | null;
+  isDelete?: boolean | null;
   driver?: IDriver | null;
   vehicle?: IVehicle | null;
 }
 
-export const defaultValue: Readonly<ITrip> = {};
+export const defaultValue: Readonly<ITrip> = {
+  isDelete: false,
+};

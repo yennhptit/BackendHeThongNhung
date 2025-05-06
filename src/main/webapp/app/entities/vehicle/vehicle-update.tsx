@@ -108,6 +108,7 @@ export const VehicleUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
+              <ValidatedField label="Is Delete" id="vehicle-isDelete" name="isDelete" data-cy="isDelete" check type="checkbox" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/vehicle" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

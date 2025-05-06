@@ -99,6 +99,9 @@ public class VehicleQueryService extends QueryService<Vehicle> {
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildSpecification(criteria.getStatus(), Vehicle_.status));
             }
+            if (criteria.getIsDelete() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDelete(), Vehicle_.isDelete));
+            }
             if (criteria.getTripId() != null) {
                 specification =
                     specification.and(

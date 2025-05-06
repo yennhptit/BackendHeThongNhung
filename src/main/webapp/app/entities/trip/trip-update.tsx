@@ -134,6 +134,7 @@ export const TripUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
+              <ValidatedField label="Is Delete" id="trip-isDelete" name="isDelete" data-cy="isDelete" check type="checkbox" />
               <ValidatedField id="trip-driver" name="driver" data-cy="driver" label="Driver" type="select">
                 <option value="" key="0" />
                 {drivers

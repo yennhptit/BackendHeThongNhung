@@ -19,6 +19,8 @@ public class TripDTO implements Serializable {
 
     private TripStatus status;
 
+    private Boolean isDelete;
+
     private DriverDTO driver;
 
     private VehicleDTO vehicle;
@@ -53,6 +55,14 @@ public class TripDTO implements Serializable {
 
     public void setStatus(TripStatus status) {
         this.status = status;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
     public DriverDTO getDriver() {
@@ -100,6 +110,7 @@ public class TripDTO implements Serializable {
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", status='" + getStatus() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             ", driver=" + getDriver() +
             ", vehicle=" + getVehicle() +
             "}";

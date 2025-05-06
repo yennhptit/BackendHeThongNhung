@@ -105,6 +105,9 @@ public class DriverQueryService extends QueryService<Driver> {
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildSpecification(criteria.getStatus(), Driver_.status));
             }
+            if (criteria.getIsDelete() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDelete(), Driver_.isDelete));
+            }
             if (criteria.getTripId() != null) {
                 specification =
                     specification.and(

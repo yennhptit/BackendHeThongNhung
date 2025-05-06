@@ -51,6 +51,8 @@ public class DriverCriteria implements Serializable, Criteria {
 
     private DriverStatusFilter status;
 
+    private BooleanFilter isDelete;
+
     private LongFilter tripId;
 
     private LongFilter violationId;
@@ -66,6 +68,7 @@ public class DriverCriteria implements Serializable, Criteria {
         this.licenseNumber = other.licenseNumber == null ? null : other.licenseNumber.copy();
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.isDelete = other.isDelete == null ? null : other.isDelete.copy();
         this.tripId = other.tripId == null ? null : other.tripId.copy();
         this.violationId = other.violationId == null ? null : other.violationId.copy();
         this.distinct = other.distinct;
@@ -110,7 +113,7 @@ public class DriverCriteria implements Serializable, Criteria {
         return driverId;
     }
 
-    public StringFilter rfidUid() {
+    public StringFilter driverId() {
         if (driverId == null) {
             driverId = new StringFilter();
         }
@@ -164,6 +167,21 @@ public class DriverCriteria implements Serializable, Criteria {
 
     public void setStatus(DriverStatusFilter status) {
         this.status = status;
+    }
+
+    public BooleanFilter getIsDelete() {
+        return isDelete;
+    }
+
+    public BooleanFilter isDelete() {
+        if (isDelete == null) {
+            isDelete = new BooleanFilter();
+        }
+        return isDelete;
+    }
+
+    public void setIsDelete(BooleanFilter isDelete) {
+        this.isDelete = isDelete;
     }
 
     public LongFilter getTripId() {
@@ -220,6 +238,7 @@ public class DriverCriteria implements Serializable, Criteria {
             Objects.equals(licenseNumber, that.licenseNumber) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(status, that.status) &&
+            Objects.equals(isDelete, that.isDelete) &&
             Objects.equals(tripId, that.tripId) &&
             Objects.equals(violationId, that.violationId) &&
             Objects.equals(distinct, that.distinct)
@@ -228,7 +247,7 @@ public class DriverCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, driverId, licenseNumber, createdAt, status, tripId, violationId, distinct);
+        return Objects.hash(id, name, driverId, licenseNumber, createdAt, status, isDelete, tripId, violationId, distinct);
     }
 
     // prettier-ignore
@@ -237,10 +256,11 @@ public class DriverCriteria implements Serializable, Criteria {
         return "DriverCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
-            (driverId != null ? "rfidUid=" + driverId + ", " : "") +
+            (driverId != null ? "driverId=" + driverId + ", " : "") +
             (licenseNumber != null ? "licenseNumber=" + licenseNumber + ", " : "") +
             (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
+            (isDelete != null ? "isDelete=" + isDelete + ", " : "") +
             (tripId != null ? "tripId=" + tripId + ", " : "") +
             (violationId != null ? "violationId=" + violationId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

@@ -42,6 +42,9 @@ class VehicleResourceIT {
     private static final VehicleStatus DEFAULT_STATUS = VehicleStatus.AVAILABLE;
     private static final VehicleStatus UPDATED_STATUS = VehicleStatus.RUNNING;
 
+    private static final Boolean DEFAULT_IS_DELETE = false;
+    private static final Boolean UPDATED_IS_DELETE = true;
+
     private static final String ENTITY_API_URL = "/api/vehicles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -69,7 +72,11 @@ class VehicleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Vehicle createEntity(EntityManager em) {
-        Vehicle vehicle = new Vehicle().licensePlate(DEFAULT_LICENSE_PLATE).model(DEFAULT_MODEL).status(DEFAULT_STATUS);
+        Vehicle vehicle = new Vehicle()
+            .licensePlate(DEFAULT_LICENSE_PLATE)
+            .model(DEFAULT_MODEL)
+            .status(DEFAULT_STATUS)
+            .isDelete(DEFAULT_IS_DELETE);
         return vehicle;
     }
 
@@ -80,7 +87,11 @@ class VehicleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Vehicle createUpdatedEntity(EntityManager em) {
-        Vehicle vehicle = new Vehicle().licensePlate(UPDATED_LICENSE_PLATE).model(UPDATED_MODEL).status(UPDATED_STATUS);
+        Vehicle vehicle = new Vehicle()
+            .licensePlate(UPDATED_LICENSE_PLATE)
+            .model(UPDATED_MODEL)
+            .status(UPDATED_STATUS)
+            .isDelete(UPDATED_IS_DELETE);
         return vehicle;
     }
 
@@ -106,6 +117,7 @@ class VehicleResourceIT {
         assertThat(testVehicle.getLicensePlate()).isEqualTo(DEFAULT_LICENSE_PLATE);
         assertThat(testVehicle.getModel()).isEqualTo(DEFAULT_MODEL);
         assertThat(testVehicle.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testVehicle.getIsDelete()).isEqualTo(DEFAULT_IS_DELETE);
     }
 
     @Test
@@ -159,7 +171,8 @@ class VehicleResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(vehicle.getId().intValue())))
             .andExpect(jsonPath("$.[*].licensePlate").value(hasItem(DEFAULT_LICENSE_PLATE)))
             .andExpect(jsonPath("$.[*].model").value(hasItem(DEFAULT_MODEL)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
     }
 
     @Test
@@ -176,7 +189,8 @@ class VehicleResourceIT {
             .andExpect(jsonPath("$.id").value(vehicle.getId().intValue()))
             .andExpect(jsonPath("$.licensePlate").value(DEFAULT_LICENSE_PLATE))
             .andExpect(jsonPath("$.model").value(DEFAULT_MODEL))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.isDelete").value(DEFAULT_IS_DELETE.booleanValue()));
     }
 
     @Test
@@ -368,6 +382,45 @@ class VehicleResourceIT {
 
     @Test
     @Transactional
+    void getAllVehiclesByIsDeleteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vehicleRepository.saveAndFlush(vehicle);
+
+        // Get all the vehicleList where isDelete equals to DEFAULT_IS_DELETE
+        defaultVehicleShouldBeFound("isDelete.equals=" + DEFAULT_IS_DELETE);
+
+        // Get all the vehicleList where isDelete equals to UPDATED_IS_DELETE
+        defaultVehicleShouldNotBeFound("isDelete.equals=" + UPDATED_IS_DELETE);
+    }
+
+    @Test
+    @Transactional
+    void getAllVehiclesByIsDeleteIsInShouldWork() throws Exception {
+        // Initialize the database
+        vehicleRepository.saveAndFlush(vehicle);
+
+        // Get all the vehicleList where isDelete in DEFAULT_IS_DELETE or UPDATED_IS_DELETE
+        defaultVehicleShouldBeFound("isDelete.in=" + DEFAULT_IS_DELETE + "," + UPDATED_IS_DELETE);
+
+        // Get all the vehicleList where isDelete equals to UPDATED_IS_DELETE
+        defaultVehicleShouldNotBeFound("isDelete.in=" + UPDATED_IS_DELETE);
+    }
+
+    @Test
+    @Transactional
+    void getAllVehiclesByIsDeleteIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vehicleRepository.saveAndFlush(vehicle);
+
+        // Get all the vehicleList where isDelete is not null
+        defaultVehicleShouldBeFound("isDelete.specified=true");
+
+        // Get all the vehicleList where isDelete is null
+        defaultVehicleShouldNotBeFound("isDelete.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllVehiclesByTripIsEqualToSomething() throws Exception {
         Trip trip;
         if (TestUtil.findAll(em, Trip.class).isEmpty()) {
@@ -399,7 +452,8 @@ class VehicleResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(vehicle.getId().intValue())))
             .andExpect(jsonPath("$.[*].licensePlate").value(hasItem(DEFAULT_LICENSE_PLATE)))
             .andExpect(jsonPath("$.[*].model").value(hasItem(DEFAULT_MODEL)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
 
         // Check, that the count call also returns 1
         restVehicleMockMvc
@@ -447,7 +501,7 @@ class VehicleResourceIT {
         Vehicle updatedVehicle = vehicleRepository.findById(vehicle.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedVehicle are not directly saved in db
         em.detach(updatedVehicle);
-        updatedVehicle.licensePlate(UPDATED_LICENSE_PLATE).model(UPDATED_MODEL).status(UPDATED_STATUS);
+        updatedVehicle.licensePlate(UPDATED_LICENSE_PLATE).model(UPDATED_MODEL).status(UPDATED_STATUS).isDelete(UPDATED_IS_DELETE);
         VehicleDTO vehicleDTO = vehicleMapper.toDto(updatedVehicle);
 
         restVehicleMockMvc
@@ -465,6 +519,7 @@ class VehicleResourceIT {
         assertThat(testVehicle.getLicensePlate()).isEqualTo(UPDATED_LICENSE_PLATE);
         assertThat(testVehicle.getModel()).isEqualTo(UPDATED_MODEL);
         assertThat(testVehicle.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testVehicle.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test
@@ -544,6 +599,8 @@ class VehicleResourceIT {
         Vehicle partialUpdatedVehicle = new Vehicle();
         partialUpdatedVehicle.setId(vehicle.getId());
 
+        partialUpdatedVehicle.isDelete(UPDATED_IS_DELETE);
+
         restVehicleMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedVehicle.getId())
@@ -559,6 +616,7 @@ class VehicleResourceIT {
         assertThat(testVehicle.getLicensePlate()).isEqualTo(DEFAULT_LICENSE_PLATE);
         assertThat(testVehicle.getModel()).isEqualTo(DEFAULT_MODEL);
         assertThat(testVehicle.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testVehicle.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test
@@ -573,7 +631,7 @@ class VehicleResourceIT {
         Vehicle partialUpdatedVehicle = new Vehicle();
         partialUpdatedVehicle.setId(vehicle.getId());
 
-        partialUpdatedVehicle.licensePlate(UPDATED_LICENSE_PLATE).model(UPDATED_MODEL).status(UPDATED_STATUS);
+        partialUpdatedVehicle.licensePlate(UPDATED_LICENSE_PLATE).model(UPDATED_MODEL).status(UPDATED_STATUS).isDelete(UPDATED_IS_DELETE);
 
         restVehicleMockMvc
             .perform(
@@ -590,6 +648,7 @@ class VehicleResourceIT {
         assertThat(testVehicle.getLicensePlate()).isEqualTo(UPDATED_LICENSE_PLATE);
         assertThat(testVehicle.getModel()).isEqualTo(UPDATED_MODEL);
         assertThat(testVehicle.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testVehicle.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test

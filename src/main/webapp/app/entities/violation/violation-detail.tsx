@@ -53,9 +53,15 @@ export const ViolationDetail = () => {
           </dt>
           <dd>{violationEntity.type}</dd>
           <dt>
-            <Translate contentKey="backendHeThongNhungApp.violation.trip">Trip</Translate>
+            <span id="isDelete">
+              <Translate contentKey="backendHeThongNhungApp.violation.isDelete">Is Delete</Translate>
+            </span>
           </dt>
-          <dd>{violationEntity.trip ? violationEntity.trip.id : ''}</dd>
+          <dd>{violationEntity.isDelete ? 'true' : 'false'}</dd>
+          <dt>
+            <Translate contentKey="backendHeThongNhungApp.violation.driver">Driver</Translate>
+          </dt>
+          <dd>{violationEntity.driver ? violationEntity.driver.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/violation" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

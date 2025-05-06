@@ -51,6 +51,12 @@ export const TripDetail = () => {
           </dt>
           <dd>{tripEntity.status}</dd>
           <dt>
+            <span id="isDelete">
+              <Translate contentKey="backendHeThongNhungApp.trip.isDelete">Is Delete</Translate>
+            </span>
+          </dt>
+          <dd>{tripEntity.isDelete ? 'true' : 'false'}</dd>
+          <dt>
             <Translate contentKey="backendHeThongNhungApp.trip.driver">Driver</Translate>
           </dt>
           <dd>{tripEntity.driver ? tripEntity.driver.id : ''}</dd>

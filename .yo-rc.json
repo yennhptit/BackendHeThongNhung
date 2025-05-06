@@ -16,7 +16,7 @@
     "enableHibernateCache": false,
     "enableSwaggerCodegen": true,
     "enableTranslation": false,
-    "entities": ["Driver", "Vehicle", "Trip", "Checkin", "Violation"],
+    "entities": ["Driver", "Vehicle", "Trip", "Violation"],
     "gradleEnterpriseHost": null,
     "jhipsterVersion": "8.0.0-rc.1",
     "jwtSecretKey": "Y2Q4YTZiMmM0ZWRmZDQwMmYxNmIyMDJmOGNmZGVmNTQ1NTA5MzI1YjBhYTY3MGFlNDE3YTU3ZTQxNzhjMWI4MGY1NDhmMDVhZTY5YTYyYjZlNTNmNjI1MGNiNWY3NmE5NjRkZmVjNDZiZDlhNWFiZjUyNTJmYTI2MjY1YTRmZmU=",

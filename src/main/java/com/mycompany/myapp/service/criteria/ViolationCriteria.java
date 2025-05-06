@@ -47,7 +47,9 @@ public class ViolationCriteria implements Serializable, Criteria {
 
     private ViolationTypeFilter type;
 
-    private LongFilter tripId;
+    private BooleanFilter isDelete;
+
+    private LongFilter driverId;
 
     private Boolean distinct;
 
@@ -58,7 +60,8 @@ public class ViolationCriteria implements Serializable, Criteria {
         this.value = other.value == null ? null : other.value.copy();
         this.timestamp = other.timestamp == null ? null : other.timestamp.copy();
         this.type = other.type == null ? null : other.type.copy();
-        this.tripId = other.tripId == null ? null : other.tripId.copy();
+        this.isDelete = other.isDelete == null ? null : other.isDelete.copy();
+        this.driverId = other.driverId == null ? null : other.driverId.copy();
         this.distinct = other.distinct;
     }
 
@@ -127,19 +130,34 @@ public class ViolationCriteria implements Serializable, Criteria {
         this.type = type;
     }
 
-    public LongFilter getTripId() {
-        return tripId;
+    public BooleanFilter getIsDelete() {
+        return isDelete;
     }
 
-    public LongFilter tripId() {
-        if (tripId == null) {
-            tripId = new LongFilter();
+    public BooleanFilter isDelete() {
+        if (isDelete == null) {
+            isDelete = new BooleanFilter();
         }
-        return tripId;
+        return isDelete;
     }
 
-    public void setTripId(LongFilter tripId) {
-        this.tripId = tripId;
+    public void setIsDelete(BooleanFilter isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public LongFilter getDriverId() {
+        return driverId;
+    }
+
+    public LongFilter driverId() {
+        if (driverId == null) {
+            driverId = new LongFilter();
+        }
+        return driverId;
+    }
+
+    public void setDriverId(LongFilter driverId) {
+        this.driverId = driverId;
     }
 
     public Boolean getDistinct() {
@@ -164,14 +182,15 @@ public class ViolationCriteria implements Serializable, Criteria {
             Objects.equals(value, that.value) &&
             Objects.equals(timestamp, that.timestamp) &&
             Objects.equals(type, that.type) &&
-            Objects.equals(tripId, that.tripId) &&
+            Objects.equals(isDelete, that.isDelete) &&
+            Objects.equals(driverId, that.driverId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, value, timestamp, type, tripId, distinct);
+        return Objects.hash(id, value, timestamp, type, isDelete, driverId, distinct);
     }
 
     // prettier-ignore
@@ -182,7 +201,8 @@ public class ViolationCriteria implements Serializable, Criteria {
             (value != null ? "value=" + value + ", " : "") +
             (timestamp != null ? "timestamp=" + timestamp + ", " : "") +
             (type != null ? "type=" + type + ", " : "") +
-            (tripId != null ? "tripId=" + tripId + ", " : "") +
+            (isDelete != null ? "isDelete=" + isDelete + ", " : "") +
+            (driverId != null ? "driverId=" + driverId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

@@ -47,6 +47,8 @@ public class TripCriteria implements Serializable, Criteria {
 
     private TripStatusFilter status;
 
+    private BooleanFilter isDelete;
+
     private LongFilter driverId;
 
     private LongFilter vehicleId;
@@ -60,6 +62,7 @@ public class TripCriteria implements Serializable, Criteria {
         this.startTime = other.startTime == null ? null : other.startTime.copy();
         this.endTime = other.endTime == null ? null : other.endTime.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.isDelete = other.isDelete == null ? null : other.isDelete.copy();
         this.driverId = other.driverId == null ? null : other.driverId.copy();
         this.vehicleId = other.vehicleId == null ? null : other.vehicleId.copy();
         this.distinct = other.distinct;
@@ -130,6 +133,21 @@ public class TripCriteria implements Serializable, Criteria {
         this.status = status;
     }
 
+    public BooleanFilter getIsDelete() {
+        return isDelete;
+    }
+
+    public BooleanFilter isDelete() {
+        if (isDelete == null) {
+            isDelete = new BooleanFilter();
+        }
+        return isDelete;
+    }
+
+    public void setIsDelete(BooleanFilter isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public LongFilter getDriverId() {
         return driverId;
     }
@@ -182,6 +200,7 @@ public class TripCriteria implements Serializable, Criteria {
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
             Objects.equals(status, that.status) &&
+            Objects.equals(isDelete, that.isDelete) &&
             Objects.equals(driverId, that.driverId) &&
             Objects.equals(vehicleId, that.vehicleId) &&
             Objects.equals(distinct, that.distinct)
@@ -190,7 +209,7 @@ public class TripCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startTime, endTime, status, driverId, vehicleId, distinct);
+        return Objects.hash(id, startTime, endTime, status, isDelete, driverId, vehicleId, distinct);
     }
 
     // prettier-ignore
@@ -201,6 +220,7 @@ public class TripCriteria implements Serializable, Criteria {
             (startTime != null ? "startTime=" + startTime + ", " : "") +
             (endTime != null ? "endTime=" + endTime + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
+            (isDelete != null ? "isDelete=" + isDelete + ", " : "") +
             (driverId != null ? "driverId=" + driverId + ", " : "") +
             (vehicleId != null ? "vehicleId=" + vehicleId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

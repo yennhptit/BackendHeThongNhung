@@ -119,9 +119,9 @@ export const Driver = () => {
                   <Translate contentKey="backendHeThongNhungApp.driver.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
-                <th className="hand" onClick={sort('rfidUid')}>
-                  <Translate contentKey="backendHeThongNhungApp.driver.rfidUid">Rfid Uid</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('rfidUid')} />
+                <th className="hand" onClick={sort('driverId')}>
+                  <Translate contentKey="backendHeThongNhungApp.driver.driverId">Driver Id</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('driverId')} />
                 </th>
                 <th className="hand" onClick={sort('licenseNumber')}>
                   <Translate contentKey="backendHeThongNhungApp.driver.licenseNumber">License Number</Translate>{' '}
@@ -139,6 +139,10 @@ export const Driver = () => {
                   <Translate contentKey="backendHeThongNhungApp.driver.status">Status</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('status')} />
                 </th>
+                <th className="hand" onClick={sort('isDelete')}>
+                  <Translate contentKey="backendHeThongNhungApp.driver.isDelete">Is Delete</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDelete')} />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -151,11 +155,12 @@ export const Driver = () => {
                     </Button>
                   </td>
                   <td>{driver.name}</td>
-                  <td>{driver.rfidUid}</td>
+                  <td>{driver.driverId}</td>
                   <td>{driver.licenseNumber}</td>
                   <td>{driver.faceData}</td>
                   <td>{driver.createdAt ? <TextFormat type="date" value={driver.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{driver.status}</td>
+                  <td>{driver.isDelete ? 'true' : 'false'}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/driver/${driver.id}`} color="info" size="sm" data-cy="entityDetailsButton">

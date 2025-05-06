@@ -126,6 +126,10 @@ export const Vehicle = () => {
                   <Translate contentKey="backendHeThongNhungApp.vehicle.status">Status</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('status')} />
                 </th>
+                <th className="hand" onClick={sort('isDelete')}>
+                  <Translate contentKey="backendHeThongNhungApp.vehicle.isDelete">Is Delete</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDelete')} />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -140,6 +144,7 @@ export const Vehicle = () => {
                   <td>{vehicle.licensePlate}</td>
                   <td>{vehicle.model}</td>
                   <td>{vehicle.status}</td>
+                  <td>{vehicle.isDelete ? 'true' : 'false'}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/vehicle/${vehicle.id}`} color="info" size="sm" data-cy="entityDetailsButton">

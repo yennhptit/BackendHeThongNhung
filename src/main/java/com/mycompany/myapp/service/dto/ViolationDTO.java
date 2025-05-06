@@ -1,9 +1,6 @@
 package com.mycompany.myapp.service.dto;
 
 import com.mycompany.myapp.domain.enumeration.ViolationType;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -21,6 +18,8 @@ public class ViolationDTO implements Serializable {
     private Instant timestamp;
 
     private ViolationType type;
+
+    private Boolean isDelete;
 
     private DriverDTO driver;
 
@@ -54,6 +53,14 @@ public class ViolationDTO implements Serializable {
 
     public void setType(ViolationType type) {
         this.type = type;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
     public DriverDTO getDriver() {
@@ -93,6 +100,7 @@ public class ViolationDTO implements Serializable {
             ", value=" + getValue() +
             ", timestamp='" + getTimestamp() + "'" +
             ", type='" + getType() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             ", driver=" + getDriver() +
             "}";
     }

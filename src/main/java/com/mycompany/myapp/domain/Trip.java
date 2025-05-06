@@ -31,6 +31,9 @@ public class Trip implements Serializable {
     @Column(name = "status")
     private TripStatus status;
 
+    @Column(name = "is_delete", nullable = false)
+    private Boolean isDelete;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     @JsonIgnoreProperties(value = { "trips", "violations" }, allowSetters = true)
@@ -95,6 +98,19 @@ public class Trip implements Serializable {
         this.status = status;
     }
 
+    public Boolean getIsDelete() {
+        return this.isDelete;
+    }
+
+    public Trip isDelete(Boolean isDelete) {
+        this.setIsDelete(isDelete);
+        return this;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public Driver getDriver() {
         return this.driver;
     }
@@ -148,6 +164,7 @@ public class Trip implements Serializable {
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", status='" + getStatus() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             "}";
     }
 }

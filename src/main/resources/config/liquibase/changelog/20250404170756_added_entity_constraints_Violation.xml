@@ -8,9 +8,9 @@
     -->
     <changeSet id="20250404170756-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="trip_id"
+        <addForeignKeyConstraint baseColumnNames="driver_id"
                                  baseTableName="violation"
-                                 constraintName="fk_violation__trip_id"
+                                 constraintName="fk_violation__driver_id"
                                  referencedColumnNames="id"
                                  referencedTableName="driver"
                                  />

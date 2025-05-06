@@ -16,6 +16,10 @@
       "fieldName": "status",
       "fieldType": "TripStatus",
       "fieldValues": "ONGOING,COMPLETED"
+    },
+    {
+      "fieldName": "isDelete",
+      "fieldType": "Boolean"
     }
   ],
   "jpaMetamodelFiltering": true,

@@ -54,6 +54,9 @@ class DriverResourceIT {
     private static final DriverStatus DEFAULT_STATUS = DriverStatus.ACTIVE;
     private static final DriverStatus UPDATED_STATUS = DriverStatus.INACTIVE;
 
+    private static final Boolean DEFAULT_IS_DELETE = false;
+    private static final Boolean UPDATED_IS_DELETE = true;
+
     private static final String ENTITY_API_URL = "/api/drivers";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -87,7 +90,8 @@ class DriverResourceIT {
             .licenseNumber(DEFAULT_LICENSE_NUMBER)
             .faceData(DEFAULT_FACE_DATA)
             .createdAt(DEFAULT_CREATED_AT)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .isDelete(DEFAULT_IS_DELETE);
         return driver;
     }
 
@@ -104,7 +108,8 @@ class DriverResourceIT {
             .licenseNumber(UPDATED_LICENSE_NUMBER)
             .faceData(UPDATED_FACE_DATA)
             .createdAt(UPDATED_CREATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .isDelete(UPDATED_IS_DELETE);
         return driver;
     }
 
@@ -133,6 +138,7 @@ class DriverResourceIT {
         assertThat(testDriver.getFaceData()).isEqualTo(DEFAULT_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testDriver.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testDriver.getIsDelete()).isEqualTo(DEFAULT_IS_DELETE);
     }
 
     @Test
@@ -189,7 +195,8 @@ class DriverResourceIT {
             .andExpect(jsonPath("$.[*].licenseNumber").value(hasItem(DEFAULT_LICENSE_NUMBER)))
             .andExpect(jsonPath("$.[*].faceData").value(hasItem(DEFAULT_FACE_DATA.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
     }
 
     @Test
@@ -209,7 +216,8 @@ class DriverResourceIT {
             .andExpect(jsonPath("$.licenseNumber").value(DEFAULT_LICENSE_NUMBER))
             .andExpect(jsonPath("$.faceData").value(DEFAULT_FACE_DATA.toString()))
             .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.isDelete").value(DEFAULT_IS_DELETE.booleanValue()));
     }
 
     @Test
@@ -505,6 +513,45 @@ class DriverResourceIT {
 
     @Test
     @Transactional
+    void getAllDriversByIsDeleteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        driverRepository.saveAndFlush(driver);
+
+        // Get all the driverList where isDelete equals to DEFAULT_IS_DELETE
+        defaultDriverShouldBeFound("isDelete.equals=" + DEFAULT_IS_DELETE);
+
+        // Get all the driverList where isDelete equals to UPDATED_IS_DELETE
+        defaultDriverShouldNotBeFound("isDelete.equals=" + UPDATED_IS_DELETE);
+    }
+
+    @Test
+    @Transactional
+    void getAllDriversByIsDeleteIsInShouldWork() throws Exception {
+        // Initialize the database
+        driverRepository.saveAndFlush(driver);
+
+        // Get all the driverList where isDelete in DEFAULT_IS_DELETE or UPDATED_IS_DELETE
+        defaultDriverShouldBeFound("isDelete.in=" + DEFAULT_IS_DELETE + "," + UPDATED_IS_DELETE);
+
+        // Get all the driverList where isDelete equals to UPDATED_IS_DELETE
+        defaultDriverShouldNotBeFound("isDelete.in=" + UPDATED_IS_DELETE);
+    }
+
+    @Test
+    @Transactional
+    void getAllDriversByIsDeleteIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        driverRepository.saveAndFlush(driver);
+
+        // Get all the driverList where isDelete is not null
+        defaultDriverShouldBeFound("isDelete.specified=true");
+
+        // Get all the driverList where isDelete is null
+        defaultDriverShouldNotBeFound("isDelete.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllDriversByTripIsEqualToSomething() throws Exception {
         Trip trip;
         if (TestUtil.findAll(em, Trip.class).isEmpty()) {
@@ -561,7 +608,8 @@ class DriverResourceIT {
             .andExpect(jsonPath("$.[*].licenseNumber").value(hasItem(DEFAULT_LICENSE_NUMBER)))
             .andExpect(jsonPath("$.[*].faceData").value(hasItem(DEFAULT_FACE_DATA.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
 
         // Check, that the count call also returns 1
         restDriverMockMvc
@@ -615,7 +663,8 @@ class DriverResourceIT {
             .licenseNumber(UPDATED_LICENSE_NUMBER)
             .faceData(UPDATED_FACE_DATA)
             .createdAt(UPDATED_CREATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .isDelete(UPDATED_IS_DELETE);
         DriverDTO driverDTO = driverMapper.toDto(updatedDriver);
 
         restDriverMockMvc
@@ -636,6 +685,7 @@ class DriverResourceIT {
         assertThat(testDriver.getFaceData()).isEqualTo(UPDATED_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testDriver.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testDriver.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test
@@ -735,6 +785,7 @@ class DriverResourceIT {
         assertThat(testDriver.getFaceData()).isEqualTo(DEFAULT_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testDriver.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testDriver.getIsDelete()).isEqualTo(DEFAULT_IS_DELETE);
     }
 
     @Test
@@ -755,7 +806,8 @@ class DriverResourceIT {
             .licenseNumber(UPDATED_LICENSE_NUMBER)
             .faceData(UPDATED_FACE_DATA)
             .createdAt(UPDATED_CREATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .isDelete(UPDATED_IS_DELETE);
 
         restDriverMockMvc
             .perform(
@@ -775,6 +827,7 @@ class DriverResourceIT {
         assertThat(testDriver.getFaceData()).isEqualTo(UPDATED_FACE_DATA);
         assertThat(testDriver.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testDriver.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testDriver.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test

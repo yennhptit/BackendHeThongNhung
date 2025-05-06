@@ -6,7 +6,10 @@ export interface IVehicle {
   licensePlate?: string;
   model?: string | null;
   status?: keyof typeof VehicleStatus | null;
+  isDelete?: boolean | null;
   trips?: ITrip[] | null;
 }
 
-export const defaultValue: Readonly<IVehicle> = {};
+export const defaultValue: Readonly<IVehicle> = {
+  isDelete: false,
+};

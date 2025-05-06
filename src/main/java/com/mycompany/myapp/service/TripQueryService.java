@@ -99,6 +99,9 @@ public class TripQueryService extends QueryService<Trip> {
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildSpecification(criteria.getStatus(), Trip_.status));
             }
+            if (criteria.getIsDelete() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDelete(), Trip_.isDelete));
+            }
             if (criteria.getDriverId() != null) {
                 specification =
                     specification.and(

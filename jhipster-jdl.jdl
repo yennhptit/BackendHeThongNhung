@@ -1,9 +1,9 @@
 // File: driver-management.jdl
 
-// 1. Bảng Driver (Tài xế)
+// Bảng Driver (Tài xế)
 entity Driver {
     name String required
-    rfidUid String
+    driverId String
     licenseNumber String
     faceData TextBlob
     createdAt Instant
@@ -16,7 +16,7 @@ enum DriverStatus {
     INACTIVE
 }
 
-// 2. Bảng Vehicle (Xe)
+// Bảng Vehicle (Xe)
 entity Vehicle {
     licensePlate String required
     model String
@@ -30,7 +30,7 @@ enum VehicleStatus {
     UNAVAILABLE
 }
 
-// 3. Bảng Trip (Chuyến đi)
+// Bảng Trip (Chuyến đi)
 entity Trip {
     startTime Instant
     endTime Instant
@@ -43,8 +43,7 @@ enum TripStatus {
     COMPLETED
 }
 
-
-// 5. Bảng Violation (Vi phạm)
+// Bảng Violation (Vi phạm)
 entity Violation {
     value Float
     timestamp Instant

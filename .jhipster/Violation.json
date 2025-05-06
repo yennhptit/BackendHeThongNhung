@@ -16,6 +16,10 @@
       "fieldName": "type",
       "fieldType": "ViolationType",
       "fieldValues": "ALCOHOL,DROWSINESS"
+    },
+    {
+      "fieldName": "isDelete",
+      "fieldType": "Boolean"
     }
   ],
   "jpaMetamodelFiltering": true,
@@ -24,7 +28,7 @@
   "relationships": [
     {
       "otherEntityName": "driver",
-      "relationshipName": "trip",
+      "relationshipName": "driver",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }

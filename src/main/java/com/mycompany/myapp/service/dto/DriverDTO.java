@@ -29,6 +29,8 @@ public class DriverDTO implements Serializable {
 
     private DriverStatus status;
 
+    private Boolean isDelete;
+
     public Long getId() {
         return id;
     }
@@ -85,6 +87,14 @@ public class DriverDTO implements Serializable {
         this.status = status;
     }
 
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,11 +122,12 @@ public class DriverDTO implements Serializable {
         return "DriverDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rfidUid='" + getDriverId() + "'" +
+            ", driverId='" + getDriverId() + "'" +
             ", licenseNumber='" + getLicenseNumber() + "'" +
             ", faceData='" + getFaceData() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", status='" + getStatus() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             "}";
     }
 }

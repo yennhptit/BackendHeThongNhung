@@ -31,6 +31,9 @@ public class Violation implements Serializable {
     @Column(name = "type")
     private ViolationType type;
 
+    @Column(name = "is_delete", nullable = false)
+    private Boolean isDelete;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "trips", "violations" }, allowSetters = true)
     private Driver driver;
@@ -89,6 +92,19 @@ public class Violation implements Serializable {
         this.type = type;
     }
 
+    public Boolean getIsDelete() {
+        return this.isDelete;
+    }
+
+    public Violation isDelete(Boolean isDelete) {
+        this.setIsDelete(isDelete);
+        return this;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public Driver getDriver() {
         return this.driver;
     }
@@ -129,6 +145,7 @@ public class Violation implements Serializable {
             ", value=" + getValue() +
             ", timestamp='" + getTimestamp() + "'" +
             ", type='" + getType() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             "}";
     }
 }

@@ -16,7 +16,11 @@
     {
       "fieldName": "status",
       "fieldType": "VehicleStatus",
-      "fieldValues": "AVAILABLE,IN_USE"
+      "fieldValues": "AVAILABLE,RUNNING,UNAVAILABLE"
+    },
+    {
+      "fieldName": "isDelete",
+      "fieldType": "Boolean"
     }
   ],
   "jpaMetamodelFiltering": true,

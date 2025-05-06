@@ -127,6 +127,10 @@ export const Trip = () => {
                   <Translate contentKey="backendHeThongNhungApp.trip.status">Status</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('status')} />
                 </th>
+                <th className="hand" onClick={sort('isDelete')}>
+                  <Translate contentKey="backendHeThongNhungApp.trip.isDelete">Is Delete</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDelete')} />
+                </th>
                 <th>
                   <Translate contentKey="backendHeThongNhungApp.trip.driver">Driver</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -147,6 +151,7 @@ export const Trip = () => {
                   <td>{trip.startTime ? <TextFormat type="date" value={trip.startTime} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{trip.endTime ? <TextFormat type="date" value={trip.endTime} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{trip.status}</td>
+                  <td>{trip.isDelete ? 'true' : 'false'}</td>
                   <td>{trip.driver ? <Link to={`/driver/${trip.driver.id}`}>{trip.driver.id}</Link> : ''}</td>
                   <td>{trip.vehicle ? <Link to={`/vehicle/${trip.vehicle.id}`}>{trip.vehicle.id}</Link> : ''}</td>
                   <td className="text-end">

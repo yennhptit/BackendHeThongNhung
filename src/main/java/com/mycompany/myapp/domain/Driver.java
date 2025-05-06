@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mycompany.myapp.domain.enumeration.DriverStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -46,8 +45,11 @@ public class Driver implements Serializable {
     @Column(name = "status")
     private DriverStatus status;
 
+    @Column(name = "is_delete", nullable = false)
+    private Boolean isDelete;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
-    @JsonIgnoreProperties(value = { "driver", "vehicle", "checkin" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "driver", "vehicle" }, allowSetters = true)
     private Set<Trip> trips = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
@@ -147,6 +149,19 @@ public class Driver implements Serializable {
         this.status = status;
     }
 
+    public Boolean getIsDelete() {
+        return this.isDelete;
+    }
+
+    public Driver isDelete(Boolean isDelete) {
+        this.setIsDelete(isDelete);
+        return this;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public Set<Trip> getTrips() {
         return this.trips;
     }
@@ -239,6 +254,7 @@ public class Driver implements Serializable {
             ", faceData='" + getFaceData() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", status='" + getStatus() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             "}";
     }
 }

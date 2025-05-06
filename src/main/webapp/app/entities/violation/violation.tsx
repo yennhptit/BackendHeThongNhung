@@ -127,8 +127,12 @@ export const Violation = () => {
                   <Translate contentKey="backendHeThongNhungApp.violation.type">Type</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('type')} />
                 </th>
+                <th className="hand" onClick={sort('isDelete')}>
+                  <Translate contentKey="backendHeThongNhungApp.violation.isDelete">Is Delete</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDelete')} />
+                </th>
                 <th>
-                  <Translate contentKey="backendHeThongNhungApp.violation.trip">Trip</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="backendHeThongNhungApp.violation.driver">Driver</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -144,7 +148,8 @@ export const Violation = () => {
                   <td>{violation.value}</td>
                   <td>{violation.timestamp ? <TextFormat type="date" value={violation.timestamp} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{violation.type}</td>
-                  <td>{violation.trip ? <Link to={`/driver/${violation.trip.id}`}>{violation.trip.id}</Link> : ''}</td>
+                  <td>{violation.isDelete ? 'true' : 'false'}</td>
+                  <td>{violation.driver ? <Link to={`/driver/${violation.driver.id}`}>{violation.driver.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/violation/${violation.id}`} color="info" size="sm" data-cy="entityDetailsButton">

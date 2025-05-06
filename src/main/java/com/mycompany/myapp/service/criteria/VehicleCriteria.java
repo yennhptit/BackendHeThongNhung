@@ -47,6 +47,8 @@ public class VehicleCriteria implements Serializable, Criteria {
 
     private VehicleStatusFilter status;
 
+    private BooleanFilter isDelete;
+
     private LongFilter tripId;
 
     private Boolean distinct;
@@ -58,6 +60,7 @@ public class VehicleCriteria implements Serializable, Criteria {
         this.licensePlate = other.licensePlate == null ? null : other.licensePlate.copy();
         this.model = other.model == null ? null : other.model.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.isDelete = other.isDelete == null ? null : other.isDelete.copy();
         this.tripId = other.tripId == null ? null : other.tripId.copy();
         this.distinct = other.distinct;
     }
@@ -127,6 +130,21 @@ public class VehicleCriteria implements Serializable, Criteria {
         this.status = status;
     }
 
+    public BooleanFilter getIsDelete() {
+        return isDelete;
+    }
+
+    public BooleanFilter isDelete() {
+        if (isDelete == null) {
+            isDelete = new BooleanFilter();
+        }
+        return isDelete;
+    }
+
+    public void setIsDelete(BooleanFilter isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public LongFilter getTripId() {
         return tripId;
     }
@@ -164,6 +182,7 @@ public class VehicleCriteria implements Serializable, Criteria {
             Objects.equals(licensePlate, that.licensePlate) &&
             Objects.equals(model, that.model) &&
             Objects.equals(status, that.status) &&
+            Objects.equals(isDelete, that.isDelete) &&
             Objects.equals(tripId, that.tripId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -171,7 +190,7 @@ public class VehicleCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, licensePlate, model, status, tripId, distinct);
+        return Objects.hash(id, licensePlate, model, status, isDelete, tripId, distinct);
     }
 
     // prettier-ignore
@@ -182,6 +201,7 @@ public class VehicleCriteria implements Serializable, Criteria {
             (licensePlate != null ? "licensePlate=" + licensePlate + ", " : "") +
             (model != null ? "model=" + model + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
+            (isDelete != null ? "isDelete=" + isDelete + ", " : "") +
             (tripId != null ? "tripId=" + tripId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

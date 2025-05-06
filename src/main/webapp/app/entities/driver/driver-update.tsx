@@ -105,7 +105,7 @@ export const DriverUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
-              <ValidatedField label="Rfid Uid" id="driver-rfidUid" name="rfidUid" data-cy="rfidUid" type="text" />
+              <ValidatedField label="Driver Id" id="driver-driverId" name="driverId" data-cy="driverId" type="text" />
               <ValidatedField label="License Number" id="driver-licenseNumber" name="licenseNumber" data-cy="licenseNumber" type="text" />
               <ValidatedField label="Face Data" id="driver-faceData" name="faceData" data-cy="faceData" type="textarea" />
               <ValidatedField
@@ -123,6 +123,7 @@ export const DriverUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
+              <ValidatedField label="Is Delete" id="driver-isDelete" name="isDelete" data-cy="isDelete" check type="checkbox" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/driver" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

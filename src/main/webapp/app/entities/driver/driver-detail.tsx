@@ -39,11 +39,11 @@ export const DriverDetail = () => {
           </dt>
           <dd>{driverEntity.name}</dd>
           <dt>
-            <span id="rfidUid">
-              <Translate contentKey="backendHeThongNhungApp.driver.rfidUid">Rfid Uid</Translate>
+            <span id="driverId">
+              <Translate contentKey="backendHeThongNhungApp.driver.driverId">Driver Id</Translate>
             </span>
           </dt>
-          <dd>{driverEntity.rfidUid}</dd>
+          <dd>{driverEntity.driverId}</dd>
           <dt>
             <span id="licenseNumber">
               <Translate contentKey="backendHeThongNhungApp.driver.licenseNumber">License Number</Translate>
@@ -68,6 +68,12 @@ export const DriverDetail = () => {
             </span>
           </dt>
           <dd>{driverEntity.status}</dd>
+          <dt>
+            <span id="isDelete">
+              <Translate contentKey="backendHeThongNhungApp.driver.isDelete">Is Delete</Translate>
+            </span>
+          </dt>
+          <dd>{driverEntity.isDelete ? 'true' : 'false'}</dd>
         </dl>
         <Button tag={Link} to="/driver" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

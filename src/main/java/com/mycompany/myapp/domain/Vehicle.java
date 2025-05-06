@@ -34,8 +34,11 @@ public class Vehicle implements Serializable {
     @Column(name = "status")
     private VehicleStatus status;
 
+    @Column(name = "is_delete", nullable = false)
+    private Boolean isDelete;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
-    @JsonIgnoreProperties(value = { "driver", "vehicle", "checkin" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "driver", "vehicle" }, allowSetters = true)
     private Set<Trip> trips = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -90,6 +93,19 @@ public class Vehicle implements Serializable {
 
     public void setStatus(VehicleStatus status) {
         this.status = status;
+    }
+
+    public Boolean getIsDelete() {
+        return this.isDelete;
+    }
+
+    public Vehicle isDelete(Boolean isDelete) {
+        this.setIsDelete(isDelete);
+        return this;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
     public Set<Trip> getTrips() {
@@ -150,6 +166,7 @@ public class Vehicle implements Serializable {
             ", licensePlate='" + getLicensePlate() + "'" +
             ", model='" + getModel() + "'" +
             ", status='" + getStatus() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             "}";
     }
 }

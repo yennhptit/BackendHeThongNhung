@@ -45,6 +45,9 @@ class TripResourceIT {
     private static final TripStatus DEFAULT_STATUS = TripStatus.ONGOING;
     private static final TripStatus UPDATED_STATUS = TripStatus.COMPLETED;
 
+    private static final Boolean DEFAULT_IS_DELETE = false;
+    private static final Boolean UPDATED_IS_DELETE = true;
+
     private static final String ENTITY_API_URL = "/api/trips";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -72,7 +75,7 @@ class TripResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Trip createEntity(EntityManager em) {
-        Trip trip = new Trip().startTime(DEFAULT_START_TIME).endTime(DEFAULT_END_TIME).status(DEFAULT_STATUS);
+        Trip trip = new Trip().startTime(DEFAULT_START_TIME).endTime(DEFAULT_END_TIME).status(DEFAULT_STATUS).isDelete(DEFAULT_IS_DELETE);
         return trip;
     }
 
@@ -83,7 +86,7 @@ class TripResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Trip createUpdatedEntity(EntityManager em) {
-        Trip trip = new Trip().startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).status(UPDATED_STATUS);
+        Trip trip = new Trip().startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).status(UPDATED_STATUS).isDelete(UPDATED_IS_DELETE);
         return trip;
     }
 
@@ -109,6 +112,7 @@ class TripResourceIT {
         assertThat(testTrip.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testTrip.getEndTime()).isEqualTo(DEFAULT_END_TIME);
         assertThat(testTrip.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testTrip.getIsDelete()).isEqualTo(DEFAULT_IS_DELETE);
     }
 
     @Test
@@ -144,7 +148,8 @@ class TripResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(trip.getId().intValue())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
     }
 
     @Test
@@ -161,7 +166,8 @@ class TripResourceIT {
             .andExpect(jsonPath("$.id").value(trip.getId().intValue()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
             .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.isDelete").value(DEFAULT_IS_DELETE.booleanValue()));
     }
 
     @Test
@@ -301,6 +307,45 @@ class TripResourceIT {
 
     @Test
     @Transactional
+    void getAllTripsByIsDeleteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        tripRepository.saveAndFlush(trip);
+
+        // Get all the tripList where isDelete equals to DEFAULT_IS_DELETE
+        defaultTripShouldBeFound("isDelete.equals=" + DEFAULT_IS_DELETE);
+
+        // Get all the tripList where isDelete equals to UPDATED_IS_DELETE
+        defaultTripShouldNotBeFound("isDelete.equals=" + UPDATED_IS_DELETE);
+    }
+
+    @Test
+    @Transactional
+    void getAllTripsByIsDeleteIsInShouldWork() throws Exception {
+        // Initialize the database
+        tripRepository.saveAndFlush(trip);
+
+        // Get all the tripList where isDelete in DEFAULT_IS_DELETE or UPDATED_IS_DELETE
+        defaultTripShouldBeFound("isDelete.in=" + DEFAULT_IS_DELETE + "," + UPDATED_IS_DELETE);
+
+        // Get all the tripList where isDelete equals to UPDATED_IS_DELETE
+        defaultTripShouldNotBeFound("isDelete.in=" + UPDATED_IS_DELETE);
+    }
+
+    @Test
+    @Transactional
+    void getAllTripsByIsDeleteIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        tripRepository.saveAndFlush(trip);
+
+        // Get all the tripList where isDelete is not null
+        defaultTripShouldBeFound("isDelete.specified=true");
+
+        // Get all the tripList where isDelete is null
+        defaultTripShouldNotBeFound("isDelete.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllTripsByDriverIsEqualToSomething() throws Exception {
         Driver driver;
         if (TestUtil.findAll(em, Driver.class).isEmpty()) {
@@ -354,7 +399,8 @@ class TripResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(trip.getId().intValue())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].isDelete").value(hasItem(DEFAULT_IS_DELETE.booleanValue())));
 
         // Check, that the count call also returns 1
         restTripMockMvc
@@ -402,7 +448,7 @@ class TripResourceIT {
         Trip updatedTrip = tripRepository.findById(trip.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTrip are not directly saved in db
         em.detach(updatedTrip);
-        updatedTrip.startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).status(UPDATED_STATUS);
+        updatedTrip.startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).status(UPDATED_STATUS).isDelete(UPDATED_IS_DELETE);
         TripDTO tripDTO = tripMapper.toDto(updatedTrip);
 
         restTripMockMvc
@@ -420,6 +466,7 @@ class TripResourceIT {
         assertThat(testTrip.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testTrip.getEndTime()).isEqualTo(UPDATED_END_TIME);
         assertThat(testTrip.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testTrip.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test
@@ -499,7 +546,7 @@ class TripResourceIT {
         Trip partialUpdatedTrip = new Trip();
         partialUpdatedTrip.setId(trip.getId());
 
-        partialUpdatedTrip.startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME);
+        partialUpdatedTrip.startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).isDelete(UPDATED_IS_DELETE);
 
         restTripMockMvc
             .perform(
@@ -516,6 +563,7 @@ class TripResourceIT {
         assertThat(testTrip.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testTrip.getEndTime()).isEqualTo(UPDATED_END_TIME);
         assertThat(testTrip.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testTrip.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test
@@ -530,7 +578,7 @@ class TripResourceIT {
         Trip partialUpdatedTrip = new Trip();
         partialUpdatedTrip.setId(trip.getId());
 
-        partialUpdatedTrip.startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).status(UPDATED_STATUS);
+        partialUpdatedTrip.startTime(UPDATED_START_TIME).endTime(UPDATED_END_TIME).status(UPDATED_STATUS).isDelete(UPDATED_IS_DELETE);
 
         restTripMockMvc
             .perform(
@@ -547,6 +595,7 @@ class TripResourceIT {
         assertThat(testTrip.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testTrip.getEndTime()).isEqualTo(UPDATED_END_TIME);
         assertThat(testTrip.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testTrip.getIsDelete()).isEqualTo(UPDATED_IS_DELETE);
     }
 
     @Test

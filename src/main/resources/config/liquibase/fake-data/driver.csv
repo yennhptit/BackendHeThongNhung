@@ -1,11 +1,11 @@
-id;name;driver_id;license_number;face_data;created_at;status
-1;monthly and unabashedly;given sidecar lever;ugh refund now;../fake-data/blob/hipster.txt;2025-04-03T18:35:01;INACTIVE
-2;until um barium;whenever;hmph exotic psst;../fake-data/blob/hipster.txt;2025-04-04T13:05:54;INACTIVE
-3;afterwards geez yowza;tenderize till;across;../fake-data/blob/hipster.txt;2025-04-04T04:08:05;ACTIVE
-4;fooey;round delightfully;physical;../fake-data/blob/hipster.txt;2025-04-04T15:11:56;ACTIVE
-5;blah after note;decent sick mid;pun overburden chasten;../fake-data/blob/hipster.txt;2025-04-04T07:01:26;INACTIVE
-6;supposing transit whereas;automatic supportive;rightfully fragrance;../fake-data/blob/hipster.txt;2025-04-03T20:24:59;INACTIVE
-7;boo pounce;aw unethically than;ambulance repeatedly pace;../fake-data/blob/hipster.txt;2025-04-03T20:24:00;INACTIVE
-8;ack pluck vibrant;whoa slip cloud;yippee colorfully;../fake-data/blob/hipster.txt;2025-04-04T14:12:55;ACTIVE
-9;deadly;coolly;whoa auction;../fake-data/blob/hipster.txt;2025-04-04T07:07:18;ACTIVE
-10;except wherever aw;following hm;glittering patrol nor;../fake-data/blob/hipster.txt;2025-04-04T10:42:42;ACTIVE
+id;name;driver_id;license_number;face_data;created_at;status;is_delete
+1;monthly and unabashedly;given sidecar lever;ugh refund now;../fake-data/blob/hipster.txt;2025-04-03T18:35:01;INACTIVE;false
+2;savage if blah;scribble hmph;after condemn;../fake-data/blob/hipster.txt;2025-04-03T18:21:04;INACTIVE;false
+3;finally for;where chauffeur;hectare after;../fake-data/blob/hipster.txt;2025-04-04T15:08:35;INACTIVE;false
+4;following;neuron gratitude and;blah after note;../fake-data/blob/hipster.txt;2025-04-03T19:25:46;INACTIVE;false
+5;recruit beside;bloop um upon;unto ew;../fake-data/blob/hipster.txt;2025-04-03T20:45:14;ACTIVE;true
+6;galley phony yahoo;emotional versus wherever;between essential;../fake-data/blob/hipster.txt;2025-04-04T10:10:20;INACTIVE;true
+7;whether grip black-and-white;yowza including foolishly;likewise;../fake-data/blob/hipster.txt;2025-04-04T02:26:08;INACTIVE;true
+8;vibrant than;slip;aw yippee colorfully;../fake-data/blob/hipster.txt;2025-04-04T14:12:55;ACTIVE;true
+9;coaxingly coolly rewire;auction;uh-huh potentially;../fake-data/blob/hipster.txt;2025-04-04T16:40:01;INACTIVE;true
+10;diadem chuckle ick;nor birdhouse dissuade;utterly;../fake-data/blob/hipster.txt;2025-04-03T21:48:28;INACTIVE;true

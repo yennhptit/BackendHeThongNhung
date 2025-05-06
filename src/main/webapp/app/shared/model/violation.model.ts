@@ -6,7 +6,10 @@ export interface IViolation {
   value?: number | null;
   timestamp?: string | null;
   type?: keyof typeof ViolationType | null;
-  trip?: IDriver | null;
+  isDelete?: boolean | null;
+  driver?: IDriver | null;
 }
 
-export const defaultValue: Readonly<IViolation> = {};
+export const defaultValue: Readonly<IViolation> = {
+  isDelete: false,
+};

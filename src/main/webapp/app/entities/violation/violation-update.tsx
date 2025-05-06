@@ -55,7 +55,7 @@ export const ViolationUpdate = () => {
     const entity = {
       ...violationEntity,
       ...values,
-      trip: drivers.find(it => it.id.toString() === values.trip.toString()),
+      driver: drivers.find(it => it.id.toString() === values.driver.toString()),
     };
 
     if (isNew) {
@@ -74,7 +74,7 @@ export const ViolationUpdate = () => {
           type: 'ALCOHOL',
           ...violationEntity,
           timestamp: convertDateTimeFromServer(violationEntity.timestamp),
-          trip: violationEntity?.trip?.id,
+          driver: violationEntity?.driver?.id,
         };
 
   return (
@@ -118,7 +118,8 @@ export const ViolationUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedField id="violation-trip" name="trip" data-cy="trip" label="Trip" type="select">
+              <ValidatedField label="Is Delete" id="violation-isDelete" name="isDelete" data-cy="isDelete" check type="checkbox" />
+              <ValidatedField id="violation-driver" name="driver" data-cy="driver" label="Driver" type="select">
                 <option value="" key="0" />
                 {drivers
                   ? drivers.map(otherEntity => (

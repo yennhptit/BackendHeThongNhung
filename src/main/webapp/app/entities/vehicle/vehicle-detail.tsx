@@ -49,6 +49,12 @@ export const VehicleDetail = () => {
             </span>
           </dt>
           <dd>{vehicleEntity.status}</dd>
+          <dt>
+            <span id="isDelete">
+              <Translate contentKey="backendHeThongNhungApp.vehicle.isDelete">Is Delete</Translate>
+            </span>
+          </dt>
+          <dd>{vehicleEntity.isDelete ? 'true' : 'false'}</dd>
         </dl>
         <Button tag={Link} to="/vehicle" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

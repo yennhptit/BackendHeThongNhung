@@ -20,6 +20,8 @@ public class VehicleDTO implements Serializable {
 
     private VehicleStatus status;
 
+    private Boolean isDelete;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +54,14 @@ public class VehicleDTO implements Serializable {
         this.status = status;
     }
 
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,6 +91,7 @@ public class VehicleDTO implements Serializable {
             ", licensePlate='" + getLicensePlate() + "'" +
             ", model='" + getModel() + "'" +
             ", status='" + getStatus() + "'" +
+            ", isDelete='" + getIsDelete() + "'" +
             "}";
     }
 }
