@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/favicon.svg"
+      type="image/x-icon"
+    />
+    <title>Home | Embedded System</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/lineicons.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/css/materialdesignicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <style>
+    .main-wrapper {
+      padding-bottom: 0;
+    }
+  </style>
+  <body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <!-- ======== Preloader =========== -->
+
+    <!-- ======== sidebar-nav start =========== -->
+    <div id="sidebar"></div>
+
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <div id="header"></div>
+
+      <section class="section">
+        <div class="container-fluid">
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>Embedded System Dashboard</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon white">
+                  <img
+                    src="assets/images/icon/car.png"
+                    alt="Alcohol Icon"
+                    style="width: 100%; height: 100%; object-fit: contain"
+                  />
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Vehicles</h6>
+                  <h3 class="text-bold mb-10" id="currentMonthVehicles">0</h3>
+                  <p id="vehiclesChangeIndicator" class="text-sm">
+                    <i class="lni"></i> <span class="percent-change">0</span>
+                    <span class="text-gray"> (Last month)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon white">
+                  <img
+                    src="assets/images/icon/driver.png"
+                    alt="Driver Icon"
+                    style="width: 100%; height: 100%; object-fit: contain"
+                  />
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Driver</h6>
+                  <h3 class="text-bold mb-10" id="currentMonthDrivers">0</h3>
+                  <p id="driversChangeIndicator" class="text-sm">
+                    <i class="lni"></i> <span class="percent-change">0</span>
+                    <span class="text-gray"> (Last month)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon orange">
+                  <img
+                    src="assets/images/icon/Drowsy.png"
+                    alt="Drowsy Icon"
+                    style="width: 100%; height: 100%; object-fit: contain"
+                  />
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Drowsy Violations</h6>
+                  <h3
+                    id="currentMonthDrowsinessViolations"
+                    class="text-bold mb-10"
+                  >
+                    0
+                  </h3>
+                  <p id="drowsinessChangeIndicator" class="text-sm">
+                    <i class="lni"></i> <span class="percent-change">0</span>
+                    <span class="text-gray"> (Last month)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon orange">
+                  <img
+                    src="assets/images/icon/alcohol.png"
+                    alt="Alcohol Icon"
+                    style="width: 100%; height: 100%; object-fit: contain"
+                  />
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Alcohol Violations</h6>
+                  <h3
+                    id="currentMonthAlcoholViolations"
+                    class="text-bold mb-10"
+                  >
+                    0
+                  </h3>
+                  <p id="alcoholChangeIndicator" class="text-sm">
+                    <i class="lni"></i> <span class="percent-change">0</span>
+                    <span class="text-gray"> (Last month)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card-style mb-30">
+                <div class="title d-flex flex-wrap justify-content-between">
+                  <div class="left">
+                    <h6 class="text-medium mb-10">Statistic In Month</h6>
+                    <!-- <h3 class="text-bold">$245,479</h3> -->
+                  </div>
+                </div>
+                <!-- End Title -->
+                <div class="chart">
+                  <canvas
+                    id="Chart1"
+                    style="width: 100%; height: 435px; margin-left: -35px"
+                  ></canvas>
+                </div>
+                <!-- End Chart -->
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card-style mb-30">
+                <div
+                  class="title d-flex flex-wrap justify-content-between align-items-center"
+                >
+                  <div class="left">
+                    <h6 class="text-medium mb-30">
+                      Top Violating Drivers In Month
+                    </h6>
+                  </div>
+                </div>
+                <!-- End Title -->
+                <div class="table-responsive">
+                  <table class="table top-selling-table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>
+                          <h6
+                            class="text-sm text-medium"
+                            style="text-align: center"
+                          >
+                            Driver
+                          </h6>
+                        </th>
+                        <th class="min-width">
+                          <h6
+                            class="text-sm text-medium"
+                            style="text-align: center"
+                          >
+                            Total
+                          </h6>
+                        </th>
+                        <th class="min-width">
+                          <h6
+                            class="text-sm text-medium"
+                            style="text-align: center"
+                          >
+                            Alcohol
+                          </h6>
+                        </th>
+                        <th class="min-width">
+                          <h6
+                            class="text-sm text-medium"
+                            style="text-align: center"
+                          >
+                            Drowsy
+                          </h6>
+                        </th>
+
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <!-- <tbody>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <div class="product">
+                            <div class="image">
+                              <img
+                                src="assets/images/products/product-mini-1.jpg"
+                                alt=""
+                              />
+                            </div>
+                            <p class="text-sm">Nguyễn Minh Khoa</p>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm">10</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">5</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">5</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <div class="product">
+                            <div class="image">
+                              <img
+                                src="assets/images/products/product-mini-2.jpg"
+                                alt=""
+                              />
+                            </div>
+                            <p class="text-sm">Trần Thanh Trúc</p>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm">6</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">3</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">3</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <div class="product">
+                            <div class="image">
+                              <img
+                                src="assets/images/products/product-mini-3.jpg"
+                                alt=""
+                              />
+                            </div>
+                            <p class="text-sm">Lê Hải Đăng</p>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm">3</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">2</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">1</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <div class="product">
+                            <div class="image">
+                              <img
+                                src="assets/images/products/product-mini-4.jpg"
+                                alt=""
+                              />
+                            </div>
+                            <p class="text-sm">Phạm Bảo Ngọc</p>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm">2</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">1</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">1</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <div class="product">
+                            <div class="image">
+                              <img
+                                src="assets/images/products/product-mini-5.jpg"
+                                alt=""
+                              />
+                            </div>
+                            <p class="text-sm">Vũ Gia Hưng</p>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm">1</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">1</p>
+                        </td>
+                        <td>
+                          <p class="text-sm">0</p>
+                        </td>
+                      </tr>
+                    </tbody> -->
+                    <tbody></tbody>
+                  </table>
+                  <!-- End Table -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- End Row -->
+
+          <!-- End Row -->
+
+          <!-- End Row -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+
+      <!-- ========== footer start =========== -->
+
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+      // ======== jvectormap activation
+      var markers = [
+        { name: "Egypt", coords: [26.8206, 30.8025] },
+        { name: "Russia", coords: [61.524, 105.3188] },
+        { name: "Canada", coords: [56.1304, -106.3468] },
+        { name: "Greenland", coords: [71.7069, -42.6043] },
+        { name: "Brazil", coords: [-14.235, -51.9253] },
+      ];
+
+      var jvm = new jsVectorMap({
+        map: "world_merc",
+        selector: "#map",
+        zoomButtons: true,
+
+        regionStyle: {
+          initial: {
+            fill: "#d1d5db",
+          },
+        },
+
+        labels: {
+          markers: {
+            render: (marker) => marker.name,
+          },
+        },
+
+        markersSelectable: true,
+        selectedMarkers: markers.map((marker, index) => {
+          var name = marker.name;
+
+          if (name === "Russia" || name === "Brazil") {
+            return index;
+          }
+        }),
+        markers: markers,
+        markerStyle: {
+          initial: { fill: "#4A6CF7" },
+          selected: { fill: "#ff5050" },
+        },
+        markerLabelStyle: {
+          // thêm padding cho label
+          initial: {
+            fontWeight: 500,
+            fontSize: 14,
+            padding: "5px",
+          },
+        },
+      });
+      // ====== calendar activation
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarMiniEl = document.getElementById("calendar-mini");
+        var calendarMini = new FullCalendar.Calendar(calendarMiniEl, {
+          initialView: "dayGridMonth",
+          headerToolbar: {
+            end: "today prev,next",
+          },
+        });
+        calendarMini.render();
+      });
+
+      // =========== chart one start
+      // const ctx1 = document.getElementById("Chart1").getContext("2d");
+      // const chart1 = new Chart(ctx1, {
+      //   type: "line",
+      //   data: {
+      //     labels: [
+      //       "Jan",
+      //       "Fab",
+      //       "Mar",
+      //       "Apr",
+      //       "May",
+      //       "Jun",
+      //       "Jul",
+      //       "Aug",
+      //       "Sep",
+      //       "Oct",
+      //       "Nov",
+      //       "Dec",
+      //     ],
+      //     datasets: [
+      //       {
+      //         label: "",
+      //         backgroundColor: "transparent",
+      //         borderColor: "#365CF5",
+      //         data: [
+      //           600, 800, 750, 880, 940, 880, 900, 770, 920, 890, 976, 1100,
+      //         ],
+      //         pointBackgroundColor: "transparent",
+      //         pointHoverBackgroundColor: "#365CF5",
+      //         pointBorderColor: "transparent",
+      //         pointHoverBorderColor: "#fff",
+      //         pointHoverBorderWidth: 5,
+      //         borderWidth: 5,
+      //         pointRadius: 8,
+      //         pointHoverRadius: 8,
+      //         cubicInterpolationMode: "monotone", // Add this line for curved line
+      //       },
+      //     ],
+      //   },
+      //   options: {
+      //     plugins: {
+      //       tooltip: {
+      //         callbacks: {
+      //           labelColor: function (context) {
+      //             return {
+      //               backgroundColor: "#ffffff",
+      //               color: "#171717",
+      //             };
+      //           },
+      //         },
+      //         intersect: false,
+      //         backgroundColor: "#f9f9f9",
+      //         title: {
+      //           fontFamily: "Plus Jakarta Sans",
+      //           color: "#8F92A1",
+      //           fontSize: 12,
+      //         },
+      //         body: {
+      //           fontFamily: "Plus Jakarta Sans",
+      //           color: "#171717",
+      //           fontStyle: "bold",
+      //           fontSize: 16,
+      //         },
+      //         multiKeyBackground: "transparent",
+      //         displayColors: false,
+      //         padding: {
+      //           x: 30,
+      //           y: 10,
+      //         },
+      //         bodyAlign: "center",
+      //         titleAlign: "center",
+      //         titleColor: "#8F92A1",
+      //         bodyColor: "#171717",
+      //         bodyFont: {
+      //           family: "Plus Jakarta Sans",
+      //           size: "16",
+      //           weight: "bold",
+      //         },
+      //       },
+      //       legend: {
+      //         display: false,
+      //       },
+      //     },
+      //     responsive: true,
+      //     maintainAspectRatio: false,
+      //     title: {
+      //       display: false,
+      //     },
+      //     scales: {
+      //       y: {
+      //         grid: {
+      //           display: false,
+      //           drawTicks: false,
+      //           drawBorder: false,
+      //         },
+      //         ticks: {
+      //           padding: 35,
+      //           max: 1200,
+      //           min: 500,
+      //         },
+      //       },
+      //       x: {
+      //         grid: {
+      //           drawBorder: false,
+      //           color: "rgba(143, 146, 161, .1)",
+      //           zeroLineColor: "rgba(143, 146, 161, .1)",
+      //         },
+      //         ticks: {
+      //           padding: 20,
+      //         },
+      //       },
+      //     },
+      //   },
+      // });
+      // function generateCappedRandomData(days, total, capIndex) {
+      //   const data = Array(days).fill(0);
+      //   let remaining = total;
+
+      //   while (remaining > 0) {
+      //     const i = Math.floor(Math.random() * capIndex); // chỉ chọn trong 0–5
+      //     data[i]++;
+      //     remaining--;
+      //   }
+
+      //   return data;
+      // }
+
+      // const ctx1 = document.getElementById("Chart1").getContext("2d");
+
+      // // Generate random daily data adding up to the required totals
+      // function generateRandomData(days, total) {
+      //   const data = Array(days).fill(0);
+      //   let remaining = total;
+
+      //   while (remaining > 0) {
+      //     const i = Math.floor(Math.random() * days);
+      //     data[i]++;
+      //     remaining--;
+      //   }
+
+      //   return data;
+      // }
+
+      // const daysInMonth = 31;
+      // // const drowsyData = generateRandomData(daysInMonth, 15);
+      // // const alcoholData = generateRandomData(daysInMonth, 18);
+      // const drowsyData = generateCappedRandomData(daysInMonth, 11, 6); // capIndex=6 cho ngày 1–6
+      // const alcoholData = generateCappedRandomData(daysInMonth, 10, 6);
+
+      // const labels = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
+
+      // const chart1 = new Chart(ctx1, {
+      //   type: "line",
+      //   data: {
+      //     labels: labels, // days 1–31
+      //     datasets: [
+      //       {
+      //         label: "Drowsy Violations",
+      //         backgroundColor: "transparent",
+      //         borderColor: "#F97316", // orange
+      //         data: drowsyData,
+      //         pointBackgroundColor: "transparent",
+      //         pointHoverBackgroundColor: "#F97316",
+      //         pointBorderColor: "transparent",
+      //         pointHoverBorderColor: "#fff",
+      //         pointHoverBorderWidth: 4,
+      //         borderWidth: 3,
+      //         pointRadius: 5,
+      //         pointHoverRadius: 6,
+      //         cubicInterpolationMode: "monotone",
+      //       },
+      //       {
+      //         label: "Alcohol Violations",
+      //         backgroundColor: "transparent",
+      //         borderColor: "#3B82F6", // blue
+      //         data: alcoholData,
+      //         pointBackgroundColor: "transparent",
+      //         pointHoverBackgroundColor: "#3B82F6",
+      //         pointBorderColor: "transparent",
+      //         pointHoverBorderColor: "#fff",
+      //         pointHoverBorderWidth: 4,
+      //         borderWidth: 3,
+      //         pointRadius: 5,
+      //         pointHoverRadius: 6,
+      //         cubicInterpolationMode: "monotone",
+      //       },
+      //     ],
+      //   },
+      //   options: {
+      //     plugins: {
+      //       tooltip: {
+      //         callbacks: {
+      //           title: function (tooltipItems) {
+      //             const day = tooltipItems[0].label;
+      //             return `Day: ${day}`;
+      //           },
+      //           label: function (context) {
+      //             const label = context.dataset.label;
+      //             const value = context.raw;
+      //             return `Violation (${label}): ${value}`;
+      //           },
+      //         },
+      //         intersect: false,
+      //         backgroundColor: "#f9f9f9",
+      //         titleColor: "#8F92A1",
+      //         bodyColor: "#171717",
+      //         bodyFont: {
+      //           family: "Plus Jakarta Sans",
+      //           size: 14,
+      //           weight: "bold",
+      //         },
+      //         padding: {
+      //           x: 20,
+      //           y: 8,
+      //         },
+      //         bodyAlign: "center",
+      //         titleAlign: "center",
+      //         displayColors: false,
+      //       },
+      //       legend: {
+      //         display: true,
+      //         labels: {
+      //           font: {
+      //             family: "Plus Jakarta Sans",
+      //             size: 12,
+      //           },
+      //         },
+      //       },
+      //     },
+      //     responsive: true,
+      //     maintainAspectRatio: false,
+      //     scales: {
+      //       y: {
+      //         grid: {
+      //           display: false,
+      //           drawTicks: false,
+      //           drawBorder: false,
+      //         },
+      //         ticks: {
+      //           padding: 20,
+      //           stepSize: 1,
+      //           beginAtZero: true,
+      //         },
+      //       },
+      //       x: {
+      //         grid: {
+      //           drawBorder: false,
+      //           color: "rgba(143, 146, 161, .1)",
+      //         },
+      //         ticks: {
+      //           padding: 15,
+      //         },
+      //       },
+      //     },
+      //   },
+      // });
+    </script>
+    <script>
+      // Hàm để gọi API và lấy dữ liệu cho Drowsy Violations và Alcohol Violations
+      async function fetchDrowsyAndAlcoholData() {
+        try {
+          // Lấy dữ liệu Drowsy Violations
+          const drowsyResponse = await fetch(
+            "http://26.148.120.1:8080/api/stats/drowsiness/daily",
+            {
+              method: "GET",
+              headers: {
+                accept: "*/*",
+                Authorization:
+                  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NjYyNTY5NCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQ2NTM5Mjk0fQ.lngOiDbs7pH9N-bg_kcK43vbHEzrvQQLbrntOOxBFsOT8Hrhdg54QR5Mi8VauLlpI9jmFzKpC2yG_2Hiamiq7g",
+              },
+            }
+          );
+          const drowsyData = await drowsyResponse.json();
+
+          // Lấy dữ liệu Alcohol Violations
+          const alcoholResponse = await fetch(
+            "http://26.148.120.1:8080/api/stats/alcohol/daily",
+            {
+              method: "GET",
+              headers: {
+                accept: "*/*",
+                Authorization:
+                  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NjYyNTY5NCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQ2NTM5Mjk0fQ.lngOiDbs7pH9N-bg_kcK43vbHEzrvQQLbrntOOxBFsOT8Hrhdg54QR5Mi8VauLlpI9jmFzKpC2yG_2Hiamiq7g",
+              },
+            }
+          );
+          const alcoholData = await alcoholResponse.json();
+
+          // Chuyển đổi dữ liệu API thành dữ liệu mà Chart.js cần
+          const daysInMonth = 31;
+          const drowsyViolations = new Array(daysInMonth).fill(0);
+          const alcoholViolations = new Array(daysInMonth).fill(0);
+
+          // Giả sử API trả về một đối tượng với các ngày là khóa, chuyển dữ liệu này thành mảng
+          Object.keys(drowsyData).forEach((date) => {
+            const day = new Date(date).getDate(); // Lấy ngày từ định dạng 'YYYY-MM-DD'
+            if (day <= daysInMonth) {
+              drowsyViolations[day - 1] = drowsyData[date]; // Cập nhật dữ liệu vi phạm buồn ngủ
+            }
+          });
+
+          Object.keys(alcoholData).forEach((date) => {
+            const day = new Date(date).getDate(); // Lấy ngày từ định dạng 'YYYY-MM-DD'
+            if (day <= daysInMonth) {
+              alcoholViolations[day - 1] = alcoholData[date]; // Cập nhật dữ liệu vi phạm rượu
+            }
+          });
+
+          // Cập nhật biểu đồ với dữ liệu mới
+          updateChart(drowsyViolations, alcoholViolations);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      // Hàm để cập nhật biểu đồ Chart.js
+      function updateChart(drowsyViolations, alcoholViolations) {
+        const ctx1 = document.getElementById("Chart1").getContext("2d");
+
+        const labels = Array.from({ length: 31 }, (_, i) => `${i + 1}`);
+
+        const chart1 = new Chart(ctx1, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Drowsy Violations",
+                backgroundColor: "transparent",
+                borderColor: "#F97316", // orange
+                data: drowsyViolations,
+                pointBackgroundColor: "transparent",
+                pointHoverBackgroundColor: "#F97316",
+                pointBorderColor: "transparent",
+                pointHoverBorderColor: "#fff",
+                pointHoverBorderWidth: 4,
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 6,
+                cubicInterpolationMode: "monotone",
+              },
+              {
+                label: "Alcohol Violations",
+                backgroundColor: "transparent",
+                borderColor: "#3B82F6", // blue
+                data: alcoholViolations,
+                pointBackgroundColor: "transparent",
+                pointHoverBackgroundColor: "#3B82F6",
+                pointBorderColor: "transparent",
+                pointHoverBorderColor: "#fff",
+                pointHoverBorderWidth: 4,
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 6,
+                cubicInterpolationMode: "monotone",
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    const day = tooltipItems[0].label;
+                    return `Day: ${day}`;
+                  },
+                  label: function (context) {
+                    const label = context.dataset.label;
+                    const value = context.raw;
+                    return `Violation (${label}): ${value}`;
+                  },
+                },
+                intersect: false,
+                backgroundColor: "#f9f9f9",
+                titleColor: "#8F92A1",
+                bodyColor: "#171717",
+                bodyFont: {
+                  family: "Plus Jakarta Sans",
+                  size: 14,
+                  weight: "bold",
+                },
+                padding: {
+                  x: 20,
+                  y: 8,
+                },
+                bodyAlign: "center",
+                titleAlign: "center",
+                displayColors: false,
+              },
+              legend: {
+                display: true,
+                labels: {
+                  font: {
+                    family: "Plus Jakarta Sans",
+                    size: 12,
+                  },
+                },
+              },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                grid: {
+                  display: false,
+                  drawTicks: false,
+                  drawBorder: false,
+                },
+                ticks: {
+                  padding: 20,
+                  stepSize: 1,
+                  beginAtZero: true,
+                },
+              },
+              x: {
+                grid: {
+                  drawBorder: false,
+                  color: "rgba(143, 146, 161, .1)",
+                },
+                ticks: {
+                  padding: 15,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Gọi hàm để lấy dữ liệu và cập nhật biểu đồ khi trang được tải
+      document.addEventListener("DOMContentLoaded", fetchDrowsyAndAlcoholData);
+    </script>
+    <script>
+      fetch("sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar").innerHTML = data;
+
+          // Sau khi load sidebar xong, gắn class 'active' cho link đúng
+          const currentPage = window.location.pathname.split("/").pop();
+          const navLinks = document.querySelectorAll("#sidebar .nav-item a");
+
+          navLinks.forEach((link) => {
+            const linkPage = link.getAttribute("href");
+            if (linkPage === currentPage) {
+              link.parentElement.classList.add("active");
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to load sidebar:", error);
+        });
+    </script>
+    <script>
+      fetch("header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("header").innerHTML = data;
+        })
+        .catch((error) => console.error("Failed to load header:", error));
+    </script>
+    <script>
+      // Fetch driver data from API
+      function fetchDriverData() {
+        fetch(
+          "http://26.148.120.1:8080/api/violations?pageNumber=0&pageSize=1000000",
+          {
+            method: "GET",
+            mode: "cors", // Thêm mode cors
+            headers: {
+              accept: "*/*",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NjYyNTY5NCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQ2NTM5Mjk0fQ.lngOiDbs7pH9N-bg_kcK43vbHEzrvQQLbrntOOxBFsOT8Hrhdg54QR5Mi8VauLlpI9jmFzKpC2yG_2Hiamiq7g",
+            },
+          }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch driver data");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Driver data:", data);
+            // Replace vehicleData with the fetched data
+            vehicleData = data;
+            // sort the data by startTime in descending order\
+            vehicleData.sort((a, b) => new Date(b.time) - new Date(a.time));
+            renderTable(); // Re-render the table with new data
+            setupPagination(); // Re-setup pagination
+            updatePageInfo(); // Update page info
+          })
+          .catch((error) => {
+            console.error("Error fetching driver data:", error);
+          });
+      }
+
+      // Call the fetchDriverData function when the page loads
+      document.addEventListener("DOMContentLoaded", fetchDriverData);
+    </script>
+    <script>
+      // Fetch top driver violations data from API
+      function fetchTopDriverViolations() {
+        fetch("http://26.148.120.1:8080/api/stats/top-drivers/violations", {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            accept: "*/*",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NjYyNTY5NCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQ2NTM5Mjk0fQ.lngOiDbs7pH9N-bg_kcK43vbHEzrvQQLbrntOOxBFsOT8Hrhdg54QR5Mi8VauLlpI9jmFzKpC2yG_2Hiamiq7g",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch top driver violations data");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Top driver violations data:", data);
+            renderTopDriversTable(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching top driver violations data:", error);
+          });
+      }
+
+      function renderTopDriversTable(drivers) {
+        const tbody = document.querySelector("tbody");
+        tbody.innerHTML = "";
+
+        drivers.forEach((driver, index) => {
+          const row = document.createElement("tr");
+          const thumbnailUrl = getThumbnailUrl(driver.driver.faceData);
+          row.innerHTML = `
+        <td></td>
+        <td>
+  <div style="display: flex; align-items: center;">
+    <img 
+      src="${thumbnailUrl}" 
+      alt="Image" 
+      width="50" 
+      height="50" 
+      style="object-fit: cover; margin-right: 8px;"
+      onerror="this.src='https://your-server.com/fallback-image.jpg';"
+    />
+    <span style="font-size: 0.875rem;">${driver.driver.name ?? ""}</span>
+  </div>
+</td>
+
+        <td><p class="text-sm" style="text-align: center;">${
+          driver.totalViolations ?? ""
+        }</p></td>
+        <td><p class="text-sm" style="text-align: center;">${
+          driver.alcoholCount ?? ""
+        }</p></td>
+        <td><p class="text-sm" style="text-align: center;">${
+          driver.drowsinessCount ?? ""
+        }</p></td>
+      `;
+          tbody.appendChild(row);
+        });
+      }
+      function getThumbnailUrl(originalUrl) {
+        // Tìm ID từ đường link gốc
+        const idMatch = originalUrl.match(/id=([^&]+)/);
+        if (!idMatch) return "";
+
+        const fileId = idMatch[1];
+        // Tạo link thumbnail
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w50`;
+      }
+
+      function getThumbnailUrl(originalUrl) {
+        const idMatch = originalUrl.match(/id=([^&]+)/);
+        if (!idMatch) return originalUrl;
+        const fileId = idMatch[1];
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w50`;
+      }
+
+      // Call the fetchTopDriverViolations function when the page loads
+      document.addEventListener("DOMContentLoaded", fetchTopDriverViolations);
+    </script>
+    <script>
+      function fetchMonthlyData() {
+        fetch(
+          "http://26.148.120.1:8080/api/stats/monthly?time=2025-04-06T00%3A00%3A00.015Z",
+          {
+            method: "GET",
+            headers: {
+              accept: "*/*",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NjYyNTY5NCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQ2NTM5Mjk0fQ.lngOiDbs7pH9N-bg_kcK43vbHEzrvQQLbrntOOxBFsOT8Hrhdg54QR5Mi8VauLlpI9jmFzKpC2yG_2Hiamiq7g",
+            },
+          }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch monthly data");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Fetched data:", data);
+
+            // Update values in HTML
+            document.getElementById("currentMonthVehicles").textContent =
+              data.currentMonthVehicles;
+            document.getElementById("currentMonthDrivers").textContent =
+              data.currentMonthDrivers;
+            document.getElementById(
+              "currentMonthDrowsinessViolations"
+            ).textContent = data.currentMonthDrowsinessViolations;
+            document.getElementById(
+              "currentMonthAlcoholViolations"
+            ).textContent = data.currentMonthAlcoholViolations;
+
+            // Update change indicators
+            updateChangeIndicator(
+              data.currentMonthVehicles,
+              data.previousMonthVehicles,
+              "vehiclesChangeIndicator"
+            );
+            updateChangeIndicator(
+              data.currentMonthDrivers,
+              data.previousMonthDrivers,
+              "driversChangeIndicator"
+            );
+            updateChangeIndicator(
+              data.currentMonthDrowsinessViolations,
+              data.previousMonthDrowsinessViolations,
+              "drowsinessChangeIndicator"
+            );
+            updateChangeIndicator(
+              data.currentMonthAlcoholViolations,
+              data.previousMonthAlcoholViolations,
+              "alcoholChangeIndicator"
+            );
+          })
+          .catch((error) => {
+            console.error("Error fetching monthly data:", error);
+          });
+      }
+
+      function updateChangeIndicator(current, previous, indicatorId) {
+        const indicator = document.getElementById(indicatorId);
+        const icon = indicator.querySelector("i");
+        const percentSpan = indicator.querySelector(".percent-change");
+
+        let diff = current - previous;
+        if (diff > 0) {
+          icon.className = "lni lni-arrow-up";
+          indicator.className = "text-sm text-danger";
+          percentSpan.textContent = `+${diff}`;
+        } else if (diff < 0) {
+          icon.className = "lni lni-arrow-down";
+          indicator.className = "text-sm text-success";
+          percentSpan.textContent = `${diff}`;
+        } else {
+          icon.className = "lni lni-minus";
+          indicator.className = "text-sm text-gray";
+          percentSpan.textContent = "0";
+        }
+      }
+
+      // Fetch data after the page has loaded
+      document.addEventListener("DOMContentLoaded", fetchMonthlyData);
+    </script>
+  </body>
+</html>

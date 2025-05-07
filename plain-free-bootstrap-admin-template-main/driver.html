@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/favicon.svg"
+      type="image/x-icon"
+    />
+    <title>Vehicle Management | Embedded System</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/lineicons.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/css/materialdesignicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+      /* Custom table styles */
+      .datatable {
+        width: 100%;
+        overflow-x: auto;
+        margin: 20px 0;
+      }
+
+      #vehicleTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+      }
+
+      #vehicleTable thead th {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-weight: 600;
+        text-align: left;
+        padding: 12px 15px;
+        border-bottom: 2px solid #dee2e6;
+        position: relative;
+        cursor: pointer;
+      }
+
+      #vehicleTable tbody tr {
+        border-bottom: 1px solid #dee2e6;
+        transition: all 0.3s;
+      }
+
+      #vehicleTable tbody tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      #vehicleTable tbody td {
+        padding: 12px 15px;
+        vertical-align: middle;
+      }
+
+      #vehicleTable tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      /* Sorting arrows */
+      .th-sm.sorting::after {
+        content: "⇅";
+        position: absolute;
+        right: 8px;
+        font-size: 12px;
+        opacity: 0.5;
+      }
+
+      .th-sm.sorting.asc::after {
+        content: "↑";
+        opacity: 1;
+      }
+
+      .th-sm.sorting.desc::after {
+        content: "↓";
+        opacity: 1;
+      }
+
+      /* Pagination styles */
+      .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .page-item {
+        margin: 0 5px;
+      }
+
+      .page-link {
+        padding: 6px 12px;
+        border: 1px solid #dee2e6;
+        background-color: #fff;
+        color: #007bff;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.3s;
+      }
+
+      .page-link:hover {
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+      }
+
+      .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+      }
+
+      .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
+      }
+
+      .page-info {
+        color: #6c757d;
+        font-size: 14px;
+      }
+      table th,
+      table td {
+        text-align: center !important;
+        vertical-align: middle !important;
+      }
+
+      .rows-per-page {
+        display: flex;
+        align-items: center;
+      }
+
+      .rows-per-page select {
+        margin-left: 10px;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+      }
+
+      /* Status badge styles */
+      .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .badge-active {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .badge-inactive {
+        background-color: #dc3545;
+        color: white;
+      }
+      /* Thêm vào phần <style> trong head */
+      .pagination-container {
+        font-family: "Roboto", sans-serif; /* Có thể thay bằng font bạn muốn */
+        font-size: 14px; /* Kích thước font */
+      }
+
+      .page-info {
+        font-size: 14px;
+        font-weight: 500; /* Độ đậm */
+        color: #495057; /* Màu chữ */
+      }
+
+      .page-link {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .rows-per-page {
+        font-size: 14px;
+        font-weight: 500;
+        color: #495057;
+      }
+      /* Màu xanh */
+      .tr-selected-blue {
+        background-color: #e6f7ff !important;
+        box-shadow: inset 0 0 0 1px #1890ff;
+      }
+
+      /* Màu vàng */
+      .tr-selected-yellow {
+        background-color: #fff8e6 !important;
+        box-shadow: inset 0 0 0 1px #ffc53d;
+      }
+
+      /* Màu tím */
+      .tr-selected-purple {
+        background-color: #f9f0ff !important;
+        box-shadow: inset 0 0 0 1px #722ed1;
+      }
+      .dropdown-toggle::after {
+        display: none !important;
+      }
+      /* Modal styles */
+      .modal-header {
+        padding: 1rem;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .modal-title {
+        margin: 0;
+        font-size: 1.25rem;
+      }
+
+      .modal-body {
+        padding: 1rem;
+      }
+
+      .modal-footer {
+        padding: 1rem;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      }
+
+      .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .form-control,
+      .form-select {
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .btn {
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+      }
+
+      .btn-primary {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+      }
+      .remove-btn:active {
+        background-color: #f0f0f0; /* màu nền khi click */
+        color: #333; /* màu chữ khi click */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <!-- ======== Preloader =========== -->
+
+    <!-- ======== sidebar-nav start =========== -->
+    <div id="sidebar"></div>
+
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <div id="header"></div>
+
+      <section class="section">
+        <div class="container-fluid">
+          <div class="title-wrapper pt-30" style="padding-bottom: 0">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title" style="margin-bottom: 0">
+                  <h2 style="margin-bottom: 0">Driver Management</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-end mb-3">
+            <div class="col-auto">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#addVehicleModal"
+              >
+                Add New Driver
+              </button>
+            </div>
+          </div>
+          <!-- Add Vehicle Modal -->
+          <div
+            class="modal fade"
+            id="addVehicleModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add New Driver</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form id="vehicleForm">
+                    <div class="mb-3">
+                      <label for="driverName" class="form-label">Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="vehicleModel"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="driverlicenseNumber" class="form-label"
+                        >License Number</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="vehicleModel"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="vehicleImage" class="form-label">Image</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="vehicleImage"
+                        accept=".png, .jpg, .jpeg"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="vehicleStatus" class="form-label"
+                        >Status</label
+                      >
+                      <select class="form-select" id="vehicleStatus" required>
+                        <option value="AVAILABLE">ACTIVE</option>
+                        <option value="RUNNING">INACTIVE</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveVehicleBtn"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-mdb-datatable-init class="datatable">
+            <table id="vehicleTable">
+              <thead>
+                <tr>
+                  <th class="th-sm">Driver ID</th>
+                  <th class="th-sm">Name</th>
+                  <th class="th-sm">License Number</th>
+                  <th class="th-sm">Image</th>
+                  <th class="th-sm">Status</th>
+                  <!-- <th class="th-sm">Create At</th> -->
+                  <th class="th-sm">Action</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <!-- Data will be inserted here by JavaScript -->
+              </tbody>
+            </table>
+
+            <!-- Pagination controls -->
+            <div class="pagination-container">
+              <div class="rows-per-page">
+                <span>Rows per page:</span>
+                <select id="rowsPerPage">
+                  <option value="5">5</option>
+                  <option value="10" selected>10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+
+              <!-- <div class="page-info" id="pageInfo"></div> -->
+
+              <ul class="pagination" id="pagination">
+                <!-- Pagination buttons will be inserted here by JavaScript -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+      // Vehicle data according to your entity definition
+      // const vehicleData = [
+      //   {
+      //     driverId: 1,
+      //     name: "Nguyễn Minh Khoa",
+      //     licenseNumber: "ABC-0001",
+      //     image: "assets/images/products/product-mini-1.jpg",
+      //     status: "ACTIVE",
+      //     createdAt: "2025-04-16T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 2,
+      //     name: "Trần Thanh Trúc",
+      //     licenseNumber: "ABC-0002",
+      //     image: "assets/images/products/product-mini-2.jpg",
+      //     status: "ACTIVE",
+      //     createdAt: "2025-04-17T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 3,
+      //     name: "Lê Hải Đăng",
+      //     licenseNumber: "ABC-0003",
+      //     image: "assets/images/products/product-mini-3.jpg",
+      //     status: "ACTIVE",
+      //     createdAt: "2025-04-18T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 4,
+      //     name: "Phạm Bảo Ngọc",
+      //     licenseNumber: "ABC-0004",
+      //     image: "assets/images/products/product-mini-4.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-19T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 5,
+      //     name: "Vũ Gia Hưng",
+      //     licenseNumber: "ABC-0005",
+      //     image: "assets/images/products/product-mini-5.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-20T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 6,
+      //     name: "Bùi Khánh Linh",
+      //     licenseNumber: "ABC-0006",
+      //     image: "assets/images/products/product-mini-6.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-21T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 7,
+      //     name: "Đặng Phúc An",
+      //     licenseNumber: "ABC-0007",
+      //     image: "assets/images/products/product-mini-7.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-22T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 8,
+      //     name: "Hồ Thiên Phú",
+      //     licenseNumber: "ABC-0008",
+      //     image: "assets/images/products/product-mini-8.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-23T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 9,
+      //     name: "Nguyễn Ngọc Hân",
+      //     licenseNumber: "ABC-0009",
+      //     image: "assets/images/products/product-mini-9.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-24T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 10,
+      //     name: "Trần Hoàng Nam",
+      //     licenseNumber: "ABC-0010",
+      //     image: "assets/images/products/product-mini-10.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-25T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 11,
+      //     name: "Lê Anh Thư",
+      //     licenseNumber: "ABC-0011",
+      //     image: "assets/images/products/product-mini-11.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-26T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 12,
+      //     name: "Phạm Đức Minh",
+      //     licenseNumber: "ABC-0012",
+      //     image: "assets/images/products/product-mini-12.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-27T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 13,
+      //     name: "Vũ Quỳnh Anh",
+      //     licenseNumber: "ABC-0013",
+      //     image: "assets/images/products/product-mini-13.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-28T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 14,
+      //     name: "Bùi Quốc Bảo",
+      //     licenseNumber: "ABC-0014",
+      //     image: "assets/images/products/product-mini-14.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-29T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 15,
+      //     name: "Đặng Thảo My",
+      //     licenseNumber: "ABC-0015",
+      //     image: "assets/images/products/product-mini-15.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-04-30T12:30:00Z",
+      //   },
+      //   {
+      //     driverId: 16,
+      //     name: "Hồ Nhật Quang",
+      //     licenseNumber: "ABC-0016",
+      //     image: "assets/images/products/product-mini-16.jpg",
+      //     status: "INACTIVE",
+      //     createdAt: "2025-05-01T12:30:00Z",
+      //   },
+      // ];
+
+      // Pagination variables
+      let currentPage = 1;
+      let rowsPerPage = 10;
+      let sortedColumn = null;
+      let sortDirection = "asc";
+
+      // Initialize the table
+      function initTable() {
+        renderTable();
+        setupPagination();
+        setupSorting();
+        updatePageInfo();
+
+        // Rows per page change event
+        document
+          .getElementById("rowsPerPage")
+          .addEventListener("change", function () {
+            rowsPerPage = parseInt(this.value);
+            currentPage = 1;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+          });
+      }
+
+      // Render the table with current page data
+      function renderTable() {
+        const tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+
+        // Sort data if needed
+        let sortedData = [...vehicleData];
+        if (sortedColumn !== null) {
+          sortedData.sort((a, b) => {
+            const aValue = a[sortedColumn];
+            const bValue = b[sortedColumn];
+
+            // Special handling for status to sort by enum order
+            if (sortedColumn === "status") {
+              const statusOrder = { ACTIVE: 1, INACTIVE: 2 };
+              return (
+                (statusOrder[aValue] - statusOrder[bValue]) *
+                (sortDirection === "asc" ? 1 : -1)
+              );
+            }
+
+            // Regular text comparison
+            return (
+              aValue.localeCompare(bValue) * (sortDirection === "asc" ? 1 : -1)
+            );
+          });
+        }
+
+        // Get data for current page
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const paginatedData = sortedData.slice(startIndex, endIndex);
+
+        // Create table rows
+        paginatedData.forEach((vehicle, index) => {
+          const tr = document.createElement("tr");
+          const statusClass = `badge-${vehicle.status
+            .toLowerCase()
+            .replace("_", "-")}`;
+          const rowNumber = startIndex + index + 1;
+          const thumbnailUrl = getThumbnailUrl(vehicle.faceData);
+
+          tr.innerHTML = `
+      <td>${vehicle.driverId}</td>
+      <td>${vehicle.name}</td>
+      <td>${vehicle.licenseNumber}</td>
+        <td>
+    <img 
+      src="${thumbnailUrl}" 
+      alt="Image" 
+  
+      width="50" 
+      height="50" 
+       style="object-fit: cover"
+     
+      onerror="this.src='https://your-server.com/fallback-image.jpg';"
+    />
+  </td>
+      <td><span class="badge ${statusClass}">${vehicle.status.replace(
+            "_",
+            " "
+          )}</span></td>
+    
+<td>
+
+       
+        <div class="action justify-content-end">
+          
+      <button
+  class="more-btn ml-10 dropdown-toggle"
+  id="moreAction${rowNumber}"
+  data-bs-toggle="dropdown"
+  aria-expanded="false"
+  data-id="${vehicle.licensePlate}"
+  style="border: none; background: none;"
+>
+  <i class="lni lni-more-alt"></i>
+</button>
+
+
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="moreAction${rowNumber}"
+          >
+            <li class="dropdown-item">
+              <button class="text-gray remove-btn no-radius w-100"
+        style="border: none; background: none; box-shadow: none; text-align: left;"
+        data-id="${vehicle.driverId}"
+        onclick="removeVehicle(event, '${vehicle.driverId}')">
+  Remove
+</button>
+
+
+            </li>
+            <li class="dropdown-item">
+              <button class="text-gray edit-btn no-radius w-100"
+        style="border: none; background: none; box-shadow: none; text-align: left;"
+        data-id="${vehicle.driverId}"
+        onclick="editVehicle(event, '${vehicle.driverId}')">
+  Edit
+</button>
+
+            </li>
+          </ul>
+        </div>
+      </td>
+    `;
+          tableBody.appendChild(tr);
+        });
+
+        // Add event listeners for action buttons
+        addActionEventListeners();
+      }
+      function getThumbnailUrl(originalUrl) {
+        // Tìm ID từ đường link gốc
+        const idMatch = originalUrl.match(/id=([^&]+)/);
+        if (!idMatch) return "";
+
+        const fileId = idMatch[1];
+        // Tạo link thumbnail
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w50`;
+      }
+
+      function addActionEventListeners() {
+        // Edit button click
+        document.querySelectorAll(".edit").forEach((button) => {
+          button.addEventListener("click", (e) => {
+            const licensePlate = e.currentTarget.getAttribute("data-id");
+            editVehicle(licensePlate);
+          });
+        });
+
+        // Remove button click
+        // document.querySelectorAll(".remove-btn").forEach((button) => {
+        //   button.addEventListener("click", (e) => {
+        //     e.preventDefault();
+        //     console.log("Remove button clicked");
+        //     // const licensePlate = e.currentTarget.getAttribute("data-id");
+        //     // removeVehicle(licensePlate);
+        //   });
+        // });
+
+        // Edit from dropdown click
+        // document.querySelectorAll(".edit-btn").forEach((button) => {
+        //   button.addEventListener("click", (e) => {
+        //     e.preventDefault();
+        //     const licensePlate = e.currentTarget.getAttribute("data-id");
+        //     editVehicle(licensePlate);
+        //   });
+        // });
+      }
+      function formatDate(dateString) {
+        const date = new Date(dateString); // Chuyển đổi chuỗi thành đối tượng Date
+
+        // Định dạng thời gian (HH:MM:SS)
+        const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false, // 24-hour clock
+        });
+        const time = timeFormatter.format(date);
+
+        // Định dạng ngày (DD/MM/YYYY)
+        const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        const formattedDate = dateFormatter.format(date);
+
+        return `${time} ${formattedDate}`;
+      }
+
+      function editVehicle(e, licensePlate) {
+        e.preventDefault();
+
+        const vehicle = vehicleData.find(
+          (v) => v.licensePlate === licensePlate
+        );
+
+        if (vehicle) {
+          const addVehicleModal = new bootstrap.Modal(
+            document.getElementById("addVehicleModal")
+          );
+          const modalTitle = document.querySelector(
+            "#addVehicleModal .modal-title"
+          );
+          const saveVehicleBtn = document.getElementById("saveVehicleBtn");
+          const vehicleForm = document.getElementById("vehicleForm");
+
+          // Đặt tiêu đề và nút
+          modalTitle.textContent = "Edit Vehicle";
+          saveVehicleBtn.textContent = "Update";
+
+          // Điền dữ liệu vào form
+          document.getElementById("licensePlate").value = vehicle.licensePlate;
+          document.getElementById("vehicleModel").value = vehicle.model;
+          document.getElementById("vehicleStatus").value = vehicle.status;
+
+          // Hiển thị modal
+          addVehicleModal.show();
+
+          // Gắn cờ edit mode
+          isEditMode = true;
+          currentLicensePlate = vehicle.licensePlate;
+
+          // Xử lý nút save/update (chỉ set lại handler một lần)
+          saveVehicleBtn.onclick = function () {
+            const newLicensePlate = document
+              .getElementById("licensePlate")
+              .value.trim();
+            const newModel = document
+              .getElementById("vehicleModel")
+              .value.trim();
+            const newStatus = document.getElementById("vehicleStatus").value;
+
+            if (!newLicensePlate || !newModel) {
+              alert("Please fill all required fields!");
+              return;
+            }
+
+            // Khi edit thì không check trùng
+            const index = vehicleData.findIndex(
+              (v) => v.licensePlate === currentLicensePlate
+            );
+            if (index !== -1) {
+              // Cập nhật thông tin của vehicle
+              vehicleData[index] = {
+                licensePlate: newLicensePlate, // Chỉ thay đổi biển số nếu có thay đổi
+                model: newModel,
+                status: newStatus,
+              };
+              alert("Vehicle updated successfully!");
+            }
+
+            // Đóng modal và reset form
+            addVehicleModal.hide();
+            vehicleForm.reset();
+            isEditMode = false;
+            currentLicensePlate = null;
+
+            renderTable(); // Cập nhật lại bảng sau khi thay đổi
+            setupPagination();
+            updatePageInfo();
+          };
+        } else {
+          alert("Vehicle not found!");
+        }
+      }
+
+      function removeVehicle(e, licensePlate) {
+        // Confirm before removing
+        console.log("Remove button clicked", licensePlate);
+        e.preventDefault();
+        if (
+          confirm(`Are you sure you want to remove vehicle ${licensePlate}?`)
+        ) {
+          // Find index of vehicle to remove
+          const index = vehicleData.findIndex(
+            (v) => v.licensePlate === licensePlate
+          );
+          if (index !== -1) {
+            vehicleData.splice(index, 1);
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+            console.log("Vehicle removed:", licensePlate);
+          }
+        }
+      }
+
+      // Setup pagination buttons
+      function setupPagination() {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        const pageCount = Math.ceil(vehicleData.length / rowsPerPage);
+
+        // Previous button
+        const prevLi = document.createElement("li");
+        prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
+        prevLi.innerHTML = `<a class="page-link" href="#">Previous</a>`;
+        prevLi.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+          }
+        });
+        pagination.appendChild(prevLi);
+
+        // Page buttons
+        const maxVisiblePages = 5;
+        let startPage = Math.max(
+          1,
+          currentPage - Math.floor(maxVisiblePages / 2)
+        );
+        let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        if (startPage > 1) {
+          const firstLi = document.createElement("li");
+          firstLi.className = "page-item";
+          firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
+          firstLi.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentPage = 1;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+          });
+          pagination.appendChild(firstLi);
+
+          if (startPage > 2) {
+            const ellipsisLi = document.createElement("li");
+            ellipsisLi.className = "page-item disabled";
+            ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+            pagination.appendChild(ellipsisLi);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const li = document.createElement("li");
+          li.className = `page-item ${i === currentPage ? "active" : ""}`;
+          li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          li.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentPage = i;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+          });
+          pagination.appendChild(li);
+        }
+
+        if (endPage < pageCount) {
+          if (endPage < pageCount - 1) {
+            const ellipsisLi = document.createElement("li");
+            ellipsisLi.className = "page-item disabled";
+            ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+            pagination.appendChild(ellipsisLi);
+          }
+
+          const lastLi = document.createElement("li");
+          lastLi.className = "page-item";
+          lastLi.innerHTML = `<a class="page-link" href="#">${pageCount}</a>`;
+          lastLi.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentPage = pageCount;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+          });
+          pagination.appendChild(lastLi);
+        }
+
+        // Next button
+        const nextLi = document.createElement("li");
+        nextLi.className = `page-item ${
+          currentPage === pageCount ? "disabled" : ""
+        }`;
+        nextLi.innerHTML = `<a class="page-link" href="#">Next</a>`;
+        nextLi.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (currentPage < pageCount) {
+            currentPage++;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+          }
+        });
+        pagination.appendChild(nextLi);
+      }
+
+      // Update page information text
+      function updatePageInfo() {
+        const startIndex = (currentPage - 1) * rowsPerPage + 1;
+        const endIndex = Math.min(
+          currentPage * rowsPerPage,
+          vehicleData.length
+        );
+        const totalItems = vehicleData.length;
+
+        document.getElementById(
+          "pageInfo"
+        ).textContent = `${startIndex}-${endIndex} of ${totalItems}`;
+      }
+
+      // Setup column sorting
+      function setupSorting() {
+        document
+          .querySelectorAll("#vehicleTable thead th")
+          .forEach((header, index) => {
+            const columns = ["no", "licensePlate", "model", "status"];
+            const columnName = columns[index];
+
+            header.addEventListener("click", () => {
+              // Clear all sorting classes
+              document
+                .querySelectorAll("#vehicleTable thead th")
+                .forEach((th) => {
+                  th.classList.remove("asc", "desc", "sorting");
+                });
+
+              // Add appropriate classes to clicked header
+              header.classList.add("sorting");
+
+              if (sortedColumn === columnName) {
+                // Reverse sort direction if clicking the same column
+                sortDirection = sortDirection === "asc" ? "desc" : "asc";
+              } else {
+                // New column, default to ascending
+                sortedColumn = columnName;
+                sortDirection = "asc";
+              }
+
+              header.classList.add(sortDirection);
+
+              // Re-render table with sorted data
+              currentPage = 1;
+              renderTable();
+              setupPagination();
+              updatePageInfo();
+            });
+          });
+      }
+
+      // Initialize the table when DOM is loaded
+      document.addEventListener("DOMContentLoaded", initTable);
+    </script>
+
+    <script>
+      fetch("sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar").innerHTML = data;
+
+          // Sau khi load sidebar xong, gắn class 'active' cho link đúng
+          const currentPage = window.location.pathname.split("/").pop();
+          const navLinks = document.querySelectorAll("#sidebar .nav-item a");
+
+          navLinks.forEach((link) => {
+            const linkPage = link.getAttribute("href");
+            if (linkPage === currentPage) {
+              link.parentElement.classList.add("active");
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to load sidebar:", error);
+        });
+    </script>
+    <script>
+      fetch("header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("header").innerHTML = data;
+        })
+        .catch((error) => console.error("Failed to load header:", error));
+    </script>
+    <script>
+      // Xử lý modal thêm mới vehicle
+      document.addEventListener("DOMContentLoaded", function () {
+        const addVehicleModal = new bootstrap.Modal(
+          document.getElementById("addVehicleModal")
+        );
+
+        // Xử lý khi nhấn nút Save
+        document
+          .getElementById("saveVehicleBtn")
+          .addEventListener("click", function () {
+            const licensePlate = document.getElementById("licensePlate").value;
+            const model = document.getElementById("vehicleModel").value;
+            const status = document.getElementById("vehicleStatus").value;
+
+            if (!licensePlate || !model) {
+              alert("Please fill all required fields!");
+              return;
+            }
+
+            // Kiểm tra biển số xe đã tồn tại chưa
+            const exists = vehicleData.some(
+              (v) => v.licensePlate === licensePlate
+            );
+            if (exists) {
+              alert("Vehicle with this license plate already exists!");
+              return;
+            }
+
+            // Thêm vehicle mới vào đầu mảng
+            vehicleData.unshift({
+              licensePlate: licensePlate,
+              model: model,
+              status: status,
+            });
+
+            // Đóng modal
+            addVehicleModal.hide();
+
+            // Reset form
+            document.getElementById("vehicleForm").reset();
+
+            // Cập nhật bảng
+            currentPage = 1;
+            renderTable();
+            setupPagination();
+            updatePageInfo();
+
+            alert("Vehicle added successfully!");
+          });
+
+        // Reset form khi modal đóng
+        document
+          .getElementById("addVehicleModal")
+          .addEventListener("hidden.bs.modal", function () {
+            document.getElementById("vehicleForm").reset();
+          });
+      });
+    </script>
+    <script>
+      // Fetch driver data from API
+      function fetchDriverData() {
+        fetch(
+          "http://26.148.120.1:8080/api/drivers?pageNumber=0&pageSize=1000000",
+          {
+            method: "GET",
+            mode: "cors", // Thêm mode cors
+            headers: {
+              accept: "*/*",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NjYyNTY5NCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQ2NTM5Mjk0fQ.lngOiDbs7pH9N-bg_kcK43vbHEzrvQQLbrntOOxBFsOT8Hrhdg54QR5Mi8VauLlpI9jmFzKpC2yG_2Hiamiq7g",
+            },
+          }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch driver data");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Driver data:", data);
+            // Replace vehicleData with the fetched data
+            vehicleData = data;
+            renderTable(); // Re-render the table with new data
+            setupPagination(); // Re-setup pagination
+            updatePageInfo(); // Update page info
+          })
+          .catch((error) => {
+            console.error("Error fetching driver data:", error);
+          });
+      }
+
+      // Call the fetchDriverData function when the page loads
+      document.addEventListener("DOMContentLoaded", fetchDriverData);
+    </script>
+  </body>
+</html>

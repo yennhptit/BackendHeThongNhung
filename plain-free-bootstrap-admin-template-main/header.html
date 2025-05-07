@@ -1,0 +1,474 @@
+<header class="header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-6"></div>
+      <div class="col-lg-7 col-md-7 col-6">
+        <div class="header-right">
+          <!-- notification start -->
+          <div class="notification-box ml-15 d-none d-md-flex">
+            <button
+              class="dropdown-toggle"
+              type="button"
+              id="notification"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11 20.1667C9.88317 20.1667 8.88718 19.63 8.23901 18.7917H13.761C13.113 19.63 12.1169 20.1667 11 20.1667Z"
+                  fill=""
+                />
+                <path
+                  d="M10.1157 2.74999C10.1157 2.24374 10.5117 1.83333 11 1.83333C11.4883 1.83333 11.8842 2.24374 11.8842 2.74999V2.82604C14.3932 3.26245 16.3051 5.52474 16.3051 8.24999V14.287C16.3051 14.5301 16.3982 14.7633 16.564 14.9352L18.2029 16.6342C18.4814 16.9229 18.2842 17.4167 17.8903 17.4167H4.10961C3.71574 17.4167 3.5185 16.9229 3.797 16.6342L5.43589 14.9352C5.6017 14.7633 5.69485 14.5301 5.69485 14.287V8.24999C5.69485 5.52474 7.60672 3.26245 10.1157 2.82604V2.74999Z"
+                  fill=""
+                />
+              </svg>
+              <span></span>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end notification-dropdown"
+              aria-labelledby="notification"
+            >
+              <li class="notification-footer">
+                <div
+                  class="d-flex justify-content-between w-100 align-items-center"
+                >
+                  <button
+                    id="markAllRead"
+                    class="btn btn-link text-decoration-none"
+                  >
+                    Read all
+                  </button>
+                  <button
+                    id="deleteAll"
+                    class="btn btn-link text-decoration-none"
+                  >
+                    Delete all
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="notification-item unread">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex">
+                      <div class="image">
+                        <img
+                          src="assets/images/products/product-mini-2.jpg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="content">
+                        <h6>Trần Thanh Trúc</h6>
+                        <p>Driver drowsiness detected.</p>
+                        <span>12 hour ago</span>
+                      </div>
+                    </div>
+                    <div class="action-dropdown">
+                      <button
+                        class="btn btn-link dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="lni lni-more-alt"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item mark-read" href="#">
+                            <i class="lni lni-checkmark"></i> Mark as read
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item delete-notification" href="#">
+                            <i class="lni lni-trash"></i> Delete
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="notification-item unread">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex">
+                      <div class="image">
+                        <img
+                          src="assets/images/products/product-mini-5.jpg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="content">
+                        <h6>Vũ Gia Hưng</h6>
+                        <p>Driver drowsiness detected.</p>
+                        <span>13 hour ago</span>
+                      </div>
+                    </div>
+                    <div class="action-dropdown">
+                      <button
+                        class="btn btn-link dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                      >
+                        <i class="lni lni-more-alt"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item mark-read" href="#">
+                            <i class="lni lni-checkmark"></i> Mark as read
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item delete-notification" href="#">
+                            <i class="lni lni-trash"></i> Delete
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- notification end -->
+
+          <!-- profile start -->
+          <div class="profile-box ml-15">
+            <button
+              class="dropdown-toggle bg-transparent border-0"
+              type="button"
+              id="profile"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <div class="profile-info">
+                <div class="info">
+                  <div class="image">
+                    <img src="assets/images/profile/profile-image.png" alt="" />
+                  </div>
+                  <div>
+                    <h6 class="fw-500">Adam Joe</h6>
+                    <p>Admin</p>
+                  </div>
+                </div>
+              </div>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="profile"
+            >
+              <li>
+                <div class="author-info flex items-center !p-1">
+                  <div class="image">
+                    <img
+                      src="assets/images/profile/profile-image.png"
+                      alt="image"
+                    />
+                  </div>
+                  <div class="content">
+                    <h4 class="text-sm">Adam Joe</h4>
+                    <a
+                      class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs"
+                      href="#"
+                      >Email@gmail.com</a
+                    >
+                  </div>
+                </div>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+              </li>
+            </ul>
+          </div>
+          <!-- profile end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .action-dropdown .btn-link.dropdown-toggle {
+    background: none; /* Loại bỏ nền */
+    border: none; /* Loại bỏ viền */
+    box-shadow: none; /* Loại bỏ hiệu ứng shadow */
+    padding: 0; /* Loại bỏ padding */
+    outline: none; /* Loại bỏ viền khi focus */
+  }
+
+  .action-dropdown .btn-link.dropdown-toggle:hover,
+  .action-dropdown .btn-link.dropdown-toggle:focus {
+    background: none; /* Đảm bảo không có nền khi hover hoặc focus */
+    box-shadow: none; /* Loại bỏ shadow khi hover hoặc focus */
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .section {
+    padding-top: 80px;
+  }
+  /* Thêm vào phần CSS của bạn */
+
+  /* Xóa gạch chân cho nút More */
+  .action-dropdown .btn-link {
+    color: #666;
+    padding: 0;
+    text-decoration: none !important; /* Thêm dòng này */
+  }
+
+  /* Style cho notification footer */
+  .notification-footer {
+    display: flex;
+    justify-content: space-between; /* Đẩy các nút ra hai bên */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    background-color: transparent !important; /* Đảm bảo nền trong suốt */
+    border: none; /* Loại bỏ viền nếu có */
+    padding: 5px 10px; /* Giảm khoảng cách bên trong */
+    line-height: 1; /* Giảm chiều cao dòng */
+  }
+
+  #markAllRead,
+  #deleteAll {
+    font-size: 14px;
+    padding: 0; /* Loại bỏ padding thừa */
+    margin: 0; /* Loại bỏ margin thừa */
+    line-height: 1; /* Giảm chiều cao dòng */
+  }
+
+  #markAllRead,
+  #deleteAll {
+    font-size: 14px;
+    padding: 0; /* Loại bỏ padding thừa */
+    margin: 0; /* Loại bỏ margin thừa */
+    color: #007bff;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    white-space: nowrap; /* Đảm bảo chữ không bị xuống dòng */
+  }
+  #deleteAll {
+    font-size: 14px;
+    padding: 0; /* Loại bỏ padding thừa */
+    margin: 0 8px 0 0; /* Cách lề phải 3px */
+    color: #007bff;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    white-space: nowrap; /* Đảm bảo chữ không bị xuống dòng */
+  }
+
+  #deleteAll:hover {
+    color: #0056b3;
+  }
+
+  #markAllRead:hover,
+  #deleteAll:hover {
+    color: #0056b3;
+  }
+  /* Style cho các nút trong footer */
+  #markAllRead,
+  #deleteAll {
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #666;
+    background: none;
+    border: none;
+    text-decoration: none !important;
+  }
+
+  #markAllRead:hover,
+  #deleteAll:hover {
+    color: #333;
+  }
+
+  /* Style cho dropdown menu của nút More */
+  .action-dropdown .dropdown-menu {
+    min-width: 120px;
+    padding: 5px 0;
+    margin: 0;
+  }
+
+  .action-dropdown .dropdown-item {
+    font-size: 13px;
+    padding: 8px 15px;
+    color: #666;
+  }
+
+  .action-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  /* Thêm divider sau notification-footer */
+  .notification-footer {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-menu {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Notification Styles */
+  .notification-dropdown {
+    width: 320px;
+    padding: 0;
+  }
+
+  .notification-item {
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .notification-item.unread {
+    background-color: rgba(124, 58, 237, 0.1);
+  }
+
+  .notification-item .image {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+  }
+
+  .notification-item .image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .notification-item .content h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .notification-item .content p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #666;
+  }
+
+  .notification-item .content span {
+    font-size: 12px;
+    color: #999;
+  }
+
+  .action-dropdown .btn-link {
+    color: #666;
+    padding: 0;
+  }
+
+  .action-dropdown .dropdown-toggle::after {
+    display: none;
+  }
+
+  .action-dropdown .dropdown-menu {
+    min-width: 120px;
+    padding: 5px 0;
+  }
+
+  .action-dropdown .dropdown-item {
+    font-size: 13px;
+    padding: 8px 15px;
+  }
+
+  .action-dropdown .dropdown-item i {
+    margin-right: 8px;
+  }
+
+  .notification-footer {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Remove button background */
+  #markAllRead,
+  #deleteAll {
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #007bff;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+
+  /* Custom button style to match */
+  #markAllRead:hover,
+  #deleteAll:hover {
+    color: #0056b3;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Xử lý đánh dấu đã đọc một thông báo
+    document.querySelectorAll(".mark-read").forEach((button) => {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
+        const notificationItem = this.closest(".notification-item");
+        notificationItem.classList.remove("unread");
+      });
+    });
+
+    // Xử lý xóa một thông báo
+    document.querySelectorAll(".delete-notification").forEach((button) => {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
+        const notificationItem = this.closest("li");
+        notificationItem.remove();
+      });
+    });
+
+    // Xử lý đánh dấu tất cả đã đọc
+    document
+      .getElementById("markAllRead")
+      .addEventListener("click", function () {
+        document.querySelectorAll(".notification-item").forEach((item) => {
+          item.classList.remove("unread");
+        });
+      });
+
+    // Xử lý xóa tất cả thông báo
+    document.getElementById("deleteAll").addEventListener("click", function () {
+      document.querySelectorAll(".notification-item").forEach((item) => {
+        item.closest("li").remove();
+      });
+    });
+
+    // Đóng dropdown khi click vào action
+    document
+      .querySelectorAll(".action-dropdown .dropdown-item")
+      .forEach((item) => {
+        item.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+      });
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
