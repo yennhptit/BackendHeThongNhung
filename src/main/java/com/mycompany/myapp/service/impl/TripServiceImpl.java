@@ -148,7 +148,7 @@ public class TripServiceImpl implements TripService {
     @Override
     @Transactional(readOnly = true)
     public List<TripDTO> findAll() {
-        return tripRepository.findAll()
+        return tripRepository.findAllByIsDeleteFalse()
             .stream()
             .map(tripMapper::toDto)
             .collect(Collectors.toList());

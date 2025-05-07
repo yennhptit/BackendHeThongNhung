@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.util.List;
 
 /**
  * Spring Data JPA repository for the Vehicle entity.
@@ -16,6 +17,8 @@ import java.time.Instant;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long>, JpaSpecificationExecutor<Vehicle> {
 
     Page<Vehicle> findAllByIsDeleteFalse(Pageable pageable);
+
+    List<Vehicle> findAllByIsDeleteFalse();
 
     long countByCreatedAtBetween(Instant start, Instant end);
 }

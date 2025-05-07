@@ -88,7 +88,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(readOnly = true)
     public List<VehicleDTO> findAll() {
-        return vehicleRepository.findAll()
+        return vehicleRepository.findAllByIsDeleteFalse()
             .stream()
             .map(vehicleMapper::toDto)
             .collect(Collectors.toList());

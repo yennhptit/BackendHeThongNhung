@@ -22,6 +22,8 @@ public interface ViolationRepository extends JpaRepository<Violation, Long>, Jpa
 
     Page<Violation> findAllByIsDeleteFalse(Pageable pageable);
 
+    List<Violation> findAllByIsDeleteFalse();
+
     long countByTypeAndTimestampBetween(ViolationType type, Instant start, Instant end);
 
     @Query("SELECT DATE(v.timestamp) as day, COUNT(v) " +

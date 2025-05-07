@@ -22,6 +22,8 @@ public interface TripRepository extends JpaRepository<Trip, Long>, JpaSpecificat
 
     Page<Trip> findAllByIsDeleteFalse(Pageable pageable);
 
+    List<Trip> findAllByIsDeleteFalse();
+
     List<Trip> findAllByDriver(Driver driver);
 
     List<Trip> findAllByVehicle(Vehicle vehicle);

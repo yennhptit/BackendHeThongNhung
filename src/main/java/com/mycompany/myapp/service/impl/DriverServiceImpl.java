@@ -139,7 +139,7 @@ public class DriverServiceImpl implements DriverService {
     @Override
     @Transactional(readOnly = true)
     public List<DriverDTO> findAll() {
-        return driverRepository.findAll()
+        return driverRepository.findAllByIsDeleteFalse()
             .stream()
             .map(driverMapper::toDto)
             .collect(Collectors.toList());

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,6 +20,8 @@ public interface DriverRepository extends JpaRepository<Driver, Long>, JpaSpecif
     Optional<Driver> findByDriverId(String driverId);
 
     Page<Driver> findAllByIsDeleteFalse(Pageable pageable);
+
+    List<Driver> findAllByIsDeleteFalse();
 
     long countByCreatedAtBetween(Instant start, Instant end);
 }

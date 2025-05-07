@@ -137,7 +137,7 @@ public class ViolationServiceImpl implements ViolationService {
     @Override
     @Transactional(readOnly = true)
     public List<ViolationDTO> findAll() {
-        return violationRepository.findAll()
+        return violationRepository.findAllByIsDeleteFalse()
             .stream()
             .map(violationMapper::toDto)
             .collect(Collectors.toList());
