@@ -132,4 +132,11 @@ public class ViolationResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/violations/top5")
+    public ResponseEntity<List<ViolationDTO>> getTop5LatestViolations() {
+        List<ViolationDTO> violationDTOS = violationService.getTop5LatestViolations();
+        return ResponseEntity.ok().body(violationDTOS);
+    }
+
 }

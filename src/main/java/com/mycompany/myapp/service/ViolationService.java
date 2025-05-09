@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.Violation;
 import com.mycompany.myapp.service.dto.ViolationDTO;
 
 import java.util.List;
@@ -61,4 +62,6 @@ public interface ViolationService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<ViolationDTO> getTop5LatestViolations();
 }

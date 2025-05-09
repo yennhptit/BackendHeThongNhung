@@ -48,5 +48,7 @@ public interface ViolationRepository extends JpaRepository<Violation, Long>, Jpa
     """)
     List<Object[]> findTop5DriversWithViolationStats(Pageable pageable);
 
+    List<Violation> findTop5ByIsDeleteFalseOrderByTimestampDesc();
+
 }
 

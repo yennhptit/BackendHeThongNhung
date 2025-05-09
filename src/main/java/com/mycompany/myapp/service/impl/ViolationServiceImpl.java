@@ -159,4 +159,13 @@ public class ViolationServiceImpl implements ViolationService {
             violationRepository.save(violation);
         });
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ViolationDTO> getTop5LatestViolations() {
+        return violationRepository.findTop5ByIsDeleteFalseOrderByTimestampDesc()
+            .stream()
+            .map(violationMapper::toDto)
+            .collect(Collectors.toList());
+    }
 }
