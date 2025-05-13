@@ -61,4 +61,17 @@ public interface ViolationService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+
+    /**
+     * Mark a violation as read.
+     *
+     * @param id the id of the entity.
+     * @return the updated entity.
+     */
+    Optional<ViolationDTO> markAsRead(Long id);
+
+
+    List<ViolationDTO> findUnreadAndNotDeleted();
+
 }
