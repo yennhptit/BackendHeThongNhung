@@ -64,4 +64,10 @@ public interface ViolationService {
     void delete(Long id);
 
     List<ViolationDTO> getTop5LatestViolations();
+
+    Optional<ViolationDTO> markAsRead(Long id);
+
+    List<ViolationDTO> findUnreadAndNotDeleted();
+
+
 }

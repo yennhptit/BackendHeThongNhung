@@ -168,4 +168,22 @@ public class ViolationServiceImpl implements ViolationService {
             .map(violationMapper::toDto)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ViolationDTO> findUnreadAndNotDeleted() {
+        return violationRepository.findByIsDeleteFalseAndIsReadFalse()
+            .stream()
+            .map(violationMapper::toDto)
+            .toList();
+    }
+
+    @Override
+    public Optional<ViolationDTO> markAsRead(Long id) {
+        return violationRepository.findById(id).map(violation -> {
+            violation.setIsRead(true);
+            violationRepository.save(violation);
+            return violationMapper.toDto(violation);
+        });
+    }
+
 }

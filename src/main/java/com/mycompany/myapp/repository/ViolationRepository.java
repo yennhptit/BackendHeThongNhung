@@ -50,5 +50,8 @@ public interface ViolationRepository extends JpaRepository<Violation, Long>, Jpa
 
     List<Violation> findTop5ByIsDeleteFalseOrderByTimestampDesc();
 
+    List<Violation> findByIsDeleteFalseAndIsReadFalse();
+
+
 }
 

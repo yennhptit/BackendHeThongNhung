@@ -139,4 +139,25 @@ public class ViolationResource {
         return ResponseEntity.ok().body(violationDTOS);
     }
 
+    @Operation(summary = "Mark a violation as read", description = "Set isRead = true for a violation by its ID")
+    @PatchMapping("/violations/{id}/mark-as-read")
+    public ResponseEntity<ViolationDTO> markViolationAsRead(@PathVariable Long id) {
+        log.debug("REST request to mark Violation as read : {}", id);
+
+        Optional<ViolationDTO> updatedViolation = violationService.markAsRead(id);
+        return ResponseUtil.wrapOrNotFound(
+            updatedViolation,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
+        );
+    }
+
+    @Operation(summary = "Get all unread and not deleted violations", description = "Retrieve all violations where isDelete = false and isRead = false")
+    @GetMapping("/violations/unread")
+    public ResponseEntity<List<ViolationDTO>> getUnreadAndNotDeletedViolations() {
+        log.debug("REST request to get unread and not deleted Violations");
+        List<ViolationDTO> violations = violationService.findUnreadAndNotDeleted();
+        return ResponseEntity.ok().body(violations);
+    }
+
+
 }
